@@ -3,70 +3,88 @@
 import './Banner.scss'
 import Image from 'next/image';
 import Slider from '../Slider';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 export default function Banner() {
     return (
-        <div className='wrapper'>
+        <div className='banner-wrapper'>
             <div className='banner container'>
                 <div className='row'>
-                    <div className='sidebar col-xl-3'>
-                        {/* <ul className='sidebar__menu'>
+                    <div className='sidebar col-xl-3 col-lg-3 col-md-12 col-sm-12'>
+                        <ul className='sidebar__menu'>
                             <li className='sidebar-item'>
-                                <span></span>
+                                <span>Woman's Fashion</span>
+                                <Image
+                                    width={24}
+                                    height={24}
+                                    src='image/DropDown-right.svg'
+                                    alt='dropdown right'
+                                ></Image>
                             </li>
                             <li className='sidebar-item'>
-                                <span></span>
+                                <span>Men's Fashion</span>
+                                <Image
+                                    width={24}
+                                    height={24}
+                                    src='image/DropDown-right.svg'
+                                    alt='dropdown right'
+                                ></Image>
+
                             </li>
                             <li className='sidebar-item'>
-                                <span></span>
+                                <span>Electronics</span>
                             </li>
                             <li className='sidebar-item'>
-                                <span></span>
+                                <span>Home & Lifestyle</span>
                             </li>
                             <li className='sidebar-item'>
-                                <span></span>
+                                <span>Medicine</span>
                             </li>
                             <li className='sidebar-item'>
-                                <span></span>
+                                <span>Sports & Outdoor</span>
                             </li>
                             <li className='sidebar-item'>
-                                <span></span>
+                                <span>Baby's & Toys</span>
                             </li>
-                            <li className='sidebar-item'></li>
                             <li className='sidebar-item'>
-                                <span></span>
+                                <span>Groceries & Pets</span>
                             </li>
-                        </ul> */}
+                            <li className='sidebar-item'>
+                                <span>Health & Beauty</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div className='slider'>
-    
+                    <div className='slider col-xl-9 col-lg-9 col-md-12 col-sm-12'>
+                        <Swiper
+                            modules={[Navigation, Pagination, Scrollbar, A11y]}
+                            spaceBetween={50}
+                            slidesPerView={1}
+                            pagination={{ clickable: true }}
+                            onSwiper={(swiper) => console.log(swiper)}
+                            onSlideChange={() => console.log('slide change')}
+                        >
+                            <SwiperSlide>
+                                <Slider></Slider>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Slider></Slider>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Slider></Slider>
+                            </SwiperSlide>
+                        </Swiper>
                     </div>
                 </div>
             </div>
-            {/* <Swiper
-                    // install Swiper modules
-                    modules={[Pagination, Scrollbar]}
-                    spaceBetween={50}
-                    slidesPerView={1}
-                    pagination={{ clickable: true }}
-                    // scrollbar={{ draggable: true }}
-                    onSwiper={(swiper) => console.log(swiper)}
-                    onSlideChange={() => console.log('slide change')}
-                >
-                    <SwiperSlide>
-                        <Slider></Slider>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Slider></Slider>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Slider></Slider>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Slider></Slider>
-                    </SwiperSlide>
 
-                </Swiper> */}
         </div>
     )
 }

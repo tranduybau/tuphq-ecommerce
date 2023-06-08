@@ -20,7 +20,7 @@ export default function Banner() {
                 <div className="sidebar flex-auto ">
                     <ul className="sidebar__menu ">
                         <li className="sidebar-item sp-bw">
-                            <span>Woman&acos;s Fashion</span>
+                            <span>Woman's Fashion</span>
                             <Image
                                 width={24}
                                 height={24}
@@ -29,7 +29,7 @@ export default function Banner() {
                             ></Image>
                         </li>
                         <li className="sidebar-item sp-bw">
-                            <span>Men&acos;s Fashion</span>
+                            <span>Men's Fashion</span>
                             <Image
                                 width={24}
                                 height={24}

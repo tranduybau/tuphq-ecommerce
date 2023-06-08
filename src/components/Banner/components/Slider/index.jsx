@@ -1,11 +1,11 @@
 import Image from "next/image"
 import './Slider.scss'
 
-export default function Slider() {
+export default function Slider(props) {
     return (
         <div className="slider-item container">
-            <div className="wrapper row">
-                <div className="slider-item__content col-xl-6 col-lg-7 col-md-6 col-sm-5">
+            <div className="wrapper flex row">
+                <div className="slider-item__content col-xl-6 col-lg-7 col-md-6 col-sm-5 col-5">
                     <div className="slider-item__title">
                         <Image
                             width={40}
@@ -13,10 +13,14 @@ export default function Slider() {
                             src='image/logo-banner.svg'
                             alt="logo banner"
                         ></Image>
-                        <span>iPhone 14 Series</span>
+                        <span>
+                        {props.title}
+                        </span>
                     </div>
                     <div className="slider-item__discount">
-                        <span>Up to 10% off Voucher</span>
+                        <span>
+                        {props.discount}
+                        </span>
                     </div>
                     <div className="slider-item__link">
                         <a href="/">Shop Now</a>
@@ -29,9 +33,9 @@ export default function Slider() {
                         ></Image>
                     </div>
                 </div>
-                <div className="slider-item__img col-xl-6 col-lg-5 col-md-6 col-sm-7">
+                <div className="slider-item__img col-xl-6 col-lg-5 col-md-6 col-sm-7 col-7">
                     <Image
-                        src='image/banner.svg'
+                        src={`image/${props.img}`}
                         alt="banner"
                         fill={true}
                     ></Image>

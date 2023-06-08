@@ -28,7 +28,7 @@ export default function Header() {
                     <div className='main-header__brand col-xl-3 col-lg-2 col-md-5 col-sm-3 col-xs-2'>
                         <span>Exclusive</span>
                     </div>
-                    <ul className="main-header__menu col-xl-5 col-lg-5 col-md-7 col-sm-9 col-xs-10">
+                    <ul className="main-header__menu col-xl-4 col-lg-5 col-md-7 col-sm-9 col-xs-10">
                         <li className="nav-item">
                             <a onClick={() => setActive(1)} className={classNames('nav-link', 'main-header-link', { active: active === 1 })} href="#">Home</a>
                         </li>
@@ -42,7 +42,7 @@ export default function Header() {
                             <a onClick={() => setActive(4)} className={classNames('nav-link', 'main-header-link', { active: active === 4 })} href="#">Sign up</a>
                         </li>
                     </ul>
-                    <div className='main-header__actions col-xl-4 col-lg-5 col-md-12 col-sm-12 col-xs-12'>
+                    <div className='main-header__actions col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12'>
                         <div className='main-header__actions-search'>
                             <input placeholder='What are you looking for?' />
                             <Image

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState, memo } from "react";
+import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from 'next/image';
 import Cart from './components/Cart';
@@ -15,7 +15,7 @@ import TimeCountDown from "./components/TimeCountDown";
 
 SwiperCore.use([Navigation, Pagination]);
 
-const Flashsale = memo(() => {
+export default function Flashsale() {
     const swiperRef = useRef(null);
     let mySwiper;
 
@@ -175,6 +175,5 @@ const Flashsale = memo(() => {
             </div>
         </div>
     )
-})
+}
 
-export default Flashsale;

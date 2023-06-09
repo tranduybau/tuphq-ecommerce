@@ -32,6 +32,9 @@ export default function Cart(props) {
                         ></Image>
                     </span>
                 </div>
+                <div className='add-cart'>
+                    <span>Add To Cart</span>
+                </div>
             </div>
             <div className='description'>
                 <div className='name'>

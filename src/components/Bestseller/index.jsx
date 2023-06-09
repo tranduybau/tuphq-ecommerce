@@ -1,7 +1,6 @@
 "use client"
 import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Image from 'next/image';
 import Cart from './components/Cart';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 
@@ -40,7 +39,7 @@ export default function BestSeller() {
                     onSwiper={(swiper) => (mySwiper = swiper)}
                     ref={swiperRef}
                     slidesPerView={4}
-                    spaceBetween={50}
+                    spaceBetween={30}
                     modules={[Pagination, Navigation]}
                     breakpoints={{
                         320: {
@@ -71,7 +70,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -81,7 +79,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -91,7 +88,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -101,7 +97,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -111,7 +106,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -121,7 +115,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -131,7 +124,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -141,7 +133,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -151,7 +142,6 @@ export default function BestSeller() {
                     <SwiperSlide>
                         <Cart
                             img="clothes.svg"
-                            discount="40%"
                             name="The north coat"
                             sale="260"
                             price="360"

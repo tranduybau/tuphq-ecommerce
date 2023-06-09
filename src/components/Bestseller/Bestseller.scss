@@ -88,14 +88,12 @@
 }
 
 @media only screen and (min-width: 320px) and (max-width: 576px) {
-  .flashsale {
+  .bestseller-control {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
 
-  .btn-swiper {
-    position: relative;
-  }
+  
 }

@@ -51,7 +51,7 @@ export default function Banner() {
                             <span>Sports & Outdoor</span>
                         </li>
                         <li className="sidebar-item">
-                            <span>Baby"s & Toys</span>
+                            <span>Baby's & Toys</span>
                         </li>
                         <li className="sidebar-item">
                             <span>Groceries & Pets</span>

@@ -173,6 +173,11 @@ export default function Flashsale() {
                     </SwiperSlide>
                 </Swiper>
             </div>
+            <div className="view-all-product">
+                <button className="view-all-product__btn">
+                    <a href="/">View All Products</a>
+                </button>
+            </div>
         </div>
     )
 }

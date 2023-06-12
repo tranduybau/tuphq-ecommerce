@@ -1,7 +1,19 @@
 import './globals.scss'
-import { Inter } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
+import classNames from 'classnames'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+  variable: '--font-inter',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin']
+})
+
+const poppins = Poppins({
+  variable: '--font-poppins',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  style: ['italic', 'normal'],
+  subsets: ['latin']
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,7 +27,7 @@ export default function RootLayout({ children }) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossOrigin="anonymous" />
       </head>
 
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.variable} ${poppins.variable}`}>{children}</body>
     </html>
   )
 }

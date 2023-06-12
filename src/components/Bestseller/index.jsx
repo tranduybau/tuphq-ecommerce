@@ -10,6 +10,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/swiper-bundle.css';
+import Image from "next/image";
+import TimeCountDown from "./components/TimeCountDown";
+import { ReactSVG } from "react-svg";
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -20,15 +23,15 @@ export default function BestSeller() {
 
     return (
         <div className="bestseller-wrapper container">
-            <div className='today'>
+            <div className='bestseller-heading'>
                 <span className='block'></span>
-                <span>This Month</span>
+                <span className="font-poppins">This Month</span>
             </div>
             <div className='bestseller-control'>
-                <h1>Best Selling Products</h1>
+                <h1 className="font-inter">Best Selling Products</h1>
                 <div className='view-all'>
                     <button className="btn-view-all">
-                        <a className="btn-view-all__link">
+                        <a className="btn-view-all__link font-poppins">
                             View All
                         </a>
                     </button>
@@ -74,7 +77,7 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -83,7 +86,7 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -92,7 +95,7 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -101,7 +104,7 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -110,7 +113,7 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -119,7 +122,7 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -128,7 +131,7 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -137,7 +140,7 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -146,9 +149,21 @@ export default function BestSeller() {
                             sale="260"
                             price="360"
                             count="65"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                 </Swiper>
+            </div>
+
+            <div className="banner-product">
+                <ReactSVG src='image/imageBS.svg' className="banner-product__img"/>
+                <div className="banner-product__text">
+                    <span className="banner-product__text-categories font-poppins">Categories</span>
+                    <span className="banner-product__text-content font-inter">Enhance Your Music Experience</span>
+                    <TimeCountDown/>
+                    <button className="banner-product__btn">
+                        <a className="font-poppins" href="">Buy Now</a>
+                    </button>
+                </div>
             </div>
         </div>
     )

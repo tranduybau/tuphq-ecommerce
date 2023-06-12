@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import './Cart.scss'
+import { ReactSVG } from 'react-svg'
 
 export default function Cart(props) {
     return (
@@ -12,32 +13,28 @@ export default function Cart(props) {
                     alt='product'
                 ></Image>
                 <div className='icon-wrapper'>
-                    <span className='heart-small-icon'>
-                        <Image
+                    <span className='heart-small-icon__wrapper'>
+                        <ReactSVG
                             src='image/heart-small.svg'
-                            width={24}
-                            height={24}
-                            alt='heart small'
-                        ></Image>
+                            className='heart-small-icon'
+                        ></ReactSVG>
                     </span>
-                    <span className='quick-view-icon'>
-                        <Image
+                    <span className='quick-view-icon__wrapper'>
+                        <ReactSVG
                             src='image/Quick-View.svg'
-                            width={24}
-                            height={24}
-                            alt='quick view'
-                        ></Image>
+                            className='quick-view-icon'
+                        ></ReactSVG>
                     </span>
                 </div>
             </div>
             <div className='description'>
                 <div className='name'>
-                    <span>{props.name}</span>
+                    <span className='font-poppins'>{props.name}</span>
                     
                 </div>
                 <div className='price'>
-                    <span className='price-sale'>${props.sale}</span>
-                    <spab className='price-default'>${props.price}</spab>
+                    <span className='price-sale font-poppins'>${props.sale}</span>
+                    <spab className='price-default font-poppins'>${props.price}</spab>
                 </div>
                 <div className='rate'>
                     <div className='star'>
@@ -72,7 +69,7 @@ export default function Cart(props) {
                             src='image/star.svg'
                         ></Image>
                     </div>
-                    <div className='count'>({props.count})</div>
+                    <div className='count font-poppins'>({props.count})</div>
                 </div>  
             </div>
         </div>

@@ -10,7 +10,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/swiper-bundle.css';
-import Image from "next/image";
 import TimeCountDown from "./components/TimeCountDown";
 import { ReactSVG } from "react-svg";
 

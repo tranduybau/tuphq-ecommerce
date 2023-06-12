@@ -3,7 +3,7 @@
 
 .image {
   position: relative;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 .cart-discount {
@@ -20,7 +20,7 @@
   align-items: center;
   p {
     margin-bottom: 0 !important;
-    font-family: 'Poppins';
+
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -37,8 +37,8 @@
   flex-direction: column;
 }
 
-.heart-small-icon,
-.quick-view-icon {
+.heart-small-icon__wrapper,
+.quick-view-icon__wrapper {
   width: 34px;
   height: 34px;
   background-color: #fff;
@@ -49,9 +49,17 @@
   align-items: center;
 }
 
-.heart-small-icon {
+.heart-small-icon__wrapper {
   margin-bottom: 8px;
 }
+
+.heart-small-icon:hover svg{
+  path{
+    stroke: red;
+    fill: #db4444;
+  }
+}
+
 
 .description {
   margin-top: 16px;
@@ -62,7 +70,6 @@
 }
 
 .name {
-  font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -75,7 +82,6 @@
   gap: 12px;
 
   .price-sale {
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -85,7 +91,7 @@
 
   .price-default {
     text-decoration: line-through;
-    font-family: 'Poppins';
+
     font-style: normal;
     font-weight: 500;
     font-size: 16px;

@@ -20,44 +20,44 @@ export default function Banner() {
                 <div className="sidebar flex-auto ">
                     <ul className="sidebar__menu ">
                         <li className="sidebar-item sp-bw">
-                            <span>Woman&apos;s Fashion</span>
+                            <span className="font-poppins">Woman's Fashion</span>
                             <Image
                                 width={24}
                                 height={24}
                                 src="image/DropDown-right.svg"
                                 alt="dropdown right"
-                            ></Image>
+                            />
                         </li>
                         <li className="sidebar-item sp-bw">
-                            <span>Men&apos;s Fashion</span>
+                            <span className="font-poppins">Men's Fashion</span>
                             <Image
                                 width={24}
                                 height={24}
                                 src="image/DropDown-right.svg"
                                 alt="dropdown right"
-                            ></Image>
+                            />
 
                         </li>
                         <li className="sidebar-item">
-                            <span>Electronics</span>
+                            <span className="font-poppins">Electronics</span>
                         </li>
                         <li className="sidebar-item">
-                            <span>Home & Lifestyle</span>
+                            <span className="font-poppins">Home & Lifestyle</span>
                         </li>
                         <li className="sidebar-item">
-                            <span>Medicine</span>
+                            <span className="font-poppins">Medicine</span>
                         </li>
                         <li className="sidebar-item">
-                            <span>Sports & Outdoor</span>
+                            <span className="font-poppins">Sports & Outdoor</span>
                         </li>
                         <li className="sidebar-item">
-                            <span>Baby"s & Toys</span>
+                            <span className="font-poppins">Baby"s & Toys</span>
                         </li>
                         <li className="sidebar-item">
-                            <span>Groceries & Pets</span>
+                            <span className="font-poppins">Groceries & Pets</span>
                         </li>
                         <li className="sidebar-item">
-                            <span>Health & Beauty</span>
+                            <span className="font-poppins">Health & Beauty</span>
                         </li>
                     </ul>
                 </div>
@@ -66,30 +66,27 @@ export default function Banner() {
                         modules={[Navigation, Pagination, Scrollbar, A11y]}
                         spaceBetween={50}
                         slidesPerView={1}
-                        pagination={{ clickable: true }}
-                        onSwiper={(swiper) => console.log(swiper)}
-                        onSlideChange={() => console.log("slide change")}
-                    >
+                        pagination={{ clickable: true }}>
                         <SwiperSlide>
                             <Slider
                                 title="iPhone 14 Series"
                                 discount="Up to 10% off Voucher"
                                 img="banner.svg"
-                            ></Slider>
+                            />
                         </SwiperSlide>
                         <SwiperSlide>
                             <Slider
                                 title="iPhone 14 Series"
                                 discount="Up to 10% off Voucher"
                                 img="banner.svg"
-                            ></Slider>
+                            />
                         </SwiperSlide>
                         <SwiperSlide>
                             <Slider
                                 title="iPhone 14 Series"
                                 discount="Up to 10% off Voucher"
                                 img="banner.svg"
-                            ></Slider>
+                            />
                         </SwiperSlide>
                     </Swiper>
                 </div>

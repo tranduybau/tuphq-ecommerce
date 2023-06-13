@@ -1,21 +1,24 @@
 import Image from 'next/image'
 import './Cart.scss'
+import { useState } from 'react';
+import classNames from 'classnames';
+import Star from '@/svgs/star.svg'
 
 export default function Cart(props) {
+    const [active, setActive] = useState(true);
+
+    const handleClick = () => {
+        setActive(!active);
+    }
     return (
-        <div className='cart'>
+        <div className={`cart ${props.className}`}>
             <div className='image'>
                 <Image
                     width={500}
-                    height={500}
-                    src={`image/${props.img}`}
+                    height={250}
+                    src={`/image/test2.png`}
                     alt='product'
                 />
-
-                <span className='cart-discount'>
-                    <p className='font-poppins'>-{props.discount}</p>
-                </span>
-
                 <div className='icon-wrapper'>
                     <span className='heart-small-icon'>
                         <Image
@@ -40,53 +43,32 @@ export default function Cart(props) {
                 </div>
             </div>
             <div className='description'>
-                <div className='name'>
-                    <span className='font-poppins'>{props.name}</span>
-                </div>
+                <span className='name font-poppins'>{props.name}</span>
 
                 <div className='description__wrapper'>
-                    <div className='price'>
-                        <span className='price-sale font-poppins'>${props.sale}</span>
-                        <spab className='price-default class-poppins'>${props.price}</spab>
-                    </div>
-    
                     <div className='rate'>
+                        <span className='price-default font-poppins'>${props.sale}</span>
+
+
                         <div className='star'>
-                            <Image
-                                width={20}
-                                height={20}
-                                alt='star'
-                                src='image/star.svg'
-                            />
-                            <Image
-                                width={20}
-                                height={20}
-                                alt='star'
-                                src='image/star.svg'
-                            />
-                            <Image
-                                width={20}
-                                height={20}
-                                alt='star'
-                                src='image/star.svg'
-                            />
-                            <Image
-                                width={20}
-                                height={20}
-                                alt='star'
-                                src='image/star.svg'
-                            />
-                            <Image
-                                width={20}
-                                height={20}
-                                alt='star'
-                                src='image/star.svg'
-                            />
+                            <Star className='text-[20px]' />
+                            <Star className='text-[20px]' />
+                            <Star className='text-[20px]' />
+                            <Star className='text-[20px]' />
+                            <Star className='text-[20px]' />
                         </div>
-                        <div className='count'>(
-                            <span className='font-poppins'>{props.count}</span>)
-                        </div>
+
+                        <span className='font-poppins count'>({props.count})</span>
+
                     </div>
+                    {props.color && <div className='color'>
+                        <button onClick={handleClick} className={classNames({ active: active, 'no-active': !active })}>
+                            <span />
+                        </button>
+                        <button onClick={handleClick} className={classNames({ active: !active, 'no-active': active })}>
+                            <span />
+                        </button>
+                    </div>}
                 </div>
             </div>
         </div>

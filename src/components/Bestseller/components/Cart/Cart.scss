@@ -1,10 +1,12 @@
 .cart {
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .image {
-  cursor: pointer;
   position: relative;
-  background-color: #f5f5f5;
   &:hover .add-cart {
     display: flex;
     justify-content: center;
@@ -27,7 +29,6 @@
   align-items: center;
   p {
     margin-bottom: 0 !important;
-
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -44,29 +45,20 @@
   flex-direction: column;
 }
 
-.heart-small-icon__wrapper,
-.quick-view-icon__wrapper {
+.heart-small-icon,
+.quick-view-icon {
   width: 34px;
   height: 34px;
   background-color: #fff;
   border-radius: 50%;
   display: flex;
   justify-content: center;
-  cursor: pointer;
   align-items: center;
 }
 
-.heart-small-icon__wrapper {
+.heart-small-icon {
   margin-bottom: 8px;
 }
-
-.heart-small-icon:hover svg{
-  path{
-    stroke: red;
-    fill: #db4444;
-  }
-}
-
 
 .add-cart {
   position: absolute;
@@ -86,14 +78,13 @@
   }
 }
 
-
-
 .description {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .name {
@@ -101,14 +92,14 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  cursor: pointer;
   color: #000000;
+  margin-bottom: 8px;
 }
 
 .price {
   display: flex;
-  cursor: pointer;
   gap: 12px;
+  margin-bottom: 8px;
 
   .price-sale {
     font-style: normal;
@@ -120,32 +111,31 @@
 
   .price-default {
     text-decoration: line-through;
-
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
     color: #000000;
-
     opacity: 0.5;
   }
 }
 
-.price-sale {
-}
-
-.price-default {
-}
-
 .rate {
-  cursor: pointer;
   display: flex;
-}
 
-.star {
-  display: flex;
+  .star {
+    display: flex;
+  }
 }
 
 .count {
   margin-left: 8px;
+  span {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #000000;
+    opacity: 0.5;
+  }
 }

@@ -57,8 +57,12 @@
     color: #000;
   }
 }
+.product {
 
-.view-all {
+  .swiper-slide {
+    min-height: 100%;
+    height: auto;
+  }
 }
 
 .btn-view-all {

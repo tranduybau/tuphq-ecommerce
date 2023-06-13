@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from 'next/image';
 import Cart from './components/Cart';
@@ -7,58 +7,90 @@ import SwiperCore, { Navigation, Pagination } from 'swiper';
 
 
 import './Flashsale.scss'
+import 'swiper/swiper-bundle.css'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/swiper-bundle.css'
 import TimeCountDown from "./components/TimeCountDown";
+import classNames from "classnames";
 
 SwiperCore.use([Navigation, Pagination]);
 
 export default function Flashsale() {
-    const swiperRef = useRef(null);
-    let mySwiper;
+    //state
+    const [swiper, setSwiper] = useState(true);
+    const [canGoPrev, setCanGoPrev] = useState(false);
+    const [canGoNext, setCanGoNext] = useState(true);
+
+    //ref
+    const swiperRef = useRef()
+
+    const handleControlSwiperLeft = () => {
+        swiperRef.current.swiper.slidePrev();
+        setCanGoNext(true);
+        if (swiper.isBeginning) {
+            setCanGoPrev(false);
+        }
+    }
+
+    const handleControlSwiperRight = () => {
+        swiperRef.current.swiper.slideNext();
+        setCanGoPrev(true);
+        if (swiper.isEnd) {
+            setCanGoNext(false);
+        }
+    }
+
+    const handleSwiper = (swiper) => {
+        setSwiper(swiper);
+    };
 
 
     return (
         <div className="flashsale-wrapper container">
             <div className='today'>
-                <span className='block'></span>
-                <span>Today's</span>
+                <span className='block' />
+                <span className="font-poppins">Today's</span>
             </div>
             <div className='flashsale'>
-                <h1>Flash Sales</h1>
-                <TimeCountDown></TimeCountDown>
+                <h1 className="font-inter">Flash Sales</h1>
+                <TimeCountDown />
                 <div className='btn-swiper'>
-                    <button onClick={() => mySwiper.slidePrev()} className='btn-control-swiper'>
+                    <button onClick={handleControlSwiperLeft} className={classNames('btn-control-swiper', { disabled: canGoPrev === false })}>
                         <Image
                             src='image/icons_arrow-left.svg'
                             width={16}
                             height={16}
                             alt="button control swiper"
-                        ></Image>
+                        />
                     </button>
-                    <button onClick={() => mySwiper.slideNext()} className='btn-control-swiper'>
+                    <button onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false})}>
                         <Image
                             src='image/icons_arrow-right.svg'
                             width={16}
                             height={16}
                             alt="button control swiper"
-                        ></Image>
+                        />
                     </button>
                 </div>
             </div>
             <div className='product'>
                 <Swiper
-                    onSwiper={(swiper) => (mySwiper = swiper)}
+                    onSwiper={handleSwiper}
+                    onReachEnd={() => {
+                        setCanGoPrev(true)
+                    }}
+                    onReachBeginning={() => {
+                        setCanGoPrev(true)
+                    }}
                     ref={swiperRef}
                     slidesPerView={4}
-                    spaceBetween={50}
+                    spaceBetween={30}
                     modules={[Pagination, Navigation]}
                     breakpoints={{
                         320: {
-                            slidesPerView: 2,
-                            spaceBetween: 20
+                            slidesPerView: 1,
+                            spaceBetween: 40
                         },
 
                         480: {
@@ -70,26 +102,25 @@ export default function Flashsale() {
                             slidesPerView: 2,
                             spaceBetween: 40
                         },
-                        750:{
+                        750: {
                             slidesPerView: 3,
                             spaceBetween: 40
                         },
-                        1000:{
+                        1000: {
                             slidesPerView: 4,
                             spaceBetween: 40
                         }
-                        
-                    }}
-                >
+
+                    }}>
                     <SwiperSlide>
                         <Cart
                             img="flashsale.svg"
                             discount="40%"
-                            name="HAVIT HV-G92 Gamepad"
+                            name="HAVIT HV-G92 Gamepad 123"
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -99,7 +130,7 @@ export default function Flashsale() {
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -109,7 +140,7 @@ export default function Flashsale() {
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -119,7 +150,7 @@ export default function Flashsale() {
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -129,7 +160,7 @@ export default function Flashsale() {
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -139,7 +170,7 @@ export default function Flashsale() {
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -149,7 +180,7 @@ export default function Flashsale() {
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -159,7 +190,7 @@ export default function Flashsale() {
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
@@ -169,13 +200,13 @@ export default function Flashsale() {
                             sale="120"
                             price="160"
                             count="88"
-                        ></Cart>
+                        />
                     </SwiperSlide>
                 </Swiper>
             </div>
             <div className="view-all-product">
                 <button className="view-all-product__btn">
-                    <a href="/">View All Products</a>
+                    <a className="font-poppins" href="/">View All Products</a>
                 </button>
             </div>
         </div>

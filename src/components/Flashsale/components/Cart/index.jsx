@@ -6,14 +6,16 @@ export default function Cart(props) {
         <div className='cart'>
             <div className='image'>
                 <Image
-                    width={270}
-                    height={250}
+                    width={500}
+                    height={500}
                     src={`image/${props.img}`}
                     alt='product'
-                ></Image>
+                />
+
                 <span className='cart-discount'>
-                    <p>-{props.discount}</p>
+                    <p className='font-poppins'>-{props.discount}</p>
                 </span>
+
                 <div className='icon-wrapper'>
                     <span className='heart-small-icon'>
                         <Image
@@ -21,7 +23,7 @@ export default function Cart(props) {
                             width={24}
                             height={24}
                             alt='heart small'
-                        ></Image>
+                        />
                     </span>
                     <span className='quick-view-icon'>
                         <Image
@@ -29,57 +31,63 @@ export default function Cart(props) {
                             width={24}
                             height={24}
                             alt='quick view'
-                        ></Image>
+                        />
                     </span>
                 </div>
+
                 <div className='add-cart'>
-                    <span>Add To Cart</span>
+                    <span className='font-poppins'>Add To Cart</span>
                 </div>
             </div>
             <div className='description'>
                 <div className='name'>
-                    <span>{props.name}</span>
-                    
+                    <span className='font-poppins'>{props.name}</span>
                 </div>
-                <div className='price'>
-                    <span className='price-sale'>${props.sale}</span>
-                    <spab className='price-default'>${props.price}</spab>
-                </div>
-                <div className='rate'>
-                    <div className='star'>
-                        <Image
-                            width={20}
-                            height={20}
-                            alt='star'
-                            src='image/star.svg'
-                        ></Image>
-                        <Image
-                            width={20}
-                            height={20}
-                            alt='star'
-                            src='image/star.svg'
-                        ></Image>
-                        <Image
-                            width={20}
-                            height={20}
-                            alt='star'
-                            src='image/star.svg'
-                        ></Image>
-                        <Image
-                            width={20}
-                            height={20}
-                            alt='star'
-                            src='image/star.svg'
-                        ></Image>
-                        <Image
-                            width={20}
-                            height={20}
-                            alt='star'
-                            src='image/star.svg'
-                        ></Image>
+
+                <div className='description__wrapper'>
+                    <div className='price'>
+                        <span className='price-sale font-poppins'>${props.sale}</span>
+                        <spab className='price-default class-poppins'>${props.price}</spab>
                     </div>
-                    <div className='count'>({props.count})</div>
-                </div>  
+    
+                    <div className='rate'>
+                        <div className='star'>
+                            <Image
+                                width={20}
+                                height={20}
+                                alt='star'
+                                src='image/star.svg'
+                            />
+                            <Image
+                                width={20}
+                                height={20}
+                                alt='star'
+                                src='image/star.svg'
+                            />
+                            <Image
+                                width={20}
+                                height={20}
+                                alt='star'
+                                src='image/star.svg'
+                            />
+                            <Image
+                                width={20}
+                                height={20}
+                                alt='star'
+                                src='image/star.svg'
+                            />
+                            <Image
+                                width={20}
+                                height={20}
+                                alt='star'
+                                src='image/star.svg'
+                            />
+                        </div>
+                        <div className='count'>(
+                            <span className='font-poppins'>{props.count}</span>)
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

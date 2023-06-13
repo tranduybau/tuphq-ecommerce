@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import './TimeCountDown.scss'
 
-export default function TimeCountDown(){
+export default function TimeCountDown() {
     const [secondLeft, setSecondLeft] = useState(60); // 60 giây
     const [minuteLeft, setMinuteLeft] = useState(59); // 60 phút
     const [hourLeft, setHourLeft] = useState(23); // 23 giờ
@@ -36,30 +36,30 @@ export default function TimeCountDown(){
     return (
         <span className='time-area'>
             <div className='time'>
-                <h5>Days</h5>
+                <h5 className="font-poppins">Days</h5>
                 <div className='time-block'>
-                    <p className='time-value'>{dayLeft}</p>
+                    <p className='time-value font-inter'>{dayLeft}</p>
                     <span className='semiclone'><p>:</p></span>
                 </div>
             </div>
             <div className='time'>
-                <h5>Hours</h5>
+                <h5 className="font-poppins">Hours</h5>
                 <div className="time-block">
-                    <p className='time-value'>{hourLeft}</p>
+                    <p className='time-value font-inter'>{hourLeft}</p>
                     <span className='semiclone'><p>:</p></span>
                 </div>
             </div>
             <div className='time'>
-                <h5>Minutes</h5>
+                <h5 className="font-poppins">Minutes</h5>
                 <div className="time-block">
-                    <p className='time-value'>{minuteLeft}</p>
+                    <p className='time-value font-inter'>{minuteLeft}</p>
                     <span className='semiclone'><p>:</p></span>
                 </div>
             </div>
             <div className='time'>
-                <h5>Seconds</h5>
+                <h5 className="font-poppins">Seconds</h5>
                 <div className="time-block">
-                    <p className='time-value'>{secondLeft}</p>
+                    <p className='time-value font-inter'>{secondLeft}</p>
                 </div>
             </div>
         </span>

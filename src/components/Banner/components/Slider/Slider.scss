@@ -24,7 +24,6 @@
   align-items: center;
   margin-left: 64px;
   span {
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -39,7 +38,6 @@
 
   max-width: 294px;
   span {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 48px;
@@ -53,7 +51,6 @@
   margin-left: 64px;
 
   a {
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -65,11 +62,13 @@
 }
 
 .slider-item__img {
+  width: 50%;
   position: relative;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
   .slider-item__content {
+    width: 50%;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -81,7 +80,6 @@
     align-items: center;
     margin-left: 32px;
     span {
-      font-family: 'Poppins';
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
@@ -96,7 +94,6 @@
 
     max-width: 294px;
     span {
-      font-family: 'Inter';
       font-style: normal;
       font-weight: 600;
       font-size: 48px;
@@ -110,7 +107,6 @@
     margin-left: 32px;
 
     a {
-      font-family: 'Poppins';
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
@@ -135,7 +131,6 @@
     align-items: center;
     margin-left: 12px;
     span {
-      font-family: 'Poppins';
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
@@ -150,7 +145,6 @@
 
     max-width: 294px;
     span {
-      font-family: 'Inter';
       font-style: normal;
       font-weight: 600;
       font-size: 36px;
@@ -163,7 +157,6 @@
     margin-left: 12px;
     display: flex;
     a {
-      font-family: 'Poppins';
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
@@ -188,7 +181,6 @@
     align-items: center;
     margin-left: 12px;
     span {
-      font-family: 'Poppins';
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
@@ -203,7 +195,6 @@
 
     max-width: 294px;
     span {
-      font-family: 'Inter';
       font-style: normal;
       font-weight: 600;
       font-size: 24px;
@@ -216,7 +207,6 @@
     margin-left: 12px;
     display: flex;
     a {
-      font-family: 'Poppins';
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
@@ -255,9 +245,7 @@
     display: flex;
     align-items: center;
     margin-left: 12px;
-    max-width: 20px;
     span {
-      font-family: 'Poppins';
       font-style: normal;
       font-weight: 400;
       font-size: 12px;
@@ -269,13 +257,11 @@
   }
   .slider-item__discount {
     margin-left: 12px;
-
-    max-width: 90px;
+    max-width: 150px;
     span {
-      font-family: 'Inter';
       font-style: normal;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 20px;
       line-height: 60px;
       letter-spacing: 0.04em;
       color: #fafafa;
@@ -285,7 +271,6 @@
     margin-left: 12px;
     display: flex;
     a {
-      font-family: 'Poppins';
       font-style: normal;
       font-weight: 500;
       font-size: 12px;

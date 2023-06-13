@@ -6,10 +6,10 @@ import Flashsale from '@/components/Flashsale'
 
 export default function Home() {
   return (
-    <main className='main'>
+    <main className='home-main'>
       <Header/>
       <Banner/>
-      <Flashsale></Flashsale>
+      <Flashsale/>
     </main>
   )
 }

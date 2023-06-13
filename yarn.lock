@@ -1374,7 +1374,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tanem/svg-injector@^10.1.56":
+"@tanem/svg-injector@^10.1.57":
   version "10.1.57"
   resolved "https://registry.npmjs.org/@tanem/svg-injector/-/svg-injector-10.1.57.tgz"
   integrity sha512-XbkU63nZUVhkUvC709swATTiZ7GRb7+l6AAuoz0t1m3Liia0Iac0WwBFij3JeTve08Pd0J5xATAhHxDdJkXunw==
@@ -3721,13 +3721,13 @@ react-is@^16.13.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-svg@^16.1.15:
-  version "16.1.15"
-  resolved "https://registry.npmjs.org/react-svg/-/react-svg-16.1.15.tgz"
-  integrity sha512-xXRku+OlcSE5k6JrJ6jdOFJVAqPcOb1HL93dqi5An2Qe2GMX0RNdvq9JOWUxLroSmV0I3PY2zz3i5+BhAB4yVg==
+react-svg@^16.1.16:
+  version "16.1.16"
+  resolved "https://registry.npmjs.org/react-svg/-/react-svg-16.1.16.tgz"
+  integrity sha512-AEOVy9ISp9/mGoeX89q/hRRUF7GaB56vqydqTTR2m7C7sh9swa3Ps1VkpaMmf9HX7KiXSm3SlK7EJ0gLdy37Lg==
   dependencies:
     "@babel/runtime" "^7.22.3"
-    "@tanem/svg-injector" "^10.1.56"
+    "@tanem/svg-injector" "^10.1.57"
     "@types/prop-types" "^15.7.5"
     prop-types "^15.8.1"
 

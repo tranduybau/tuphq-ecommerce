@@ -26,6 +26,10 @@ export default function Cart(props) {
                         ></ReactSVG>
                     </span>
                 </div>
+
+                <div className='add-cart'>
+                    <span className='font-poppins'>Add To Cart</span>
+                </div>
             </div>
             <div className='description'>
                 <div className='name'>

@@ -1,3 +1,15 @@
+.disabled {
+  background-color: #ccc !important;
+  opacity: 0.3 !important;
+  cursor: default !important;
+
+  &:hover {
+    cursor: default !important;
+    background-color: #ccc !important;
+    opacity: 0.3 !important;
+  }
+}
+
 .bestseller-wrapper {
   padding-top: 70px;
   padding-right: 0 !important;

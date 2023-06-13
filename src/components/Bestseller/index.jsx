@@ -17,7 +17,7 @@ SwiperCore.use([Navigation, Pagination]);
 
 export default function BestSeller() {
     const swiperRef = useRef(null);
-    let mySwiper;
+    
 
 
     return (
@@ -38,7 +38,6 @@ export default function BestSeller() {
             </div>
             <div className='product'>
                 <Swiper
-                    onSwiper={(swiper) => (mySwiper = swiper)}
                     ref={swiperRef}
                     slidesPerView={4}
                     spaceBetween={30}

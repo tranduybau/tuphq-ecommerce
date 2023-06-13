@@ -8,7 +8,6 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 export default function Header() {
     const [active, setActive] = useState(1)
-    console.log(screen.width)
     return (
         <header className='header'>
             <div className='top-header'>

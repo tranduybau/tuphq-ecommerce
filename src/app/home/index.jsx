@@ -1,9 +1,10 @@
 import Category from '@/components/Category'
-import Image from 'next/image'
+
+import './Home.scss'
 
 export default function Home() {
   return (
-    <main className="">
+    <main className='home-main'>
       <Category></Category>
     </main>
   )

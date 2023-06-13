@@ -1,8 +1,9 @@
 "use client"
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from 'next/image';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
+import classNames from "classnames";
 
 
 import './Category.scss'
@@ -15,40 +16,72 @@ import CategoryItem from "./components/CategoryItem";
 SwiperCore.use([Navigation, Pagination]);
 
 export default function Category() {
-    const swiperRef = useRef(null);
-    let mySwiper;
+    //ref
+    const swiperRef = useRef()
 
+    //state
+    const [swiper, setSwiper] = useState(true);
+    const [canGoPrev, setCanGoPrev] = useState(false);
+    const [canGoNext, setCanGoNext] = useState(true);
+
+
+
+    const handleControlSwiperLeft = () => {
+        swiperRef.current.swiper.slidePrev();
+        setCanGoNext(true);
+        if (swiper.isBeginning) {
+            setCanGoPrev(false);
+        }
+    }
+
+    const handleControlSwiperRight = () => {
+        swiperRef.current.swiper.slideNext();
+        setCanGoPrev(true);
+        if (swiper.isEnd) {
+            setCanGoNext(false);
+        }
+    }
+
+    const handleSwiper = (swiper) => {
+        setSwiper(swiper);
+    };
 
     return (
         <div className="category-wrapper container">
             <div className='category-title'>
-                <span className='block'></span>
-                <span>Categories</span>
+                <span className='block' />
+                <span className="font-poppins">Categories</span>
             </div>
             <div className='category-control'>
-                <h1>Browse By Category</h1>
+                <h1 className="font-inter">Browse By Category</h1>
                 <div className='btn-swiper'>
-                    <button onClick={() => mySwiper.slidePrev()} className='btn-control-swiper'>
+                    <button onClick={handleControlSwiperLeft} className={classNames('btn-control-swiper', { disabled: canGoPrev === false })}>
                         <Image
                             src='image/icons_arrow-left.svg'
                             width={16}
                             height={16}
                             alt="button control swiper"
-                        ></Image>
+                        />
                     </button>
-                    <button onClick={() => mySwiper.slideNext()} className='btn-control-swiper'>
+                    <button onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false })}>
                         <Image
                             src='image/icons_arrow-right.svg'
                             width={16}
                             height={16}
                             alt="button control swiper"
-                        ></Image>
+                        />
                     </button>
                 </div>
             </div>
             <div className='categories'>
                 <Swiper
-                    onSwiper={(swiper) => (mySwiper = swiper)}
+                    onSwiper={handleSwiper}
+                    onReachEnd={() => {
+                        setCanGoPrev(true)
+                    }}
+                    onReachBeginning={() => {
+                        setCanGoPrev(true)
+                    }}
                     ref={swiperRef}
                     slidesPerView={6}
                     spaceBetween={30}
@@ -58,12 +91,10 @@ export default function Category() {
                             slidesPerView: 2,
                             spaceBetween: 20
                         },
-
                         480: {
                             slidesPerView: 2,
                             spaceBetween: 30
                         },
-
                         640: {
                             slidesPerView: 2,
                             spaceBetween: 40
@@ -77,86 +108,71 @@ export default function Category() {
                             spaceBetween: 40
                         }
 
-                    }}
-                >
+                    }}>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-CellPhone.svg"
-                            category="Phones"
-                        ></CategoryItem>
-
+                            category="Phones" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Computer.svg"
-                            category="Computer"
-                        ></CategoryItem>
+                            category="Computer" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-SmartWatch.svg"
-                            category="SmartWatch"
-                        ></CategoryItem>
+                            category="SmartWatch" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Camera.svg"
-                            category="Camera"
-                        ></CategoryItem>
+                            category="Camera" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Headphone.svg"
-                            category="Headphones"
-                        ></CategoryItem>
+                            category="Headphones" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Gamepad.svg"
-                            category="Gaming"
-                        ></CategoryItem>
+                            category="Gaming" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Computer.svg"
-                            category="Computer"
-                        ></CategoryItem>
+                            category="Computer" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Computer.svg"
-                            category="Computer"
-                        ></CategoryItem>
+                            category="Computer" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Computer.svg"
-                            category="Computer"
-                        ></CategoryItem>
+                            category="Computer" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Computer.svg"
-                            category="Computer"
-                        ></CategoryItem>
+                            category="Computer" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Computer.svg"
-                            category="Computer"
-                        ></CategoryItem>
+                            category="Computer" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Computer.svg"
-                            category="Computer"
-                        ></CategoryItem>
+                            category="Computer" />
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem
                             icon="Category-Computer.svg"
-                            category="Computer"
-                        ></CategoryItem>
+                            category="Computer" />
                     </SwiperSlide>
                 </Swiper>
             </div>

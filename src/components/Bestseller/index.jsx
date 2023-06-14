@@ -11,10 +11,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/swiper-bundle.css';
 import TimeCountDown from "./components/TimeCountDown";
-import { ReactSVG } from "react-svg";
-
 SwiperCore.use([Navigation, Pagination]);
-
+import { ReactSVG } from "react-svg";
 export default function BestSeller() {
     const swiperRef = useRef(null);
     
@@ -36,7 +34,7 @@ export default function BestSeller() {
                     </button>
                 </div>
             </div>
-            <div className='product'>
+            <div className='product-bs'>
                 <Swiper
                     ref={swiperRef}
                     slidesPerView={4}

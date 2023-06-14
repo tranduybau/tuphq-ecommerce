@@ -29,12 +29,12 @@
     "tailwindcss": "3.3.2"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.0.1",
     "@svgr/cli": "^8.0.1",
     "@svgr/plugin-jsx": "^8.0.1",
     "@svgr/plugin-prettier": "^8.0.1",
     "@svgr/plugin-svgo": "^8.0.1",
     "@svgr/rollup": "^8.0.1",
-    "@svgr/webpack": "^8.0.1",
     "npm-run-all": "^4.1.5",
     "npm-watch": "^0.11.0",
     "react-svg": "^16.1.15",

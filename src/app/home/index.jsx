@@ -1,6 +1,7 @@
 import './Home.scss'
 
 //Component
+import OutProduct from '@/components/OurProduct'
 import Bestseller from '@/components/Bestseller'
 import Header from '@/components/Header'
 import Banner from '@/components/Banner'
@@ -16,6 +17,7 @@ export default function Home() {
       <Flashsale/>
       <Category/>
       <Bestseller/>
+      <OutProduct/>
     </main>
   )
 }

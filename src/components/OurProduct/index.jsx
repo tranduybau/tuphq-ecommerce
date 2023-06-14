@@ -168,7 +168,7 @@ export default function OutProduct() {
 
 
     return (
-        <div className="outproduct-wrapper container">
+        <div className="ourproduct-wrapper container">
             <div className='today'>
                 <span className='block' />
                 <span className="font-poppins">Our Products</span>

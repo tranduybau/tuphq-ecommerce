@@ -3,7 +3,7 @@ import './Cart.scss'
 
 export default function Cart(props) {
     return (
-        <div className='cart'>
+        <div className='cart-fs'>
             <div className='image'>
                 <Image
                     width={500}
@@ -51,7 +51,7 @@ export default function Cart(props) {
                     </div>
     
                     <div className='rate'>
-                        <div className='star'>
+                        <div className='star-fs'>
                             <Image
                                 width={20}
                                 height={20}

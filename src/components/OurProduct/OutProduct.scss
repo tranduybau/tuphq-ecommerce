@@ -1,6 +1,5 @@
-.outproduct-wrapper {
+.ourproduct-wrapper {
   padding-top: 71px;
-  padding-bottom: 60px;
   border-bottom: 1px solid #ccc;
   padding-right: 0 !important;
   padding-left: 0 !important;
@@ -89,7 +88,8 @@
     flex-direction: row !important;
   }
   .swiper-slide {
-    height: auto;
+    min-height: auto !important;
+    height: auto !important;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

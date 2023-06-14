@@ -74,7 +74,7 @@ export default function Flashsale() {
                     </button>
                 </div>
             </div>
-            <div className='product'>
+            <div className='product-fs'>
                 <Swiper
                     onSwiper={handleSwiper}
                     onReachEnd={() => {

@@ -2,7 +2,7 @@
 "use client"
 import "./Banner.scss"
 import Image from "next/image";
-import Slider from "../Slider";
+import Slider from "./components/Slider";;
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 

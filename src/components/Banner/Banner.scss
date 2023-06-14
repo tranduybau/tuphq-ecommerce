@@ -195,3 +195,40 @@ ul {
     }
   }
 }
+
+@media only screen and (max-width: 576px) {
+  .banner {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+  }
+
+  .sidebar {
+    border-right: 1px solid transparent;
+    padding: 40px 0 4px 8px;
+  }
+
+  .sidebar__menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .sidebar-item {
+    max-width: 45%;
+    min-width: 44%;
+    border: 1px solid #ccc;
+    padding: 8px 8px;
+    margin-bottom: 0px;
+  }
+
+  .slider {
+    margin: 10px 0;
+    width: 100%;
+    padding-left: 10px;
+    .swiper-slide {
+      width: 100% !important;
+    }
+  }
+}

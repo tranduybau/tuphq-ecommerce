@@ -2,6 +2,7 @@ import Image from 'next/image'
 import './Cart.scss'
 import { useState } from 'react';
 import classNames from 'classnames';
+
 import Star from '@/svgs/star.svg'
 
 export default function Cart(props) {

@@ -6,12 +6,16 @@
 
   .image {
     position: relative;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
     &:hover .add-cart {
       display: flex;
       justify-content: center;
       align-items: center;
       transition: all 0.3 linear;
+    }
+    .image-clothes {
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -43,21 +47,21 @@
     right: 12px;
     display: flex;
     flex-direction: column;
-  }
 
-  .heart-small-icon,
-  .quick-view-icon {
-    width: 34px;
-    height: 34px;
-    background-color: #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    .heart-small-icon,
+    .quick-view-icon {
+      width: 34px;
+      height: 34px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .heart-small-icon {
-    margin-bottom: 8px;
+    .heart-small-icon {
+      margin-bottom: 8px;
+    }
   }
 
   .add-cart {
@@ -125,6 +129,12 @@
 
     .star-bs {
       display: flex;
+
+      & > .star{
+        width: 20px;
+        height: 20px;
+        margin: 0 !important;
+      }
     }
   }
 

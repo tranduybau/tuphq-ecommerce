@@ -11,33 +11,31 @@
     cursor: pointer;
   }
 
-  &:hover .category-name{
+  &:hover .category-name {
     color: #fafafa;
   }
 
-  &:hover .category-img svg{
-    width: 56px;
-    height: 56px;
-    path{
+  &:hover .category-icon {
+    g{
       stroke: #fff;
     }
   }
-
- 
 }
 
 .category-icon {
+  width: 56px;
+  height: 56px;
   color: #000;
   margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.category-img svg{
-    width: 56px;
-    height: 56px;
-    path{
-      stroke: #000;
-    }
-  }
+.category-img svg {
+  width: 56px;
+  height: 56px;
+}
 
 .category-name {
   margin-top: 16px;

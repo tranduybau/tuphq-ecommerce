@@ -1,18 +1,20 @@
 "use client"
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Image from 'next/image';
 import Cart from './components/Cart';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
-
+import TimeCountDown from "./components/TimeCountDown";
+import classNames from "classnames";
 
 import './Flashsale.scss'
 import 'swiper/swiper-bundle.css'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import TimeCountDown from "./components/TimeCountDown";
-import classNames from "classnames";
+
+//icon
+import ArrowLeft from '@/svgs/icons_arrow-left.svg'
+import ArrowRight from '@/svgs/icons_arrow-right.svg'
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -57,20 +59,10 @@ export default function Flashsale() {
                 <TimeCountDown />
                 <div className='btn-swiper'>
                     <button onClick={handleControlSwiperLeft} className={classNames('btn-control-swiper', { disabled: canGoPrev === false })}>
-                        <Image
-                            src='image/icons_arrow-left.svg'
-                            width={16}
-                            height={16}
-                            alt="button control swiper"
-                        />
+                        <ArrowLeft className='arrow-left' />
                     </button>
-                    <button onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false})}>
-                        <Image
-                            src='image/icons_arrow-right.svg'
-                            width={16}
-                            height={16}
-                            alt="button control swiper"
-                        />
+                    <button onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false })}>
+                        <ArrowRight className='arrow-right' />
                     </button>
                 </div>
             </div>
@@ -114,7 +106,6 @@ export default function Flashsale() {
                     }}>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad 123"
                             sale="120"
@@ -124,7 +115,6 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -134,7 +124,6 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -144,7 +133,6 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -154,7 +142,6 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -164,7 +151,6 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -174,7 +160,6 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -184,7 +169,6 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -194,7 +178,6 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="flashsale.svg"
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"

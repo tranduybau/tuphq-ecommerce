@@ -1,11 +1,15 @@
 "use client"
 import { useState } from 'react'
-import './Header.scss'
-import Image from 'next/image'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
+import './Header.scss'
+
+//icon
+import SearchIcon from '@/svgs/SearchIcon.svg'
+import HeartIcon from '@/svgs/Heart.svg'
+import CartIcon from '@/svgs/Cart.svg'
 export default function Header() {
     const [active, setActive] = useState(1)
     return (
@@ -31,7 +35,7 @@ export default function Header() {
                     <div className='main-header__brand'>
                         <span className='font-inter'>Exclusive</span>
                     </div>
-                    
+
                     <ul className="main-header__menu">
                         <li className="nav-item">
                             <a onClick={() => setActive(1)} className={classNames('nav-link', 'main-header-link', 'font-poppins', { active: active === 1 })} href="#">Home</a>
@@ -50,32 +54,14 @@ export default function Header() {
                     <div className='main-header__actions'>
                         <div className='main-header__actions-search'>
                             <input placeholder='What are you looking for?' />
-                            <Image
-                                className='icon-search'
-                                width={24}
-                                height={24}
-                                src='image/SearchIcon.svg'
-                                alt="search"
-                            />
+                            <SearchIcon className='icon-search'/>
                         </div>
-                        <Image
-                            className='icon-heart'
-                            width={32}
-                            height={32}
-                            alt='Heart'
-                            src='image/Heart.svg'
-                        />
-                        <Image
-                            className='icon-cart'
-                            width={32}
-                            height={32}
-                            alt='Cart'
-                            src='image/Cart.svg'
-                        />
+                        <HeartIcon className='icon-heart'/>
+                        <CartIcon className='icon-cart'/>
                     </div>
 
                     <div className='bar-icon'>
-                        <FontAwesomeIcon icon={faBars}/>
+                        <FontAwesomeIcon icon={faBars} />
                     </div>
                 </div>
             </div>

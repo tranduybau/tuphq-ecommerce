@@ -63,21 +63,31 @@
   gap: 8px;
   position: absolute;
   right: 0;
-}
 
-.btn-control-swiper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 46px;
-  height: 46px;
-  background-color: #f5f5f5;
-  border-radius: 50%;
-}
+  .btn-control-swiper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 46px;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+  }
 
-.btn-control-swiper:hover {
-  background-color: #ccc;
-  opacity: 0.8;
+  .btn-control-swiper:hover {
+    background-color: #ccc;
+    opacity: 0.8;
+  }
+
+  .arrow-left{
+    width: 16px;
+    height: 16px;
+  }
+
+  .arrow-right{
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .product-fs {
@@ -133,7 +143,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 30px;
   }
 
   .btn-swiper {

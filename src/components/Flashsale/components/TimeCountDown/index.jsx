@@ -34,33 +34,32 @@ export default function TimeCountDown() {
         return () => clearInterval(intervalId);
     }, [secondLeft, minuteLeft, hourLeft, dayLeft]);
     return (
-        <span className='time-area'>
+        <span className='time-area-fs'>
             <div className='time'>
                 <h5 className="font-poppins">Days</h5>
-                <div className='time-block'>
-                    <p className='time-value font-inter'>{dayLeft}</p>
-                    <span className='semiclone'><p>:</p></span>
-                </div>
+                {dayLeft > 9 && <p className='time-value font-inter'>{dayLeft}</p>}
+                {dayLeft < 10 && <p className='time-value font-inter'>0{dayLeft}</p>}
             </div>
+            <span className='semiclone'>
+                <p>:</p>
+            </span>
             <div className='time'>
                 <h5 className="font-poppins">Hours</h5>
-                <div className="time-block">
-                    <p className='time-value font-inter'>{hourLeft}</p>
-                    <span className='semiclone'><p>:</p></span>
-                </div>
+                <p className='time-value font-inter'>{hourLeft}</p>
             </div>
+            <span className='semiclone'>
+                <p>:</p>
+            </span>
             <div className='time'>
                 <h5 className="font-poppins">Minutes</h5>
-                <div className="time-block">
-                    <p className='time-value font-inter'>{minuteLeft}</p>
-                    <span className='semiclone'><p>:</p></span>
-                </div>
+                <p className='time-value font-inter'>{minuteLeft}</p>
             </div>
+            <span className='semiclone'>
+                <p>:</p>
+            </span>
             <div className='time'>
                 <h5 className="font-poppins">Seconds</h5>
-                <div className="time-block">
-                    <p className='time-value font-inter'>{secondLeft}</p>
-                </div>
+                <p className='time-value font-inter'>{secondLeft}</p>
             </div>
         </span>
     )

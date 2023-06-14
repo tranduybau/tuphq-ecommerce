@@ -1,47 +1,94 @@
-.time-area {
+.time-area-fs {
   display: flex;
   align-items: flex-end;
-}
+  .time {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    h5 {
+      width: 100%;
+      margin-bottom: 4px !important;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 18px;
+      color: #000;
+    }
+  }
 
-.time {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-
-  h5 {
-    margin-bottom: 4px !important;
+  .time-value {
+    width: 100%;
     font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 30px;
+    margin-bottom: 0px !important;
+    letter-spacing: 0.04em;
     color: #000;
+  }
+
+  .semiclone {
+    margin-left: 0px;
+    margin-right: 17px;
+    p {
+      margin-bottom: 0 !important;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 30px;
+      color: #e07575;
+      display: flex;
+      align-items: flex-start;
+    }
   }
 }
 
-.time-block {
-  display: flex;
-}
+@media only screen and (min-width: 320px) and (max-width: 575.98px) {
+  .time-area-fs {
+    display: flex;
+    width: 100% !important;
+    justify-content: space-around !important;
 
-.time-value {
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 30px;
-  margin-bottom: 0px !important;
-  letter-spacing: 0.04em;
-  color: #000;
-}
+    .time {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
 
-.semiclone {
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 30px;
-  color: #e07575;
-  display: flex;
-  align-items: flex-start;
-  p {
-    margin-bottom: 0 !important;
-    margin-left: 17px;
-    margin-right: 17px;
+      h5 {
+        margin-bottom: 4px !important;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px !important;
+        line-height: 18px !important;
+        color: #000;
+      }
+    }
+
+    .time-block {
+      display: flex;
+    }
+
+    .time-value {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 32px !important;
+      line-height: 32px !important  ;
+      margin-bottom: 0px !important;
+      letter-spacing: 0.04em;
+      color: #000;
+    }
+
+    .semiclone {
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 30px;
+      color: #e07575;
+      display: flex;
+      align-items: flex-start;
+      p {
+        margin-bottom: 0 !important;
+        margin-left: 17px;
+        margin-right: 17px;
+      }
+    }
   }
 }

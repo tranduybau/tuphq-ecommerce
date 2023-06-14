@@ -15,6 +15,7 @@ import 'swiper/css/pagination';
 //icon
 import ArrowLeft from '@/svgs/icons_arrow-left.svg'
 import ArrowRight from '@/svgs/icons_arrow-right.svg'
+
 export default function OutProduct() {
     const products = [
         {

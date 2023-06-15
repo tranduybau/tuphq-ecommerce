@@ -20,14 +20,14 @@ ul {
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
-  margin-right: 16px !important;
+  margin-right: 16px;
   min-width: 217px;
 }
 
 .sidebar-item {
   display: flex;
   margin-bottom: 16px;
-  
+
   &:last-child {
     margin-bottom: 0px;
   }
@@ -46,7 +46,7 @@ ul {
     cursor: pointer;
   }
 
-  .dropdown-right-icon{
+  .dropdown-right-icon {
     width: 24px;
     height: 24px;
   }
@@ -160,7 +160,7 @@ ul {
   }
 }
 
-@media only screen and (max-width: 576px) {
+@media (max-width: 576px) {
   .banner {
     display: flex;
     flex-direction: column;
@@ -169,44 +169,7 @@ ul {
 
   .sidebar {
     border-right: 1px solid transparent;
-    padding: 40px 0 4px 8px;
-  }
-
-  .sidebar__menu {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .sidebar-item {
-    max-width: 45%;
-    min-width: 44%;
-    border: 1px solid #ccc;
-    padding: 8px;
-    margin-bottom: 0px;
-  }
-
-  .slider {
-    margin: 10px 0;
-    width: 100%;
-    padding-left: 10px;
-    .swiper-slide {
-      width: 100% !important;
-    }
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .banner {
-    display: flex;
-    flex-direction: column;
-    padding-left: 20px;
-  }
-
-  .sidebar {
-    border-right: 1px solid transparent;
-    padding: 40px 0 4px 8px;
+    padding: 40px 0 4px 24px;
   }
 
   .sidebar__menu {

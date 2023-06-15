@@ -79,12 +79,12 @@
     opacity: 0.8;
   }
 
-  .arrow-left{
+  .arrow-left {
     width: 16px;
     height: 16px;
   }
 
-  .arrow-right{
+  .arrow-right {
     width: 16px;
     height: 16px;
   }
@@ -148,5 +148,17 @@
 
   .btn-swiper {
     position: relative;
+  }
+
+  .product-fs {
+    margin-top: 31px;
+    .swiper {
+      overflow: visible;
+    }
+
+    .swiper-slide {
+      min-height: 100%;
+      height: auto;
+    }
   }
 }

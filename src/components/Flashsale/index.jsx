@@ -80,7 +80,7 @@ export default function Flashsale() {
                     spaceBetween={30}
                     modules={[Pagination, Navigation]}
                     breakpoints={{
-                        320: {
+                        210: {
                             slidesPerView: 1,
                             spaceBetween: 40
                         },

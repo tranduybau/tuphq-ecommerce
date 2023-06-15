@@ -1,13 +1,14 @@
 .time-area-fs {
   display: flex;
   align-items: flex-end;
+  gap: 17px;
   .time {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     h5 {
+      margin-bottom: 0;
       width: 100%;
-      margin-bottom: 4px !important;
       font-style: normal;
       font-weight: 500;
       font-size: 12px;
@@ -22,16 +23,16 @@
     font-weight: 700;
     font-size: 32px;
     line-height: 30px;
-    margin-bottom: 0px !important;
+    margin-bottom: 0px;
     letter-spacing: 0.04em;
     color: #000;
   }
 
   .semiclone {
-    margin-left: 0px;
-    margin-right: 17px;
+    display: flex;
+    justify-content: center;
     p {
-      margin-bottom: 0 !important;
+      margin-bottom: 0;
       font-weight: 700;
       font-size: 32px;
       line-height: 30px;
@@ -45,8 +46,8 @@
 @media (max-width: 575.98px) {
   .time-area-fs {
     display: flex;
-    width: 100% !important;
-    justify-content: space-around !important;
+    width: 100%;
+    justify-content: space-around;
 
     .time {
       display: flex;
@@ -54,11 +55,11 @@
       justify-content: flex-end;
 
       h5 {
-        margin-bottom: 4px !important;
+        margin-bottom: 4px;
         font-style: normal;
         font-weight: 500;
-        font-size: 12px !important;
-        line-height: 18px !important;
+        font-size: 12px;
+        line-height: 18px;
         color: #000;
       }
     }
@@ -70,9 +71,9 @@
     .time-value {
       font-style: normal;
       font-weight: 700;
-      font-size: 32px !important;
-      line-height: 32px !important  ;
-      margin-bottom: 0px !important;
+      font-size: 32px;
+      line-height: 32px;
+      margin-bottom: 0px;
       letter-spacing: 0.04em;
       color: #000;
     }

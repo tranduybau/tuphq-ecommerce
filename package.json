@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "npx stylelint '**/*.scss'",
+    "lint": "next lint",
+    "lint:css": "npx stylelint '**/*.scss'",
     "lint:fix": "npm run lint --fix"
   },
   "dependencies": {

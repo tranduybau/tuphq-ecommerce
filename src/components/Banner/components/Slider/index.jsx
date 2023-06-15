@@ -1,18 +1,16 @@
-import Image from "next/image"
 import './Slider.scss'
 
+//icon
+import LogoBanner from '@/svgs/logo-banner.svg'
+import ArrowRight from '@/svgs/arrow-right.svg'
+import ProductBanner from '@/svgs/banner.svg'
 export default function Slider(props) {
     return (
         <div className="slider-item container">
             <div className="wrapper">
                 <div className="slider-item__content">
                     <div className="slider-item__title">
-                        <Image
-                            width={40}
-                            height={49}
-                            src='image/logo-banner.svg'
-                            alt="logo banner"
-                        />
+                        <LogoBanner className='logo-banner' />
                         <span className="font-poppins">
                             {props.title}
                         </span>
@@ -24,20 +22,11 @@ export default function Slider(props) {
                     </div>
                     <div className="slider-item__link">
                         <a className="font-poppins" href="/">Shop Now</a>
-                        <Image
-                            width={24}
-                            height={24}
-                            src='image/arrow-right.svg'
-                            alt="arrow right"
-                        />
+                        <ArrowRight className="arrow-right-icon" />
                     </div>
                 </div>
                 <div className="slider-item__img">
-                    <Image
-                        src={`image/${props.img}`}
-                        alt="banner"
-                        fill={true}
-                    />
+                    <ProductBanner className='product-banner'/>
                 </div>
             </div>
         </div>

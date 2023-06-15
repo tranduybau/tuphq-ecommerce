@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Cart from './components/Cart';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
+import TimeCountDown from "./components/TimeCountDown";
 
 
 import './Bestseller.scss'
@@ -10,12 +11,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/swiper-bundle.css';
-import TimeCountDown from "./components/TimeCountDown";
+
+import ImageBS from '@/svgs/imageBS.svg'
 SwiperCore.use([Navigation, Pagination]);
 import { ReactSVG } from "react-svg";
 export default function BestSeller() {
     const swiperRef = useRef(null);
-    
+
 
 
     return (
@@ -63,12 +65,10 @@ export default function BestSeller() {
                             slidesPerView: 4,
                             spaceBetween: 40
                         }
-
                     }}
                 >
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -77,7 +77,6 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -86,7 +85,6 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -95,7 +93,6 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -104,7 +101,6 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -113,7 +109,6 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -122,7 +117,6 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -131,7 +125,6 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -140,7 +133,6 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Cart
-                            img="clothes.svg"
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -151,11 +143,11 @@ export default function BestSeller() {
             </div>
 
             <div className="banner-product">
-                <ReactSVG src='image/imageBS.svg' className="banner-product__img"/>
+                <ImageBS className="banner-product__img" />
                 <div className="banner-product__text">
                     <span className="banner-product__text-categories font-poppins">Categories</span>
                     <span className="banner-product__text-content font-inter">Enhance Your Music Experience</span>
-                    <TimeCountDown/>
+                    <TimeCountDown />
                     <button className="banner-product__btn">
                         <a className="font-poppins" href="">Buy Now</a>
                     </button>

@@ -1,9 +1,9 @@
 "use client"
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Image from 'next/image';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import classNames from "classnames";
+import CategoryItem from "./components/CategoryItem";
 
 
 import './Category.scss'
@@ -11,7 +11,17 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/swiper-bundle.css'
-import CategoryItem from "./components/CategoryItem";
+
+//icon
+import ArrowLeft from '@/svgs/icons_arrow-left.svg'
+import ArrowRight from '@/svgs/icons_arrow-right.svg'
+import CellPhone from '@/svgs/Category-CellPhone.svg'
+import Computer from '@/svgs/Category-Computer.svg'
+import SmartWatch from '@/svgs/Category-SmartWatch.svg'
+import Camera from '@/svgs/Category-Camera.svg'
+import Headphone from '@/svgs/Category-Headphone.svg'
+import Gamepad from '@/svgs/Category-Gamepad.svg'
+
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -56,20 +66,10 @@ export default function Category() {
                 <h1 className="font-inter">Browse By Category</h1>
                 <div className='btn-swiper'>
                     <button onClick={handleControlSwiperLeft} className={classNames('btn-control-swiper', { disabled: canGoPrev === false })}>
-                        <Image
-                            src='image/icons_arrow-left.svg'
-                            width={16}
-                            height={16}
-                            alt="button control swiper"
-                        />
+                        <ArrowLeft className="arrow-left-icon" />
                     </button>
                     <button onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false })}>
-                        <Image
-                            src='image/icons_arrow-right.svg'
-                            width={16}
-                            height={16}
-                            alt="button control swiper"
-                        />
+                        <ArrowRight className="arrow-right-icon" />
                     </button>
                 </div>
             </div>
@@ -110,69 +110,69 @@ export default function Category() {
 
                     }}>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-CellPhone.svg"
-                            category="Phones" />
+                        <CategoryItem category="Phones" >
+                            <CellPhone className='category-img'></CellPhone>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Computer.svg"
-                            category="Computer" />
+                        <CategoryItem category="Computer" >
+                            <Computer className='category-img'></Computer>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-SmartWatch.svg"
-                            category="SmartWatch" />
+                        <CategoryItem category="SmartWatch" >
+                            <SmartWatch className='category-img'></SmartWatch>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Camera.svg"
-                            category="Camera" />
+                        <CategoryItem category="Camera" >
+                            <Camera className='category-img'></Camera>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Headphone.svg"
-                            category="Headphones" />
+                        <CategoryItem category="Headphones" >
+                            <Headphone className='category-img'></Headphone>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Gamepad.svg"
-                            category="Gaming" />
+                        <CategoryItem category="Gaming" >
+                            <Gamepad className='category-img'></Gamepad>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Computer.svg"
-                            category="Computer" />
+                        <CategoryItem category="Computer" >
+                            <CellPhone className='category-img'></CellPhone>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Computer.svg"
-                            category="Computer" />
+                        <CategoryItem category="Computer" >
+                            <CellPhone className='category-img'></CellPhone>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Computer.svg"
-                            category="Computer" />
+                        <CategoryItem category="Computer" >
+                            <CellPhone className='category-img'></CellPhone>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Computer.svg"
-                            category="Computer" />
+                        <CategoryItem category="Computer" >
+                            <CellPhone className='category-img'></CellPhone>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Computer.svg"
-                            category="Computer" />
+                        <CategoryItem category="Computer" >
+                            <CellPhone className='category-img'></CellPhone>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Computer.svg"
-                            category="Computer" />
+                        <CategoryItem category="Computer" >
+                            <CellPhone className='category-img'></CellPhone>
+                        </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <CategoryItem
-                            icon="Category-Computer.svg"
-                            category="Computer" />
+                        <CategoryItem category="Computer" >
+                            <CellPhone className='category-img'></CellPhone>
+                        </CategoryItem>
                     </SwiperSlide>
                 </Swiper>
             </div>

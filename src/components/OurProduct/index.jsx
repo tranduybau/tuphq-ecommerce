@@ -2,7 +2,6 @@
 import { useRef, useState } from 'react';
 import { Navigation, Pagination, Grid } from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/react";
-import Image from 'next/image';
 import Cart from './components/Cart';
 import classNames from "classnames";
 
@@ -12,6 +11,11 @@ import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
+//icon
+import ArrowLeft from '@/svgs/icons_arrow-left.svg'
+import ArrowRight from '@/svgs/icons_arrow-right.svg'
+
 export default function OutProduct() {
     const products = [
         {
@@ -177,20 +181,10 @@ export default function OutProduct() {
                 <h1 className="font-inter">Explore Out Products</h1>
                 <div className='btn-swiper'>
                     <button onClick={handleControlSwiperLeft} className={classNames('btn-control-swiper', { disabled: canGoPrev === false })}>
-                        <Image
-                            src='image/icons_arrow-left.svg'
-                            width={16}
-                            height={16}
-                            alt="button control swiper"
-                        />
+                        <ArrowLeft className='arrow-left-icon'/>
                     </button>
                     <button onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false })}>
-                        <Image
-                            src='image/icons_arrow-right.svg'
-                            width={16}
-                            height={16}
-                            alt="button control swiper"
-                        />
+                        <ArrowRight className='arrow-right-icon' />
                     </button>
                 </div>
             </div>

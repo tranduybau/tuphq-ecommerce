@@ -4,62 +4,6 @@
   display: flex;
   flex-direction: column;
 
-  .image {
-    position: relative;
-    background-color: #F5F5F5;
-    &:hover .add-cart {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.3 linear;
-    }
-  }
-
-  .cart-discount {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background-color: #db4444;
-    border-radius: 4px;
-    width: 55px;
-    height: 26px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    p {
-      margin-bottom: 0 !important;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 18px;
-      color: #fafafa;
-    }
-  }
-
-  .icon-wrapper {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .heart-small-icon,
-  .quick-view-icon {
-    width: 34px;
-    height: 34px;
-    background-color: #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .heart-small-icon {
-    margin-bottom: 8px;
-  }
-
   .add-cart {
     position: absolute;
     width: 100%;
@@ -78,6 +22,44 @@
     }
   }
 
+  .image {
+    position: relative;
+    background-color: #f5f5f5;
+    &:hover .add-cart {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3 linear;
+    }
+    .image-clothes {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .icon-wrapper {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+
+    .heart-small-icon,
+    .quick-view-icon {
+      width: 34px;
+      height: 34px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .heart-small-icon {
+      margin-bottom: 8px;
+    }
+  }
+
   .description {
     margin-top: 16px;
     display: flex;
@@ -92,7 +74,7 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
-    color: #000000;
+    color: #000;
     margin-bottom: 8px;
   }
 
@@ -115,7 +97,7 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 24px;
-      color: #000000;
+      color: #000;
       opacity: 0.5;
     }
   }
@@ -125,6 +107,12 @@
 
     .star-bs {
       display: flex;
+
+      & > .star {
+        width: 20px;
+        height: 20px;
+        margin: 0 !important;
+      }
     }
   }
 
@@ -135,7 +123,7 @@
       font-weight: 600;
       font-size: 14px;
       line-height: 21px;
-      color: #000000;
+      color: #000;
       opacity: 0.5;
     }
   }

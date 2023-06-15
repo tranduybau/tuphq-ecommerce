@@ -1,7 +1,5 @@
-// Import Swiper React components
 "use client"
 import "./Banner.scss"
-import Image from "next/image";
 import Slider from "./components/Slider";;
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,6 +11,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
+//icon
+import DropdownRight from '@/svgs/DropDown-right.svg'
+
 export default function Banner() {
     return (
         <div className="banner-wrapper">
@@ -21,22 +22,11 @@ export default function Banner() {
                     <ul className="sidebar__menu ">
                         <li className="sidebar-item sp-bw">
                             <span className="font-poppins">Woman's Fashion</span>
-                            <Image
-                                width={24}
-                                height={24}
-                                src="image/DropDown-right.svg"
-                                alt="dropdown right"
-                            />
+                            <DropdownRight className="dropdown-right-icon" />
                         </li>
                         <li className="sidebar-item sp-bw">
                             <span className="font-poppins">Men's Fashion</span>
-                            <Image
-                                width={24}
-                                height={24}
-                                src="image/DropDown-right.svg"
-                                alt="dropdown right"
-                            />
-
+                            <DropdownRight className="dropdown-right-icon" />
                         </li>
                         <li className="sidebar-item">
                             <span className="font-poppins">Electronics</span>
@@ -71,21 +61,18 @@ export default function Banner() {
                             <Slider
                                 title="iPhone 14 Series"
                                 discount="Up to 10% off Voucher"
-                                img="banner.svg"
                             />
                         </SwiperSlide>
                         <SwiperSlide>
                             <Slider
                                 title="iPhone 14 Series"
                                 discount="Up to 10% off Voucher"
-                                img="banner.svg"
                             />
                         </SwiperSlide>
                         <SwiperSlide>
                             <Slider
                                 title="iPhone 14 Series"
                                 discount="Up to 10% off Voucher"
-                                img="banner.svg"
                             />
                         </SwiperSlide>
                     </Swiper>

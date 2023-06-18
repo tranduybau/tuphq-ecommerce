@@ -7,6 +7,7 @@ import Header from '@/components/Header'
 import Banner from '@/components/Banner'
 import Flashsale from '@/components/Flashsale'
 import Category from '@/components/Category'
+import Featured from '@/components/Featured'
 
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
       <Category/>
       <Bestseller/>
       <OutProduct/>
+      <Featured/>
     </main>
   )
 }

@@ -7,17 +7,21 @@ import Header from '@/components/Header'
 import Banner from '@/components/Banner'
 import Flashsale from '@/components/Flashsale'
 import Category from '@/components/Category'
+import Featured from '@/components/Featured'
+import Footer from '@/components/Footer'
 
 
 export default function Home() {
   return (
     <main className='home-main'>
-      <Header/>
-      <Banner/>
-      <Flashsale/>
-      <Category/>
-      <Bestseller/>
-      <OutProduct/>
+      <Header />
+      <Banner />
+      <Flashsale />
+      <Category />
+      <Bestseller />
+      <OutProduct />
+      <Featured />
+      <Footer />
     </main>
   )
 }

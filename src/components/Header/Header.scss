@@ -2,6 +2,15 @@
   border-bottom: 1px solid #ccc;
 }
 
+.fa-carat-icon {
+  display: none;
+  cursor: pointer;
+}
+
+.show{
+  display: flex !important;
+}
+
 .top-header {
   height: 48px;
   background-color: #000;
@@ -288,7 +297,11 @@
 }
 
 @media (max-width: 575.98px) {
-  .top-header__text-content{
+  .fa-carat-icon {
+    display: block;
+  }
+
+  .top-header__text-content {
     font-size: 12px;
     line-height: 16px;
     margin-right: 0;
@@ -302,10 +315,35 @@
 
     .main-header__menu {
       display: none;
+      li {
+        margin-right: 0px;
+        // margin-left: 12px;
+        padding: 12px 4px;
+      }
+
+      li:last-child {
+        margin-right: 0;
+      }
     }
 
     .main-header__actions {
       display: none;
+      flex-wrap: wrap;
+      .main-header__actions-search {
+        width: 100%;
+        input {
+          width: 100%;
+        }
+      }
+
+      .icon-cart {
+        margin-top: 12px;
+        margin-right: 12px;
+      }
+
+      .icon-heart {
+        margin-top: 12px;
+      }
     }
   }
 

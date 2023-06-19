@@ -15,8 +15,11 @@ export default function Cart(props) {
                     fill={true}
                 ></Image>
                 <div className='icon-wrapper'>
-                    <HeartSmallIcon className='heart-small-icon' />
-                    <QuickViewIcon className='quick-view-icon' />
+                    <div className='heart-small-icon'>
+                    <HeartSmallIcon className="cart-icon"/>
+                    </div>
+                    <div className='quick-view-icon'>
+                    <QuickViewIcon className="cart-icon"/></div>
                 </div>
 
                 <div className='add-cart'>
@@ -31,7 +34,7 @@ export default function Cart(props) {
                 <div className='description__wrapper'>
                     <div className='price'>
                         <span className='price-sale font-poppins'>${props.sale}</span>
-                        <spab className='price-default class-poppins'>${props.price}</spab>
+                        <span className='price-default class-poppins'>${props.price}</span>
                     </div>
 
                     <div className='rate'>

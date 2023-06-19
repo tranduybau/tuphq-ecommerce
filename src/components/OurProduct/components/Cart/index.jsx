@@ -4,8 +4,8 @@ import { useState } from 'react';
 import classNames from 'classnames';
 
 import Star from '@/svgs/star.svg'
-import heartSmall from '@/svgs/heart-small.svg'
-import quickView from '@/svgs/Quick-View.svg'
+import HeartSmallIcon from '@/svgs/heart-small.svg'
+import QuickViewIcon from '@/svgs/Quick-View.svg'
 export default function Cart(props) {
     const [active, setActive] = useState(true);
 
@@ -22,10 +22,10 @@ export default function Cart(props) {
                 />
                 <div className='icon-wrapper'>
                     <span className='heart-small-icon'>
-                        <heartSmall className='cart-icon'></heartSmall>
+                        <HeartSmallIcon className='cart-icon'></HeartSmallIcon>
                     </span>
                     <span className='quick-view-icon'>
-                        <quickView className='cart-icon'></quickView>
+                        <QuickViewIcon className='cart-icon'></QuickViewIcon>
                     </span>
                 </div>
 

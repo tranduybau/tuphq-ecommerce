@@ -10,6 +10,15 @@ ul {
   padding: 0 !important;
 }
 
+.fa-bars-icon{
+  display: none;
+  cursor: pointer;
+}
+
+.showBars{
+  display: block !important;
+}
+
 .sidebar {
   padding-top: 40px;
   border-right: 1px solid #ccc;
@@ -55,10 +64,9 @@ ul {
 .slider {
   margin-top: 40px;
   margin-left: 45px;
-  width: 892px;
-
+  min-width: 70%;
   .swiper-slide {
-    width: 892px !important;
+    min-width: 892px !important;
   }
 }
 
@@ -161,6 +169,10 @@ ul {
 }
 
 @media (max-width: 576px) {
+  .fa-bars-icon{
+    display: block;
+    padding: 12px 0 0 24px;
+  }
   .banner {
     display: flex;
     flex-direction: column;
@@ -168,8 +180,9 @@ ul {
   }
 
   .sidebar {
+    display: none;
     border-right: 1px solid transparent;
-    padding: 40px 0 4px 24px;
+    padding: 20px 0 4px 24px;
   }
 
   .sidebar__menu {
@@ -189,10 +202,9 @@ ul {
 
   .slider {
     margin: 10px 0;
-    width: 100%;
     padding-left: 10px;
     .swiper-slide {
-      width: 100% !important;
+      min-width: 100% !important;
     }
   }
 }

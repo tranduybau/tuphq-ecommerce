@@ -5,6 +5,8 @@
   flex-direction: column;
 
   .image {
+    min-width: 270px;
+    min-height: 250px;
     position: relative;
 
     &:hover .add-cart {

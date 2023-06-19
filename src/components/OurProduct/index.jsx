@@ -19,7 +19,7 @@ import ArrowRight from '@/svgs/icons_arrow-right.svg'
 export default function OutProduct() {
     const products = [
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "1",
             sale: "120",
@@ -27,7 +27,7 @@ export default function OutProduct() {
             count: "88",
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "2",
             sale: "120",
@@ -36,7 +36,7 @@ export default function OutProduct() {
 
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "3",
             sale: "120",
@@ -45,7 +45,7 @@ export default function OutProduct() {
 
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "4",
             sale: "120",
@@ -53,7 +53,7 @@ export default function OutProduct() {
             count: "88",
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "5",
             sale: "120",
@@ -61,7 +61,7 @@ export default function OutProduct() {
             count: "88",
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "6",
             sale: "120",
@@ -70,7 +70,7 @@ export default function OutProduct() {
 
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "7",
             sale: "120",
@@ -78,7 +78,7 @@ export default function OutProduct() {
             count: "88",
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "8",
             sale: "120",
@@ -87,7 +87,7 @@ export default function OutProduct() {
 
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "9",
             sale: "120",
@@ -96,7 +96,7 @@ export default function OutProduct() {
             color: true,
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "10",
             sale: "120",
@@ -105,7 +105,7 @@ export default function OutProduct() {
             color: true,
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "11",
             sale: "120",
@@ -114,7 +114,7 @@ export default function OutProduct() {
             color: true,
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "12",
             sale: "120",
@@ -123,7 +123,7 @@ export default function OutProduct() {
             color: true,
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "13",
             sale: "120",
@@ -132,7 +132,7 @@ export default function OutProduct() {
             color: true,
         },
         {
-            img: "flashsale.svg",
+            img: "/image/ourProduct-product.png",
             discount: "40%",
             name: "14",
             sale: "120",
@@ -181,7 +181,7 @@ export default function OutProduct() {
                 <h1 className="font-inter">Explore Out Products</h1>
                 <div className='btn-swiper'>
                     <button onClick={handleControlSwiperLeft} className={classNames('btn-control-swiper', { disabled: canGoPrev === false })}>
-                        <ArrowLeft className='arrow-left-icon'/>
+                        <ArrowLeft className='arrow-left-icon' />
                     </button>
                     <button onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false })}>
                         <ArrowRight className='arrow-right-icon' />
@@ -207,20 +207,20 @@ export default function OutProduct() {
                             spaceBetween: 40
                         },
 
-                        480: {
-                            slidesPerView: 2,
-                            spaceBetween: 20
-                        },
-
                         576: {
                             slidesPerView: 2,
-                            spaceBetween: 20
+                            spaceBetween: 30
                         },
+
                         768: {
-                            slidesPerView: 3,
-                            spaceBetween: 20
+                            slidesPerView: 2,
+                            spaceBetween: 40
                         },
                         992: {
+                            slidesPerView: 3,
+                            spaceBetween: 40
+                        },
+                        1200: {
                             slidesPerView: 4,
                             spaceBetween: 40
                         }

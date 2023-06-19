@@ -24,6 +24,8 @@
 }
 
 .image {
+  min-width: 270px;
+  min-height: 250px;
   position: relative;
   &:hover .add-cart {
     display: flex;
@@ -43,6 +45,11 @@
   right: 12px;
   display: flex;
   flex-direction: column;
+}
+
+.cart-icon{
+  width: 24px;
+  height: 24px;
 }
 
 .heart-small-icon,

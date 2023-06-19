@@ -3,7 +3,8 @@ import './Slider.scss'
 //icon
 import LogoBanner from '@/svgs/logo-banner.svg'
 import ArrowRight from '@/svgs/arrow-right.svg'
-import ProductBanner from '@/svgs/banner.svg'
+import Image from 'next/image'
+
 export default function Slider(props) {
     return (
         <div className="slider-item container">
@@ -26,7 +27,11 @@ export default function Slider(props) {
                     </div>
                 </div>
                 <div className="slider-item__img">
-                    <ProductBanner className='product-banner'/>
+                    <Image
+                        src='/image/banner.png'
+                        alt='banner'
+                        fill={true}
+                    ></Image>
                 </div>
             </div>
         </div>

@@ -5,10 +5,10 @@ import Link from 'next/link'
 //icon
 import SendIcon from '@/svgs/icon-send.svg'
 import CopyrightIcon from '@/svgs/icon-copyright.svg'
-import FacebookIcon from '@/svgs/icon-Facebook.svg'
-import InstagramIcon from '@/svgs/icon-Instagram.svg'
-import TwitterIcon from '@/svgs/icon-Twitter.svg'
-import LinkedinIcon from '@/svgs/icon-Linkedin.svg'
+import FacebookIcon from '@/svgs/Icon-Facebook.svg'
+import InstagramIcon from '@/svgs/icon-instagram.svg'
+import TwitterIcon from '@/svgs/Icon-Twitter.svg'
+import LinkedinIcon from '@/svgs/Icon-Linkedin.svg'
 
 export default function Footer() {
     return (

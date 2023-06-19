@@ -8,7 +8,6 @@ import Flashsale from './components/Flashsale'
 import Category from './components/Category'
 import Featured from './components/Featured'
 
-
 export default function Home() {
   return (
     <main className='home-main'>

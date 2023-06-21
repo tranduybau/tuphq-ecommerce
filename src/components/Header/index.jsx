@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretUp, faShapes } from '@fortawesome/free-solid-svg-icons'
-import { useRouter, usePathname } from 'next/navigation'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 import './Header.scss'
@@ -23,7 +23,6 @@ export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [user, setUser] = useState()
     const [isTooltipOpen, setIsTooltipOpen] = useState(false)
-    const router = useRouter()
 
     const handleShowTooltip = () => {
         setIsTooltipOpen(!isTooltipOpen)
@@ -31,7 +30,7 @@ export default function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem('currentUser');
-        setTimeout(()=>{
+        setTimeout(() => {
             window.location.reload()
         }, 500)
     }

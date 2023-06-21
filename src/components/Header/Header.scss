@@ -173,12 +173,18 @@
   cursor: pointer;
   width: 32px;
   height: 32px;
+  &:hover {
+    fill: red;
+  }
 }
 
 .icon-cart {
   cursor: pointer;
   width: 32px;
   height: 32px;
+  &:hover {
+    fill: #000;
+  }
 }
 
 .bar-icon {
@@ -229,7 +235,7 @@
     background-color: #ccc;
     text-decoration: none;
   }
-  
+
   span {
     font-style: normal;
     font-weight: 400;

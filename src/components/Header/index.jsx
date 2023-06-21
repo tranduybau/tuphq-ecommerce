@@ -90,8 +90,12 @@ export default function Header() {
                             <SearchIcon className='icon-search' />
                         </div>
                         <div className='main-header-icon__wrapper'>
-                            <HeartIcon className='icon-heart' />
-                            <CartIcon className='icon-cart' />
+                            <Link href='/wishlist'>
+                                <HeartIcon className='icon-heart' />
+                            </Link>
+                            <Link href='/cart'>
+                                <CartIcon className='icon-cart' />
+                            </Link>
                             {user && <div className='tooltip-user'>
                                 <UserIcon onClick={handleShowTooltip} className='user-icon' />
                                 <div className={classNames('tooltip-user__block', { 'tooltip-show': isTooltipOpen === true })}>

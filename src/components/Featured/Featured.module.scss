@@ -79,13 +79,17 @@
   margin-bottom: 140px;
 }
 
-.serviceIcon {
-  width: 40px;
-  height: 40px;
+.serviceIconWrapper {
+  width: 58px;
+  height: 58px;
   padding: 9px;
   background-color: #000;
   border-radius: 50%;
   opacity: 1;
+}
+.serviceIcon {
+  width: 40px;
+  height: 40px;
 }
 
 @media (max-width: 1200px) {
@@ -155,12 +159,12 @@
     height: 284px;
   }
 
-  .service{
+  .service {
     flex-direction: column;
   }
 }
 
-@media (max-width: 576px){
+@media (max-width: 576px) {
   .ps5 {
     width: 100%;
     height: 320px;
@@ -173,7 +177,7 @@
     height: 150px;
   }
 
-  .service{
+  .service {
     flex-direction: column;
   }
 }

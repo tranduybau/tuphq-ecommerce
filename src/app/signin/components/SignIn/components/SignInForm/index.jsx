@@ -41,13 +41,12 @@ export default function SignInForm() {
                 if (foundUser) {
                     toast.success('Đăng nhập thành công')
                     localStorage.setItem('currentUser', JSON.stringify(foundUser));
-
-                    router.push('/');
-
+                    setTimeout(() => {
+                        router.push('/');
+                    }, 1200)
                     setTimeout(() => {
                         window.location.reload()
-                    }, 2000)
-
+                    }, 3000)
                 } else {
                     toast.error('Sai tài khoản hoặc mật khẩu');
                 }

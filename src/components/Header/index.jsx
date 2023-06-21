@@ -1,9 +1,10 @@
 "use client"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretUp, faShapes } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 import './Header.scss'
 
@@ -11,14 +12,39 @@ import './Header.scss'
 import SearchIcon from '@/svgs/SearchIcon.svg'
 import HeartIcon from '@/svgs/Heart.svg'
 import CartIcon from '@/svgs/Cart.svg'
-import Link from 'next/link'
+import UserIcon from '@/svgs/user.svg'
+import CancelIcon from '@/svgs/icon-cancel.svg'
+import LogoutIcon from '@/svgs/Icon-logout.svg'
+import MallbagIcon from '@/svgs/icon-mallbag.svg'
+import UserTooltipIcon from '@/svgs/user-img.svg'
+import ReviewIcon from '@/svgs/Icon-Reviews.svg'
 export default function Header() {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [user, setUser] = useState()
+    const [isTooltipOpen, setIsTooltipOpen] = useState(false)
+
+    const handleShowTooltip = () => {
+        setIsTooltipOpen(!isTooltipOpen)
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem('currentUser');
+        setTimeout(() => {
+            window.location.reload()
+        }, 500)
+    }
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    useEffect(() => {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        if (currentUser) {
+            setUser(currentUser)
+        }
+    }, [])
     return (
         <header className='header'>
             <div className='top-header'>
@@ -63,8 +89,36 @@ export default function Header() {
                             <input placeholder='What are you looking for?' />
                             <SearchIcon className='icon-search' />
                         </div>
-                        <HeartIcon className='icon-heart' />
-                        <CartIcon className='icon-cart' />
+                        <div className='main-header-icon__wrapper'>
+                            <HeartIcon className='icon-heart' />
+                            <CartIcon className='icon-cart' />
+                            {user && <div className='tooltip-user'>
+                                <UserIcon onClick={handleShowTooltip} className='user-icon' />
+                                <div className={classNames('tooltip-user__block', { 'tooltip-show': isTooltipOpen === true })}>
+                                    <Link href='/' className='tooltip-user__item'>
+                                        <UserTooltipIcon className="tooltip-user__icon" />
+                                        <span className='font-poppins'>Manage My Account</span>
+                                    </Link>
+                                    <Link href='/' className='tooltip-user__item'>
+                                        <MallbagIcon className="tooltip-user__icon" />
+                                        <span className='font-poppins'>My Order</span>
+                                    </Link>
+                                    <Link href='/' className='tooltip-user__item'>
+                                        <CancelIcon className="tooltip-user__icon" />
+                                        <span className='font-poppins'>My Cancellations</span>
+                                    </Link>
+                                    <Link href='/' className='tooltip-user__item'>
+                                        <ReviewIcon className="tooltip-user__icon" />
+                                        <span className='font-poppins'>My Reviews</span>
+                                    </Link>
+                                    <button onClick={handleLogout} className='tooltip-user__item'>
+                                        <LogoutIcon className="tooltip-user__icon" />
+                                        <span className='font-poppins'>Logout</span>
+                                    </button>
+                                </div>
+                            </div>}
+                        </div>
+
                     </div>
                 </div>
             </div>

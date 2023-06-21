@@ -59,7 +59,7 @@ export default function Footer() {
                             <Link href='/' className={`font-poppins ${styles.contentTextLink}`}>My Account</Link>
                         </li>
                         <li className={`${styles.contentTextItem}`}>
-                            <Link href='/' className={`font-poppins ${styles.contentTextLink}`}>Login / Register</Link>
+                            <Link href='/signin' className={`font-poppins ${styles.contentTextLink}`}>Login / Register</Link>
                         </li>
                         <li className={`${styles.contentTextItem}`}>
                             <Link href='/' className={`font-poppins ${styles.contentTextLink}`}>Cart</Link>

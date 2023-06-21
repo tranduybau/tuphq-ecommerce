@@ -13,12 +13,25 @@ import "swiper/css/scrollbar";
 
 //icon
 import DropdownRight from '@/svgs/DropDown-right.svg'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import classNames from "classnames";
 
 export default function Banner() {
+    const [isBarsOpen, setIsBarsOpen] = useState(false);
+
+    const toggleBars = () => {
+        console.log(isBarsOpen)
+        setIsBarsOpen(!isBarsOpen);
+    };
     return (
         <div className="banner-wrapper">
             <div className="banner container flex">
-                <div className="sidebar flex-auto ">
+                <div onClick={toggleBars} className="fa-bars-icon">
+                    <FontAwesomeIcon icon={faBars} />
+                </div>
+                <div className={classNames('sidebar', 'flex-auto', {showBars: isBarsOpen === true})}>
                     <ul className="sidebar__menu ">
                         <li className="sidebar-item sp-bw">
                             <span className="font-poppins">Woman's Fashion</span>
@@ -56,7 +69,32 @@ export default function Banner() {
                         modules={[Navigation, Pagination, Scrollbar, A11y]}
                         spaceBetween={50}
                         slidesPerView={1}
-                        pagination={{ clickable: true }}>
+                        pagination={{ clickable: true }}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 1,
+                                spaceBetween: 10
+                            },
+
+                            576: {
+                                slidesPerView: 1,
+                                spaceBetween: 30
+                            },
+
+                            768: {
+                                slidesPerView: 1,
+                                spaceBetween: 40
+                            },
+                            992: {
+                                slidesPerView: 1,
+                                spaceBetween: 40
+                            },
+                            1200: {
+                                slidesPerView: 1,
+                                spaceBetween: 50
+                            }
+
+                        }}>
                         <SwiperSlide>
                             <Slider
                                 title="iPhone 14 Series"

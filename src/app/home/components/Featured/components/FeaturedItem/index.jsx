@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from './FeaturedItem.module.scss'
 export default function FeaturedItem(props){
     return (
@@ -6,7 +7,7 @@ export default function FeaturedItem(props){
             <div className={`${styles.content}`}>
                 <span className={`${styles.name} font-inter`}>{props.name}</span>
                 <span className={`${styles.description} font-poppins`}>{props.description}</span>
-                <a href='/' className={`${styles.link} font-poppins`}>Shop Now</a>
+                <Link href='/' className={`${styles.link} font-poppins`}>Shop Now</Link>
             </div>
         </div>
     )

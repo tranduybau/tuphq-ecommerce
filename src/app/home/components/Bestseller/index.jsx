@@ -12,6 +12,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/swiper-bundle.css';
 import Image from "next/image";
+import Link from "next/link";
 
 SwiperCore.use([Navigation, Pagination]);
 export default function BestSeller() {
@@ -29,9 +30,9 @@ export default function BestSeller() {
                 <h1 className="font-inter">Best Selling Products</h1>
                 <div className='view-all'>
                     <button className="btn-view-all">
-                        <a className="btn-view-all__link font-poppins">
+                        <Link href='/' className="btn-view-all__link font-poppins">
                             View All
-                        </a>
+                        </Link>
                     </button>
                 </div>
             </div>
@@ -163,7 +164,7 @@ export default function BestSeller() {
                     <span className="banner-product__text-content font-inter">Enhance Your Music Experience</span>
                     <TimeCountDown />
                     <button className="banner-product__btn">
-                        <a className="font-poppins" href="">Buy Now</a>
+                        <Link className="font-poppins" href="/">Buy Now</Link>
                     </button>
                 </div>
             </div>

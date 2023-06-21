@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import './Cart.scss'
+import Image from 'next/image'
 
 //icon
 import HeartSmallIcon from '@/svgs/heart-small.svg'
@@ -7,19 +7,25 @@ import QuickViewIcon from '@/svgs/Quick-View.svg'
 import StarIcon from '@/svgs/star.svg'
 export default function Cart(props) {
     return (
-        <div className='cart-bs'>
+        <div className='cart-fs'>
             <div className='image'>
                 <Image
                     src={props.img}
-                    alt='best selling'
+                    alt='product'
                     fill={true}
                 ></Image>
+                <span className='cart-discount'>
+                    <p className='font-poppins'>-{props.discount}</p>
+                </span>
+
                 <div className='icon-wrapper'>
                     <div className='heart-small-icon'>
-                    <HeartSmallIcon className="cart-icon"/>
+                        <HeartSmallIcon className="cart-icon"/>
                     </div>
-                    <div className='quick-view-icon'>
-                    <QuickViewIcon className="cart-icon"/></div>
+                    <div className='quick-view-icon' >
+
+                        <QuickViewIcon className="cart-icon"/>
+                    </div>
                 </div>
 
                 <div className='add-cart'>
@@ -34,11 +40,11 @@ export default function Cart(props) {
                 <div className='description__wrapper'>
                     <div className='price'>
                         <span className='price-sale font-poppins'>${props.sale}</span>
-                        <spab className='price-default class-poppins'>${props.price}</spab>
+                        <span className='price-default class-poppins'>${props.price}</span>
                     </div>
 
                     <div className='rate'>
-                        <div className='star-bs'>
+                        <div className='star-fs'>
                             <StarIcon className='star' />
                             <StarIcon className='star' />
                             <StarIcon className='star' />

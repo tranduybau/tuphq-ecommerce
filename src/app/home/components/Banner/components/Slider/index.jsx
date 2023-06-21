@@ -4,6 +4,7 @@ import './Slider.scss'
 import LogoBanner from '@/svgs/logo-banner.svg'
 import ArrowRight from '@/svgs/arrow-right.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Slider(props) {
     return (
@@ -22,7 +23,7 @@ export default function Slider(props) {
                         </span>
                     </div>
                     <div className="slider-item__link">
-                        <a className="font-poppins" href="/">Shop Now</a>
+                        <Link className="font-poppins" href="/">Shop Now</Link>
                         <ArrowRight className="arrow-right-icon" />
                     </div>
                 </div>

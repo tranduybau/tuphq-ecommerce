@@ -15,6 +15,7 @@ import 'swiper/css/pagination';
 //icon
 import ArrowLeft from '@/svgs/icons_arrow-left.svg'
 import ArrowRight from '@/svgs/icons_arrow-right.svg'
+import Link from 'next/link';
 
 export default function OutProduct() {
     const products = [
@@ -268,7 +269,7 @@ export default function OutProduct() {
             </div>
             <div className="view-all-product">
                 <button className="view-all-product__btn">
-                    <a className="font-poppins" href="/">View All Products</a>
+                    <Link className="font-poppins" href="/">View All Products</Link>
                 </button>
             </div>
         </div>

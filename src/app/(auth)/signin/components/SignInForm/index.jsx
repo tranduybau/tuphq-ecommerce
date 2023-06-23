@@ -35,9 +35,6 @@ export default function SignInForm() {
     const onSubmit = useCallback((data) => {
         axios.get('https://fakestoreapi.com/users')
             .then(response => {
-                console.log(response.data);
-                console.log(data.email)
-                console.log(data.password)
                 const foundUser = response.data.find((user) => user.email === data.email && user.password === data.password);
                 if (foundUser) {
                     toast.success('Đăng nhập thành công')
@@ -46,7 +43,11 @@ export default function SignInForm() {
                         router.push('/');
                     }, 1200)
                     setTimeout(() => {
-                        window.location.reload()
+                        const isBrowser = typeof window !== 'undefined';
+                        const currentLocation = isBrowser ? window.location : null;
+                        if(currentLocation !== null){
+                            currentLocation.reload()
+                        }
                     }, 3000)
                 } else {
                     toast.error('Sai tài khoản hoặc mật khẩu');

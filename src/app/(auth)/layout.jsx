@@ -4,14 +4,11 @@ import { useRouter } from "next/navigation";
 
 export default function AuthLayout({ children }) {
     const router = useRouter()
-    const currentUser = Cookies.get('currentUser') ? JSON.parse(Cookies.get('currentUser')) : null;
-    if (currentUser) {
-        router.push('/')
+    if (typeof window !== 'undefined') {
+        const currentUser = Cookies.get('currentUser') ? JSON.parse(Cookies.get('currentUser')) : null;
+        if (currentUser !== null) {
+            router.push('/');
+        }
+        return <div>{children}</div>;
     }
-
-    return (
-        <div>
-            {children}
-        </div>
-    )
 }

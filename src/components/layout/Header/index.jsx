@@ -37,7 +37,11 @@ export default function Header() {
     const handleLogout = () => {
         Cookies.remove('currentUser');
         setTimeout(() => {
-            window.location.reload()
+            const isBrowser = typeof window !== 'undefined';
+            const currentLocation = isBrowser ? window.location : null;
+            if(currentLocation !== null){
+                currentLocation.reload()
+            }
         }, 500)
     }
 

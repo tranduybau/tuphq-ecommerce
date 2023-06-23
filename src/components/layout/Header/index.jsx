@@ -19,6 +19,7 @@ import MallbagIcon from '@/svgs/Header/icon-mallbag.svg'
 import UserTooltipIcon from '@/svgs/Header/user-img.svg'
 import ReviewIcon from '@/svgs/Header/Icon-Reviews.svg'
 import { toast } from 'react-toastify'
+import Cookies from 'js-cookie'
 export default function Header() {
     //state
     const pathname = usePathname();
@@ -34,7 +35,7 @@ export default function Header() {
     }
 
     const handleLogout = () => {
-        localStorage.removeItem('currentUser');
+        Cookies.remove('currentUser');
         setTimeout(() => {
             window.location.reload()
         }, 500)
@@ -44,25 +45,14 @@ export default function Header() {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const handleCheckPrivateRouteCart = () => {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    const handleCheckPrivateRoute = (pathname) => {
+        const currentUser = Cookies.get('currentUser') ? JSON.parse(Cookies.get('currentUser')) : null;
         if (currentUser === null) {
             router.push('/signin')
             toast.error("Bạn cần phải đăng nhập")
         }
-        else{
-            router.push('/cart')
-        }
-    }
-
-    const handleCheckPrivateRouteWislist = () => {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'))
-        if (currentUser === null) {
-            router.push('/signin')
-            toast.error("Bạn cần phải đăng nhập")
-        }
-        else{
-            router.push('/wishlist')
+        else {
+            router.push('/' + pathname)
         }
     }
 
@@ -78,9 +68,8 @@ export default function Header() {
         };
     }, []);
 
-
     useEffect(() => {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        const currentUser = Cookies.get('currentUser') ? JSON.parse(Cookies.get('currentUser')) : null;
         if (currentUser) {
             setUser(currentUser)
         }
@@ -131,10 +120,10 @@ export default function Header() {
                             <SearchIcon className='icon-search' />
                         </div>
                         <div className='main-header-icon__wrapper'>
-                            <button onClick={handleCheckPrivateRouteWislist} className='icon-heart'>
+                            <button onClick={() => { handleCheckPrivateRoute('wishlist') }} className='icon-heart'>
                                 <HeartIcon className='icon-heart' />
                             </button>
-                            <button onClick={handleCheckPrivateRouteCart} className='icon-cart'>
+                            <button onClick={() => { handleCheckPrivateRoute('cart') }} className='icon-cart'>
                                 <CartIcon className='icon-cart' />
                             </button>
                             {user && <div ref={tooltipRef} className='tooltip-user'>

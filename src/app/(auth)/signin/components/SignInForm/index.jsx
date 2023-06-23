@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 //icon
 import InputForm from '@/components/InputForm';
@@ -19,7 +20,7 @@ export default function SignInForm() {
     const router = useRouter();
 
     useEffect(() => {
-        localStorage.removeItem('currentUser');
+        Cookies.remove('currentUser');
     }, [])
 
     const validationSchema = yup.object().shape({
@@ -40,7 +41,7 @@ export default function SignInForm() {
                 const foundUser = response.data.find((user) => user.email === data.email && user.password === data.password);
                 if (foundUser) {
                     toast.success('Đăng nhập thành công')
-                    localStorage.setItem('currentUser', JSON.stringify(foundUser));
+                    Cookies.set('currentUser', JSON.stringify(foundUser));
                     setTimeout(() => {
                         router.push('/');
                     }, 1200)

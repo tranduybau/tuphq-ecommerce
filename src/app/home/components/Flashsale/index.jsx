@@ -1,7 +1,7 @@
 "use client"
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Cart from './components/Cart';
+import Card from './components/Card';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import TimeCountDown from "./components/TimeCountDown";
 import classNames from "classnames";
@@ -17,7 +17,30 @@ import ArrowLeft from '@/svgs/icons_arrow-left.svg'
 import ArrowRight from '@/svgs/icons_arrow-right.svg'
 import Link from "next/link";
 
-SwiperCore.use([Navigation, Pagination]);
+const moduleSwiper = [Pagination, Navigation]
+const breakpointsSwiper = {
+    320: {
+        slidesPerView: 1,
+        spaceBetween: 40
+    },
+    576: {
+        slidesPerView: 2,
+        spaceBetween: 30
+    },
+    768: {
+        slidesPerView: 2,
+        spaceBetween: 40
+    },
+    992: {
+        slidesPerView: 3,
+        spaceBetween: 40
+    },
+    1200: {
+        slidesPerView: 4,
+        spaceBetween: 40
+    }
+}
+SwiperCore.use(moduleSwiper);
 
 export default function Flashsale() {
     //state
@@ -79,34 +102,10 @@ export default function Flashsale() {
                     ref={swiperRef}
                     slidesPerView={4}
                     spaceBetween={30}
-                    modules={[Pagination, Navigation]}
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 1,
-                            spaceBetween: 40
-                        },
-
-                        576: {
-                            slidesPerView: 2,
-                            spaceBetween: 30
-                        },
-
-                        768: {
-                            slidesPerView: 2,
-                            spaceBetween: 40
-                        },
-                        992: {
-                            slidesPerView: 3,
-                            spaceBetween: 40
-                        },
-                        1200: {
-                            slidesPerView: 4,
-                            spaceBetween: 40
-                        }
-
-                    }}>
+                    modules={moduleSwiper}
+                    breakpoints={breakpointsSwiper}>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad 123"
@@ -116,7 +115,7 @@ export default function Flashsale() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -126,7 +125,7 @@ export default function Flashsale() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -136,7 +135,7 @@ export default function Flashsale() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -146,7 +145,7 @@ export default function Flashsale() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -156,7 +155,7 @@ export default function Flashsale() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -166,7 +165,7 @@ export default function Flashsale() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -176,7 +175,7 @@ export default function Flashsale() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -186,7 +185,7 @@ export default function Flashsale() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
+                        <Card
                             img='/image/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"

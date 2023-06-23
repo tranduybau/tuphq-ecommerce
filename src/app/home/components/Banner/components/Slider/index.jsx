@@ -1,10 +1,10 @@
 import './Slider.scss'
-
-//icon
-import LogoBanner from '@/svgs/logo-banner.svg'
-import ArrowRight from '@/svgs/arrow-right.svg'
 import Image from 'next/image'
 import Link from 'next/link'
+
+//icon
+import LogoBanner from '@/svgs/Banner/logo-banner.svg'
+import ArrowRight from '@/svgs/Banner/arrow-right.svg'
 
 export default function Slider(props) {
     return (
@@ -32,7 +32,7 @@ export default function Slider(props) {
                         src='/image/banner.png'
                         alt='banner'
                         fill={true}
-                    ></Image>
+                    />
                 </div>
             </div>
         </div>

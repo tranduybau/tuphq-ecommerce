@@ -10,12 +10,12 @@ ul {
   padding: 0 !important;
 }
 
-.fa-bars-icon{
+.fa-bars-icon {
   display: none;
   cursor: pointer;
 }
 
-.showBars{
+.showBars {
   display: block !important;
 }
 
@@ -169,9 +169,9 @@ ul {
 }
 
 @media (max-width: 576px) {
-  .fa-bars-icon{
+  .fa-bars-icon {
     display: block;
-    padding: 12px 0 0 24px;
+    padding: 12px 0 0 0;
   }
   .banner {
     display: flex;
@@ -202,7 +202,6 @@ ul {
 
   .slider {
     margin: 10px 0;
-    padding-left: 10px;
     .swiper-slide {
       min-width: 100% !important;
     }

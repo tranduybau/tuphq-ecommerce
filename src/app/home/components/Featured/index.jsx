@@ -1,11 +1,12 @@
 import styles from './Featured.module.scss'
 import FeaturedItem from './components/FeaturedItem'
 import Image from 'next/image'
-//icon
-import DeliveryIcon from '@/svgs/icon-delivery.svg'
-import CustomerServiceIcon from '@/svgs/Icon-Customer-service.svg'
-import SecureIcon from '@/svgs/Icon-secure.svg'
 import ServiceItem from './components/ServiceItem'
+
+//icon
+import DeliveryIcon from '@/svgs/Featured/icon-delivery.svg'
+import CustomerServiceIcon from '@/svgs/Featured/Icon-Customer-service.svg'
+import SecureIcon from '@/svgs/Featured/Icon-secure.svg'
 
 
 export default function Featured() {

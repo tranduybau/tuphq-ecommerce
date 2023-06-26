@@ -101,7 +101,7 @@ export default function Footer() {
                         <li className={`${styles.contentTextItem} mb-[24px]`}>
                             <div className={`${styles.downloadAppImg}`}>
                                 <Image
-                                    src='/image/QrCode.png'
+                                    src='/image/Footer/QrCode.png'
                                     alt='QR CODE'
                                     width={80}
                                     height={80}
@@ -109,7 +109,7 @@ export default function Footer() {
                                 <div className={`${styles.downloadAppLink}`}>
                                     <Link href='/' className=''>
                                         <Image
-                                            src='/image/GooglePlay.png'
+                                            src='/image/Footer/GooglePlay.png'
                                             alt='App Store'
                                             width={104}
                                             height={30}
@@ -117,7 +117,7 @@ export default function Footer() {
                                     </Link>
                                     <Link href='/' className=''>
                                         <Image
-                                            src='/image/AppStore.png'
+                                            src='/image/Footer/AppStore.png'
                                             alt='App Store'
                                             width={104}
                                             height={34}

@@ -75,7 +75,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   span {
     color: #fff;
     font-size: 16px;
@@ -147,6 +147,12 @@
   &:hover {
     text-decoration: none;
     opacity: 0.7;
+  }
+}
+
+@media (max-width: 576px) {
+  .coupon {
+    width: 100%;
   }
 }
 

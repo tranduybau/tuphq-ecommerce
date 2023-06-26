@@ -3,21 +3,25 @@ import Image from 'next/image'
 import styles from './TableCartProductItem.module.scss'
 import { useState } from 'react';
 
+//icon 
+import DeleteIcon from '@/svgs/Cart/icon-delete.svg'
+
 export default function TableCartProductItem({ name, img, price, onTotalChange }) {
     const [quantity, setQuantity] = useState(1);
     const [total, setTotal] = useState(price);
-  
+
     const handleQuantityChange = (event) => {
-      const newQuantity = parseInt(event.target.value);
-      setQuantity(newQuantity);
-      const newTotal = price * newQuantity;
-      setTotal(newTotal);
-      onTotalChange(newTotal - (price * quantity)); // Cập nhật giá trị mới của total
+        const newQuantity = parseInt(event.target.value);
+        setQuantity(newQuantity);
+        const newTotal = price * newQuantity;
+        setTotal(newTotal);
+        onTotalChange(newTotal - (price * quantity)); // Cập nhật giá trị mới của total
     };
 
     return (
         <div className={`${styles.wrapper} row mx-0 mt-[40px]`}>
             <div className={`${styles.item} px-0 col font-poppins`}>
+                <DeleteIcon className={styles.deleteIcon} />
                 <Image
                     src={img}
                     alt='product item'

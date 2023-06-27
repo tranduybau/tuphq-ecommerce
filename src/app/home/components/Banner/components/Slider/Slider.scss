@@ -236,21 +236,23 @@
   .slider-item {
     width: 100% !important;
     height: 344px;
-    padding: 0 ;
-    margin: 0 ;
+    padding: 0;
+    margin: 0;
 
     .wrapper {
       width: 100%;
       height: 100%;
       display: flex;
       background-color: #000;
+      flex-direction: column;
     }
 
     .slider-item__content {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      padding-top: 32px;
+      gap: 8px;
+      padding-top: 4px;
       padding-right: 0px;
     }
 
@@ -263,7 +265,7 @@
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
-        line-height: 20px;
+        line-height: 16px;
         text-align: center;
         color: #fafafa;
         margin-left: 24px;
@@ -271,12 +273,12 @@
     }
     .slider-item__discount {
       margin-left: 12px;
-      max-width: 150px;
+      max-width: 100%;
       span {
         font-style: normal;
         font-weight: 600;
-        font-size: 20px;
-        line-height: 60px;
+        font-size: 24px;
+        line-height: 28px;
         letter-spacing: 0.04em;
         color: #fafafa;
       }
@@ -294,5 +296,10 @@
         margin-right: 8px;
       }
     }
+  }
+
+  .slider-item__img{
+    width: 100%;
+    min-height: 250px;
   }
 }

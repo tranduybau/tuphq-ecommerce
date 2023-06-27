@@ -14,24 +14,66 @@ import "swiper/css/scrollbar";
 //icon
 import DropdownRight from '@/svgs/DropDown-right.svg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
+import { useCallback, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
+
+const modulesSwiper = [Navigation, Pagination, Scrollbar, A11y]
+const paginationSwiper = { clickable: true }
+const breakpointsSwiper = {
+    320: {
+        slidesPerView: 1,
+        spaceBetween: 10
+    },
+    576: {
+        slidesPerView: 1,
+        spaceBetween: 30
+    },
+    768: {
+        slidesPerView: 1,
+        spaceBetween: 40
+    },
+    992: {
+        slidesPerView: 1,
+        spaceBetween: 40
+    },
+    1200: {
+        slidesPerView: 1,
+        spaceBetween: 50
+    }
+}
 
 export default function Banner() {
     const [isBarsOpen, setIsBarsOpen] = useState(false);
+    const sidebarRef = useRef(null);
 
     const toggleBars = () => {
-        console.log(isBarsOpen)
         setIsBarsOpen(!isBarsOpen);
     };
+
+    const handleOutsideClick = useCallback((event) => {
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+            setIsBarsOpen(false);
+        }
+    }, [setIsBarsOpen, sidebarRef]);
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [handleOutsideClick]);
+
     return (
         <div className="banner-wrapper">
             <div className="banner container flex">
-                <div onClick={toggleBars} className="fa-bars-icon">
-                    <FontAwesomeIcon icon={faBars} />
-                </div>
-                <div className={classNames('sidebar', 'flex-auto', {showBars: isBarsOpen === true})}>
+                <button type="button" onClick={toggleBars} className="fa-bars-icon">
+                    <FontAwesomeIcon icon={faBars} className="w-[24px] h-[24px]" />
+                </button>
+                <div ref={sidebarRef} className={classNames('sidebar', 'flex-auto', { showBars: isBarsOpen === true })}>
+                    {isBarsOpen === true && <button type='button' onClick={toggleBars} className={classNames('flex', 'justify-end', 'pr-[12px]', 'mb-[12px]')}>
+                        <FontAwesomeIcon icon={faClose} className='close-icon' />
+                    </button>}
                     <ul className="sidebar__menu ">
                         <li className="sidebar-item sp-bw">
                             <span className="font-poppins">Woman's Fashion</span>
@@ -66,35 +108,11 @@ export default function Banner() {
                 </div>
                 <div className="slider flex-auto ">
                     <Swiper
-                        modules={[Navigation, Pagination, Scrollbar, A11y]}
+                        modules={modulesSwiper}
                         spaceBetween={50}
                         slidesPerView={1}
-                        pagination={{ clickable: true }}
-                        breakpoints={{
-                            320: {
-                                slidesPerView: 1,
-                                spaceBetween: 10
-                            },
-
-                            576: {
-                                slidesPerView: 1,
-                                spaceBetween: 30
-                            },
-
-                            768: {
-                                slidesPerView: 1,
-                                spaceBetween: 40
-                            },
-                            992: {
-                                slidesPerView: 1,
-                                spaceBetween: 40
-                            },
-                            1200: {
-                                slidesPerView: 1,
-                                spaceBetween: 50
-                            }
-
-                        }}>
+                        pagination={paginationSwiper}
+                        breakpoints={breakpointsSwiper}>
                         <SwiperSlide>
                             <Slider
                                 title="iPhone 14 Series"

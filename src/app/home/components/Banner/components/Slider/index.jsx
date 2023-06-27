@@ -1,10 +1,10 @@
 import './Slider.scss'
-
-//icon
-import LogoBanner from '@/svgs/logo-banner.svg'
-import ArrowRight from '@/svgs/arrow-right.svg'
 import Image from 'next/image'
 import Link from 'next/link'
+
+//icon
+import LogoBanner from '@/svgs/Banner/logo-banner.svg'
+import ArrowRight from '@/svgs/Banner/arrow-right.svg'
 
 export default function Slider(props) {
     return (
@@ -29,10 +29,12 @@ export default function Slider(props) {
                 </div>
                 <div className="slider-item__img">
                     <Image
-                        src='/image/banner.png'
+                        src='/image/Banner/banner.png'
                         alt='banner'
                         fill={true}
-                    ></Image>
+                        sizes={'(max-width: 768px) 100vw'}
+                        priority={true}
+                    />
                 </div>
             </div>
         </div>

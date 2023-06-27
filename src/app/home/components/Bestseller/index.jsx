@@ -1,9 +1,11 @@
 "use client"
 import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Cart from './components/Cart';
+import Card from './components/Card';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import TimeCountDown from "./components/TimeCountDown";
+import Image from "next/image";
+import Link from "next/link";
 
 
 import './Bestseller.scss'
@@ -11,14 +13,36 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/swiper-bundle.css';
-import Image from "next/image";
-import Link from "next/link";
 
-SwiperCore.use([Navigation, Pagination]);
+const moduleSwiper = [Pagination, Navigation]
+const breakpointsSwiper = {
+    320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+    },
+
+    576: {
+        slidesPerView: 2,
+        spaceBetween: 30
+    },
+
+    768: {
+        slidesPerView: 2,
+        spaceBetween: 40
+    },
+    992: {
+        slidesPerView: 3,
+        spaceBetween: 40
+    },
+    1200: {
+        slidesPerView: 4,
+        spaceBetween: 40
+    }
+}
+
+SwiperCore.use(moduleSwiper);
 export default function BestSeller() {
     const swiperRef = useRef(null);
-
-
 
     return (
         <div className="bestseller-wrapper container">
@@ -41,35 +65,11 @@ export default function BestSeller() {
                     ref={swiperRef}
                     slidesPerView={4}
                     spaceBetween={30}
-                    modules={[Pagination, Navigation]}
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 1,
-                            spaceBetween: 40
-                        },
-
-                        576: {
-                            slidesPerView: 2,
-                            spaceBetween: 30
-                        },
-
-                        768: {
-                            slidesPerView: 2,
-                            spaceBetween: 40
-                        },
-                        992: {
-                            slidesPerView: 3,
-                            spaceBetween: 40
-                        },
-                        1200: {
-                            slidesPerView: 4,
-                            spaceBetween: 40
-                        }
-
-                    }}>
+                    modules={moduleSwiper}
+                    breakpoints={breakpointsSwiper}>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -77,8 +77,8 @@ export default function BestSeller() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -86,8 +86,8 @@ export default function BestSeller() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -95,8 +95,8 @@ export default function BestSeller() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -104,8 +104,8 @@ export default function BestSeller() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -113,8 +113,8 @@ export default function BestSeller() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -122,8 +122,8 @@ export default function BestSeller() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -131,8 +131,8 @@ export default function BestSeller() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -140,8 +140,8 @@ export default function BestSeller() {
                         />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Cart
-                            img='/image/bestselling-product.png'
+                        <Card
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -154,10 +154,11 @@ export default function BestSeller() {
             <div className="banner-product">
                 <div className="banner-product__img">
                     <Image
-                        src={'/image/image-bestselling.png'}
+                        src={'/image/Bestselling/image-bestselling.png'}
                         alt="best selling"
                         fill={true}
-                    ></Image>
+                        sizes={'(max-width: 768px) 100vw'}
+                    />
                 </div>
                 <div className="banner-product__text">
                     <span className="banner-product__text-categories font-poppins">Categories</span>

@@ -1,3 +1,4 @@
+"use client"
 import { useFormContext } from 'react-hook-form';
 import styles from './InputForm.module.scss'
 

@@ -33,6 +33,7 @@ export default function TimeCountDown() {
 
         return () => clearInterval(intervalId);
     }, [secondLeft, minuteLeft, hourLeft, dayLeft]);
+    
     return (
         <span className='time-area-fs'>
             <div className='time'>

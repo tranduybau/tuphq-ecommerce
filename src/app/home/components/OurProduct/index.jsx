@@ -1,8 +1,8 @@
 "use client"
 import { useRef, useState } from 'react';
-import { Navigation, Pagination, Grid } from 'swiper';
+import SwiperCore ,{ Navigation, Pagination, Grid } from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/react";
-import Cart from './components/Cart';
+import Card from './components/Card';
 import classNames from "classnames";
 
 import './OutProduct.scss'
@@ -17,132 +17,158 @@ import ArrowLeft from '@/svgs/icons_arrow-left.svg'
 import ArrowRight from '@/svgs/icons_arrow-right.svg'
 import Link from 'next/link';
 
+const products = [
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "1",
+        sale: "120",
+        price: "160",
+        count: "88",
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "2",
+        sale: "120",
+        price: "160",
+        count: "88",
+
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "3",
+        sale: "120",
+        price: "160",
+        count: "88",
+
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "4",
+        sale: "120",
+        price: "160",
+        count: "88",
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "5",
+        sale: "120",
+        price: "160",
+        count: "88",
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "6",
+        sale: "120",
+        price: "160",
+        count: "88",
+
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "7",
+        sale: "120",
+        price: "160",
+        count: "88",
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "8",
+        sale: "120",
+        price: "160",
+        count: "88",
+
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "9",
+        sale: "120",
+        price: "160",
+        count: "88",
+        color: true,
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "10",
+        sale: "120",
+        price: "160",
+        count: "88",
+        color: true,
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "11",
+        sale: "120",
+        price: "160",
+        count: "88",
+        color: true,
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "12",
+        sale: "120",
+        price: "160",
+        count: "88",
+        color: true,
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "13",
+        sale: "120",
+        price: "160",
+        count: "88",
+        color: true,
+    },
+    {
+        img: "/image/Products/ourProduct-product.png",
+        discount: "40%",
+        name: "14",
+        sale: "120",
+        price: "160",
+        count: "88",
+        color: true,
+
+    }
+]
+const modulesSwiper = [Grid, Pagination, Navigation]
+const breakpointsSwiper = {
+    320: {
+        slidesPerView: 1,
+        spaceBetween: 40
+    },
+    576: {
+        slidesPerView: 2,
+        spaceBetween: 30
+    },
+    768: {
+        slidesPerView: 2,
+        spaceBetween: 40
+    },
+    992: {
+        slidesPerView: 3,
+        spaceBetween: 40
+    },
+    1200: {
+        slidesPerView: 4,
+        spaceBetween: 40
+    }
+}
+
+SwiperCore.use(modulesSwiper);
+
 export default function OutProduct() {
-    const products = [
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "1",
-            sale: "120",
-            price: "160",
-            count: "88",
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "2",
-            sale: "120",
-            price: "160",
-            count: "88",
-
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "3",
-            sale: "120",
-            price: "160",
-            count: "88",
-
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "4",
-            sale: "120",
-            price: "160",
-            count: "88",
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "5",
-            sale: "120",
-            price: "160",
-            count: "88",
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "6",
-            sale: "120",
-            price: "160",
-            count: "88",
-
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "7",
-            sale: "120",
-            price: "160",
-            count: "88",
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "8",
-            sale: "120",
-            price: "160",
-            count: "88",
-
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "9",
-            sale: "120",
-            price: "160",
-            count: "88",
-            color: true,
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "10",
-            sale: "120",
-            price: "160",
-            count: "88",
-            color: true,
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "11",
-            sale: "120",
-            price: "160",
-            count: "88",
-            color: true,
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "12",
-            sale: "120",
-            price: "160",
-            count: "88",
-            color: true,
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "13",
-            sale: "120",
-            price: "160",
-            count: "88",
-            color: true,
-        },
-        {
-            img: "/image/ourProduct-product.png",
-            discount: "40%",
-            name: "14",
-            sale: "120",
-            price: "160",
-            count: "88",
-            color: true,
-
-        }
-    ]
     //state
     const [swiper, setSwiper] = useState(true);
     const [canGoPrev, setCanGoPrev] = useState(false);
@@ -201,32 +227,8 @@ export default function OutProduct() {
                     ref={swiperRef}
                     slidesPerView={4}
                     spaceBetween={30}
-                    modules={[Grid, Pagination, Navigation]}
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 1,
-                            spaceBetween: 40
-                        },
-
-                        576: {
-                            slidesPerView: 2,
-                            spaceBetween: 30
-                        },
-
-                        768: {
-                            slidesPerView: 2,
-                            spaceBetween: 40
-                        },
-                        992: {
-                            slidesPerView: 3,
-                            spaceBetween: 40
-                        },
-                        1200: {
-                            slidesPerView: 4,
-                            spaceBetween: 40
-                        }
-
-                    }}>
+                    modules={modulesSwiper}
+                    breakpoints={breakpointsSwiper}>
                     {products.map((product, index) => {
                         let sizeRow = 8;
                         let lengthProduct = Math.ceil(products.length / 2)
@@ -238,7 +240,7 @@ export default function OutProduct() {
                             count++
                             return (
                                 <SwiperSlide key={index}>
-                                    <Cart
+                                    <Card
                                         className={'mb-[60px]'}
                                         img={product.img}
                                         discount={product.discount}
@@ -249,7 +251,7 @@ export default function OutProduct() {
                                         color={product.color}
                                     />
                                     {newProduct && <SwiperSlide>
-                                        <Cart
+                                        <Card
                                             img={newProduct.img}
                                             discount={newProduct.discount}
                                             name={newProduct.name}

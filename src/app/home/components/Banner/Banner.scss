@@ -10,18 +10,28 @@ ul {
   padding: 0 !important;
 }
 
-.fa-bars-icon{
+.close-icon {
   display: none;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+}
+
+.fa-bars-icon {
+  opacity: 0;
   cursor: pointer;
 }
 
-.showBars{
-  display: block !important;
+.showBars {
+  transform: translateX(0) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .sidebar {
   padding-top: 40px;
   border-right: 1px solid #ccc;
+  transition: all linear 1s;
 }
 
 .sidebar__menu {
@@ -169,10 +179,17 @@ ul {
 }
 
 @media (max-width: 576px) {
-  .fa-bars-icon{
+  .close-icon {
     display: block;
-    padding: 12px 0 0 24px;
+    align-self: flex-end;
   }
+
+  .fa-bars-icon {
+    opacity: 1;
+    align-self: flex-start;
+    margin-top: 12px;
+  }
+
   .banner {
     display: flex;
     flex-direction: column;
@@ -180,29 +197,46 @@ ul {
   }
 
   .sidebar {
-    display: none;
-    border-right: 1px solid transparent;
-    padding: 20px 0 4px 24px;
-  }
+    width: 70%;
+    min-height: 100vh;
+    position: fixed;
+    padding: 12px 0 0 12px;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    z-index: 4;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+    visibility: hidden;
+    opacity: 0;
 
-  .sidebar__menu {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
+    .sidebar__menu {
+      color: #fafafa;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
 
-  .sidebar-item {
-    max-width: 45%;
-    min-width: 44%;
-    border: 1px solid #ccc;
-    padding: 8px;
-    margin-bottom: 0px;
+      .sidebar-item {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 0px;
+        border: 1px solid transparent;
+
+        span {
+          color: #fff;
+        }
+
+        .dropdown-right-icon {
+          fill: #fff;
+          stroke: #fff;
+          color: #fff;
+        }
+      }
+    }
   }
 
   .slider {
     margin: 10px 0;
-    padding-left: 10px;
     .swiper-slide {
       min-width: 100% !important;
     }

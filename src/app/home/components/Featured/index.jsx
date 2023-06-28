@@ -1,11 +1,12 @@
 import styles from './Featured.module.scss'
 import FeaturedItem from './components/FeaturedItem'
 import Image from 'next/image'
-//icon
-import DeliveryIcon from '@/svgs/icon-delivery.svg'
-import CustomerServiceIcon from '@/svgs/Icon-Customer-service.svg'
-import SecureIcon from '@/svgs/Icon-secure.svg'
 import ServiceItem from './components/ServiceItem'
+
+//icon
+import DeliveryIcon from '@/svgs/Featured/icon-delivery.svg'
+import CustomerServiceIcon from '@/svgs/Featured/Icon-Customer-service.svg'
+import SecureIcon from '@/svgs/Featured/Icon-secure.svg'
 
 
 export default function Featured() {
@@ -18,14 +19,16 @@ export default function Featured() {
             <span className={`font-inter ${styles.newArrival}`}>New Arrival</span>
             <div className={`${styles.featured}`}>
                 <FeaturedItem
-                    imgClassName="sm:h-[450px] xs:h-[350px]"
+                    imgClassName="lg:h-[600px] md:h-[600px] sm:h-[450px] xs:h-[350px]"
                     name="PlayStation 5"
                     description="Black and White version of the PS5 coming out on sale"
                     className="basis-1/2 w-full xl:h-[600px] md:h-[600px] sm:h-[450px]">
                     <Image
-                        src='/image/ps5.png'
+                        src='/image/Featured/ps5.png'
                         alt='featured'
-                        fill={true} />
+                        fill={true}
+                        sizes={'(max-width: 768px) 100vw'}
+                    />
                 </FeaturedItem>
                 <div className={`${styles.featuredCol}`}>
                     <FeaturedItem
@@ -34,9 +37,11 @@ export default function Featured() {
                         description="Featured woman collection that give you another vibe"
                         className="lg:h-[50%] sm:h-[50%]">
                         <Image
-                            src='/image/woman.png'
+                            src='/image/Featured/woman.png'
                             alt='featured'
-                            fill={true} />
+                            fill={true}
+                            sizes={'(max-width: 768px) 100vw'}
+                        />
                     </FeaturedItem>
                     <div className={`${styles.featuredRow} h-[50%]`}>
                         <FeaturedItem
@@ -44,9 +49,11 @@ export default function Featured() {
                             name="Speakers"
                             description="Amazon wireless speakers">
                             <Image
-                                src='/image/speaker.png'
+                                src='/image/Featured/speaker.png'
                                 alt='featured'
-                                fill={true} />
+                                fill={true}
+                                sizes={'(max-width: 768px) 100vw'}
+                            />
                         </FeaturedItem>
 
                         <FeaturedItem
@@ -54,9 +61,11 @@ export default function Featured() {
                             name="Perfume"
                             description="GUCCI INTENSE OUD EDP">
                             <Image
-                                src='/image/perfume.png'
+                                src='/image/Featured/perfume.png'
                                 alt='featured'
-                                fill={true} />
+                                fill={true}
+                                sizes={'(max-width: 768px) 100vw'}
+                            />
                         </FeaturedItem>
                     </div>
                 </div>

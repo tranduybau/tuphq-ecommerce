@@ -1,13 +1,17 @@
-import './CategoryItem.scss'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function CategoryItem(props) {
-    let IconProp = props.icon
-    return (
-        <div className="category-item">
-            <div className="category-icon">
-                {props.children}
-            </div>
-            <span className="category-name font-poppins">{props.category}</span>
-        </div>
-    )
+import './CategoryItem.scss';
+
+export default function CategoryItem({ children, category }) {
+  CategoryItem.propTypes = {
+    children: PropTypes.node.isRequired,
+    category: PropTypes.string.isRequired,
+  };
+  return (
+    <div className="category-item lg:max-w-[170px]">
+      <div className="category-icon">{children}</div>
+      <span className="category-name font-poppins">{category}</span>
+    </div>
+  );
 }

@@ -1,13 +1,49 @@
+'use client';
+
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import styles from './InputForm.module.scss'
+import PropTypes from 'prop-types';
 
-export default function InputForm(props) {
-  const { register, formState: { errors } } = useFormContext();
+import styles from './InputForm.module.scss';
 
+export default function InputForm({
+  name,
+  type,
+  className,
+  placeholder,
+  ...props
+}) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
+  InputForm.propTypes = {
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    className: PropTypes.string,
+    placeholder: PropTypes.string,
+    // ...props: PropTypes.any, // Nếu bạn muốn chấp nhận bất kỳ thuộc tính nào khác
+  };
+
+  InputForm.defaultProps = {
+    type: 'text',
+    className: '',
+    placeholder: '',
+  };
   return (
     <div>
-      {errors[props.name] && <p className={styles.errorMessage}>{errors[props.name].message}</p>}
-      <input {...register(props.name)} type={props.type} name={props.name} className={props.className} placeholder={props.placeholder} {...props} />
+      {errors[name] && (
+        <p className={styles.errorMessage}>{errors[name].message}</p>
+      )}
+      <input
+        {...register(name)}
+        type={type}
+        name={name}
+        className={className}
+        placeholder={placeholder}
+        {...props}
+      />
     </div>
   );
 }

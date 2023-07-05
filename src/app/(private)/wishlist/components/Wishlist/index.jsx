@@ -13,8 +13,31 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/swiper-bundle.css';
 
-SwiperCore.use([Navigation, Pagination]);
+const modulesSwiper = [Pagination, Navigation]
+const breakpointsSwiper = {
+    320: {
+        slidesPerView: 1,
+        spaceBetween: 40
+    },
+    576: {
+        slidesPerView: 2,
+        spaceBetween: 30
+    },
+    768: {
+        slidesPerView: 2,
+        spaceBetween: 40
+    },
+    992: {
+        slidesPerView: 4,
+        spaceBetween: 40
+    },
+    1200: {
+        slidesPerView: 4,
+        spaceBetween: 40
+    }
+}
 
+SwiperCore.use([Navigation, Pagination]);
 
 export default function Wishlist() {
     const [products, setProducts] = useState([]);
@@ -31,6 +54,7 @@ export default function Wishlist() {
             console.error('Error fetching products:', error);
         }
     };
+    
     return (
         <section className={`${styles.wrapper} container`}>
             <div className={`${styles.wishlistHeading}`}>
@@ -42,32 +66,8 @@ export default function Wishlist() {
                     className={`${styles.swiperContainer}`}
                     slidesPerView={4}
                     spaceBetween={30}
-                    modules={[Pagination, Navigation]}
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 1,
-                            spaceBetween: 40
-                        },
-
-                        576: {
-                            slidesPerView: 2,
-                            spaceBetween: 30
-                        },
-
-                        768: {
-                            slidesPerView: 2,
-                            spaceBetween: 40
-                        },
-                        992: {
-                            slidesPerView: 4,
-                            spaceBetween: 40
-                        },
-                        1200: {
-                            slidesPerView: 4,
-                            spaceBetween: 40
-                        }
-
-                    }}>
+                    modules={modulesSwiper}
+                    breakpoints={breakpointsSwiper}>
                     {products.map((product, index) => {
                         return (
                             <SwiperSlide key={index}>

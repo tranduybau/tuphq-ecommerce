@@ -9,8 +9,9 @@ import FacebookIcon from '@/svgs/Footer/Icon-Facebook.svg'
 import InstagramIcon from '@/svgs/Footer/icon-instagram.svg'
 import TwitterIcon from '@/svgs/Footer/Icon-Twitter.svg'
 import LinkedinIcon from '@/svgs/Footer/Icon-Linkedin.svg'
+import { memo } from 'react'
 
-export default function Footer() {
+function Footer() {
     return (
         <div className={`${styles.wrapper}`}>
             <div className={`${styles.main} container`}>
@@ -100,27 +101,29 @@ export default function Footer() {
                         </li>
                         <li className={`${styles.contentTextItem} mb-[24px]`}>
                             <div className={`${styles.downloadAppImg}`}>
-                                <Image
-                                    src='/image/Footer/QrCode.png'
-                                    alt='QR CODE'
-                                    width={80}
-                                    height={80}
-                                />
+                                <div className='w-[80px] h-[80px] relative'>
+                                    <Image
+                                        src='/image/Footer/QrCode.png'
+                                        alt='QR CODE'
+                                        fill={true}
+                                        sizes='(max-width: 768px) 100vw'
+                                    />
+                                </div>
                                 <div className={`${styles.downloadAppLink}`}>
-                                    <Link href='/' className=''>
+                                    <Link href='/' className='w-[104px] h-[40px] relative'>
                                         <Image
                                             src='/image/Footer/GooglePlay.png'
                                             alt='App Store'
-                                            width={104}
-                                            height={30}
+                                            fill={true}
+                                            sizes='(max-width: 768px) 100vw'
                                         />
                                     </Link>
-                                    <Link href='/' className=''>
+                                    <Link href='/' className='w-[104px] h-[40px] relative'>
                                         <Image
                                             src='/image/Footer/AppStore.png'
                                             alt='App Store'
-                                            width={104}
-                                            height={34}
+                                            fill={true}
+                                            sizes='(max-width: 768px) 100vw'
                                         />
                                     </Link>
                                 </div>
@@ -151,3 +154,5 @@ export default function Footer() {
         </div>
     )
 }
+
+export default memo(Footer)

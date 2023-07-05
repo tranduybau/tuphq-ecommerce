@@ -69,7 +69,7 @@ export default function BestSeller() {
                     breakpoints={breakpointsSwiper}>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -78,7 +78,7 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -87,7 +87,7 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -96,7 +96,7 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -105,7 +105,7 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -114,7 +114,7 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -123,7 +123,7 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -132,7 +132,7 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -141,7 +141,7 @@ export default function BestSeller() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/bestselling-product.png'
+                            img='/image/Products/bestselling-product.png'
                             name="The north coat"
                             sale="260"
                             price="360"
@@ -154,9 +154,10 @@ export default function BestSeller() {
             <div className="banner-product">
                 <div className="banner-product__img">
                     <Image
-                        src={'/image/image-bestselling.png'}
+                        src={'/image/Bestselling/image-bestselling.png'}
                         alt="best selling"
                         fill={true}
+                        sizes={'(max-width: 768px) 100vw'}
                     />
                 </div>
                 <div className="banner-product__text">

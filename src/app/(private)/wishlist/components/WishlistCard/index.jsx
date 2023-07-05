@@ -20,6 +20,7 @@ export default function WishlistCard(props) {
                     alt='wishlist product'
                     fill={true}
                     style={imageStyle}
+                    priority={true}
                 />
                 <div className={`${styles.discountAndActions}`}>
                     {props.discount && <span className={`${styles.discount} font-poppins`}>-{props.discount}%</span>}

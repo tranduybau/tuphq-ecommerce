@@ -16,6 +16,7 @@ export default function CheckOutCard({ name, img, price, onTotalChange }) {
                     src={img}
                     alt='product item'
                     fill={true}
+                    sizes='(max-width: 768px) 100vw'
                     className={classNames('object-contain', 'relative', 'max-w-[54px]', 'max-h-[54px]')}
                 />
                 <span>{name}</span>

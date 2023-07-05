@@ -26,6 +26,7 @@ export default function TableCartProductItem({ name, img, price, onTotalChange }
                     src={img}
                     alt='product item'
                     fill={true}
+                    sizes='(max-width: 768px) 100vw'
                     className='object-contain relative max-w-[50px] max-h-[39px]'
                 />
                 <span>{name}</span>

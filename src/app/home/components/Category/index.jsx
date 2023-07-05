@@ -29,15 +29,15 @@ const breakpointsSwiper = {
         spaceBetween: 20
     },
     576: {
-        slidesPerView: 2,
+        slidesPerView: 3,
         spaceBetween: 30
     },
     768: {
-        slidesPerView: 2,
+        slidesPerView: 4,
         spaceBetween: 40
     },
     992: {
-        slidesPerView: 3,
+        slidesPerView: 4,
         spaceBetween: 40
     },
     1200: {
@@ -88,10 +88,10 @@ export default function Category() {
             <div className='category-control'>
                 <h1 className="font-inter">Browse By Category</h1>
                 <div className='btn-swiper'>
-                    <button onClick={handleControlSwiperLeft} className={classNames('btn-control-swiper', { disabled: canGoPrev === false })}>
+                    <button type="button" onClick={handleControlSwiperLeft} className={classNames('btn-control-swiper', { disabled: canGoPrev === false })}>
                         <ArrowLeft className="arrow-left-icon" />
                     </button>
-                    <button onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false })}>
+                    <button type="button" onClick={handleControlSwiperRight} className={classNames('btn-control-swiper', { disabled: canGoNext === false })}>
                         <ArrowRight className="arrow-right-icon" />
                     </button>
                 </div>
@@ -112,67 +112,67 @@ export default function Category() {
                     breakpoints={breakpointsSwiper}>
                     <SwiperSlide>
                         <CategoryItem category="Phones" >
-                            <CellPhone className='category-img'></CellPhone>
+                            <CellPhone className='category-img max-w-[170px]'></CellPhone>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Computer" >
-                            <Computer className='category-img'></Computer>
+                            <Computer className='category-img max-w-[170px]'></Computer>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="SmartWatch" >
-                            <SmartWatch className='category-img'></SmartWatch>
+                            <SmartWatch className='category-img max-w-[170px]'></SmartWatch>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Camera" >
-                            <Camera className='category-img'></Camera>
+                            <Camera className='category-img max-w-[170px]'></Camera>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Headphones" >
-                            <Headphone className='category-img'></Headphone>
+                            <Headphone className='category-img max-w-[170px]'></Headphone>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Gaming" >
-                            <Gamepad className='category-img'></Gamepad>
+                            <Gamepad className='category-img max-w-[170px]'></Gamepad>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Computer" >
-                            <CellPhone className='category-img'></CellPhone>
+                            <CellPhone className='category-img max-w-[170px]'></CellPhone>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Computer" >
-                            <CellPhone className='category-img'></CellPhone>
+                            <CellPhone className='category-img max-w-[170px]'></CellPhone>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Computer" >
-                            <CellPhone className='category-img'></CellPhone>
+                            <CellPhone className='category-img max-w-[170px]'></CellPhone>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Computer" >
-                            <CellPhone className='category-img'></CellPhone>
+                            <CellPhone className='category-img max-w-[170px]'></CellPhone>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Computer" >
-                            <CellPhone className='category-img'></CellPhone>
+                            <CellPhone className='category-img max-w-[170px]'></CellPhone>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Computer" >
-                            <CellPhone className='category-img'></CellPhone>
+                            <CellPhone className='category-img max-w-[170px]'></CellPhone>
                         </CategoryItem>
                     </SwiperSlide>
                     <SwiperSlide>
                         <CategoryItem category="Computer" >
-                            <CellPhone className='category-img'></CellPhone>
+                            <CellPhone className='category-img max-w-[170px]'></CellPhone>
                         </CategoryItem>
                     </SwiperSlide>
                 </Swiper>

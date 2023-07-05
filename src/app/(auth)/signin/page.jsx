@@ -7,10 +7,11 @@ export default function SignIn() {
         <section className={`${styles.wrapper}`}>
             <div className={`${styles.sideImg}`}>
                 <Image
-                    src="/image/side-img.png"
+                    src="/image/Auth/side-img.png"
                     alt="side img"
                     fill={true}
-                    quality={100}
+                    priority={true}
+                    sizes='(max-width: 768px) 100vw'
                 />
             </div>
             <div className={`${styles.signInForm}`}>

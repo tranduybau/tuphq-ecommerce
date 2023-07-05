@@ -29,9 +29,11 @@ export default function Slider(props) {
                 </div>
                 <div className="slider-item__img">
                     <Image
-                        src='/image/banner.png'
+                        src='/image/Banner/banner.png'
                         alt='banner'
                         fill={true}
+                        sizes={'(max-width: 768px) 100vw'}
+                        priority={true}
                     />
                 </div>
             </div>

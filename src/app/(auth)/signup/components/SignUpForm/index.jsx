@@ -8,6 +8,7 @@ import Link from 'next/link';
 
 //icon
 import GoogleIcon from '@/svgs/Signup/Icon-Google.svg'
+import { useCallback } from 'react';
 
 export default function SignUpForm() {
     const validationSchema = yup.object().shape({
@@ -20,9 +21,9 @@ export default function SignUpForm() {
         resolver: yupResolver(validationSchema),
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = useCallback((data) => {
         console.log(data);
-    };
+    }, [])
 
     return (
         <FormProvider {...methods}>
@@ -35,7 +36,7 @@ export default function SignUpForm() {
                     Create Account
                 </button>
                 <button className={`${styles.SignUpFormGoogleBtn}`} type='button'>
-                    <GoogleIcon className={`${styles.googleIcon}`}/>
+                    <GoogleIcon className={`${styles.googleIcon}`} />
                     <span className={`${styles.googleBtnText} font-poppins`}>Sign up with Google</span>
                 </button>
                 <div className={`${styles.haveAccount}`}>

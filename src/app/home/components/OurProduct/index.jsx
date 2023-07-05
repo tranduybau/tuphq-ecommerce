@@ -19,7 +19,7 @@ import Link from 'next/link';
 
 const products = [
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "1",
         sale: "120",
@@ -27,7 +27,7 @@ const products = [
         count: "88",
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "2",
         sale: "120",
@@ -36,7 +36,7 @@ const products = [
 
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "3",
         sale: "120",
@@ -45,7 +45,7 @@ const products = [
 
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "4",
         sale: "120",
@@ -53,7 +53,7 @@ const products = [
         count: "88",
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "5",
         sale: "120",
@@ -61,7 +61,7 @@ const products = [
         count: "88",
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "6",
         sale: "120",
@@ -70,7 +70,7 @@ const products = [
 
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "7",
         sale: "120",
@@ -78,7 +78,7 @@ const products = [
         count: "88",
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "8",
         sale: "120",
@@ -87,7 +87,7 @@ const products = [
 
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "9",
         sale: "120",
@@ -96,7 +96,7 @@ const products = [
         color: true,
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "10",
         sale: "120",
@@ -105,7 +105,7 @@ const products = [
         color: true,
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "11",
         sale: "120",
@@ -114,7 +114,7 @@ const products = [
         color: true,
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "12",
         sale: "120",
@@ -123,7 +123,7 @@ const products = [
         color: true,
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "13",
         sale: "120",
@@ -132,7 +132,7 @@ const products = [
         color: true,
     },
     {
-        img: "/image/ourProduct-product.png",
+        img: "/image/Products/ourProduct-product.png",
         discount: "40%",
         name: "14",
         sale: "120",

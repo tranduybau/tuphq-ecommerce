@@ -14,18 +14,20 @@ export default function Card(props) {
     }
     return (
         <div className={`card ${props.className} border-none`}>
-            <div className='image'>
+            <div className='image lg:max-w-[270px]'>
                 <Image
                     fill={true}
                     src={props.img}
                     alt='product'
+                    className='lg:max-w-[270px]'
+                    sizes={'(max-width: 768px) 100vw'}
                 />
                 <div className='icon-wrapper'>
                     <span className='heart-small-icon'>
-                        <HeartSmallIcon className='card-icon'/>
+                        <HeartSmallIcon className='card-icon' />
                     </span>
                     <span className='quick-view-icon'>
-                        <QuickViewIcon className='card-icon'/>
+                        <QuickViewIcon className='card-icon' />
                     </span>
                 </div>
 

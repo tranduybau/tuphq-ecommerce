@@ -9,11 +9,13 @@ import StarIcon from '@/svgs/star.svg'
 export default function Card(props) {
     return (
         <div className='card-bs'>
-            <div className='image'>
+            <div className='image lg:max-w-[270px]'>
                 <Image
                     src={props.img}
                     alt='best selling'
                     fill={true}
+                    className='lg:max-w-[270px]'
+                    sizes={'(max-width: 768px) 100vw'}
                 />
                 <div className='icon-wrapper'>
                     <div className='heart-small-icon'>

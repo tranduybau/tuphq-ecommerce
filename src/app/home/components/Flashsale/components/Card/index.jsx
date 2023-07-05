@@ -5,14 +5,17 @@ import Image from 'next/image'
 import HeartSmallIcon from '@/svgs/heart-small.svg'
 import QuickViewIcon from '@/svgs/Quick-View.svg'
 import StarIcon from '@/svgs/star.svg'
+
 export default function Card(props) {
     return (
-        <div className='card-fs'>
+        <div className='card-fs lg:max-w-[270px]'>
             <div className='image'>
                 <Image
                     src={props.img}
                     alt='product'
                     fill={true}
+                    className='lg:max-w-[270px]'
+                    sizes={'(max-width: 768px) 100vw'}
                 />
                 <span className='card-discount'>
                     <p className='font-poppins'>-{props.discount}</p>

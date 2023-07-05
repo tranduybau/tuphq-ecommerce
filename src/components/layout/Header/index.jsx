@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
@@ -20,34 +20,48 @@ import UserTooltipIcon from '@/svgs/Header/user-img.svg'
 import ReviewIcon from '@/svgs/Header/Icon-Reviews.svg'
 import { toast } from 'react-toastify'
 import Cookies from 'js-cookie'
-export default function Header() {
+
+function Header() {
     //state
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [user, setUser] = useState()
     const [isTooltipOpen, setIsTooltipOpen] = useState(false)
     const router = useRouter()
+
     //ref
     const tooltipRef = useRef(null);
 
-    const handleShowTooltip = () => {
-        setIsTooltipOpen(!isTooltipOpen)
-    }
+    const handleShowTooltip = useCallback(() => {
+        setIsTooltipOpen(prevState => !prevState);
+    }, []);
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         Cookies.remove('currentUser');
         setTimeout(() => {
             const isBrowser = typeof window !== 'undefined';
             const currentLocation = isBrowser ? window.location : null;
-            if(currentLocation !== null){
+            if (currentLocation !== null) {
                 currentLocation.reload()
             }
-        }, 500)
-    }
+        }, 500);
+    }, []);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+
+    const toggleMenu = useCallback(() => {
+        setIsMenuOpen(prevState => !prevState);
+    }, []);
+
+    const handleCheckPrivateRoute = useCallback((pathname) => {
+        const currentUser = Cookies.get('currentUser') ? JSON.parse(Cookies.get('currentUser')) : null;
+        if (currentUser === null) {
+            router.push('/signin');
+            toast.error("Bạn cần phải đăng nhập");
+        }
+        else {
+            router.push('/' + pathname);
+        }
+    }, [router]);
 
     const handleCheckPrivateRoute = (pathname) => {
         const currentUser = Cookies.get('currentUser') ? JSON.parse(Cookies.get('currentUser')) : null;
@@ -70,14 +84,14 @@ export default function Header() {
         return () => {
             document.removeEventListener("click", handleOutsideClick);
         };
-    }, []);
+    }, [setIsTooltipOpen]);
 
     useEffect(() => {
         const currentUser = Cookies.get('currentUser') ? JSON.parse(Cookies.get('currentUser')) : null;
         if (currentUser) {
-            setUser(currentUser)
+            setUser(currentUser);
         }
-    }, [])
+    }, []);
 
     return (
         <header className='header'>
@@ -133,7 +147,7 @@ export default function Header() {
                             {user && <div ref={tooltipRef} className='tooltip-user'>
                                 <UserIcon onClick={handleShowTooltip} className='user-icon' />
                                 <div className={classNames('tooltip-user__block', { 'tooltip-show': isTooltipOpen === true })}>
-                                    <Link href='/' className='tooltip-user__item'>
+                                    <Link href='/myaccount' className='tooltip-user__item'>
                                         <UserTooltipIcon className="tooltip-user__icon" />
                                         <span className='font-poppins'>Manage My Account</span>
                                     </Link>
@@ -163,3 +177,5 @@ export default function Header() {
         </header>
     )
 }
+
+export default memo(Header)

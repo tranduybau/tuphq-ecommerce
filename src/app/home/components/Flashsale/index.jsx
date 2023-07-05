@@ -21,7 +21,7 @@ const moduleSwiper = [Pagination, Navigation]
 const breakpointsSwiper = {
     320: {
         slidesPerView: 1,
-        spaceBetween: 40
+        spaceBetween: 50
     },
     576: {
         slidesPerView: 2,
@@ -106,7 +106,7 @@ export default function Flashsale() {
                     breakpoints={breakpointsSwiper}>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad 123"
                             sale="120"
@@ -116,7 +116,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -126,7 +126,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -136,7 +136,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -146,7 +146,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -156,7 +156,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -166,7 +166,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -176,7 +176,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"
@@ -186,7 +186,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
-                            img='/image/flashsale-product.png'
+                            img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
                             sale="120"

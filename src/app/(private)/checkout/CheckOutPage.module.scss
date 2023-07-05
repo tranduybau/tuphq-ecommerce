@@ -1,0 +1,21 @@
+.wrapper {
+  padding: 0 !important;
+}
+
+.breadcrumb {
+  margin: 80px 0 80px;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 140px;
+}
+
+@media (max-width: 992px) {
+  .main {
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+  }
+}

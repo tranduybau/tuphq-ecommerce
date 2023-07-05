@@ -97,7 +97,7 @@ export default function TableCart() {
                         <span className={`${styles.totalPrice} font-poppins`}>${total.toFixed(2)}</span>
                     </div>
                     <button className={`${styles.totalBtn}`}>
-                        <Link href='/' className={`${styles.totalBtnLink} font-poppins`}>Procees to checkout</Link>
+                        <Link href='/checkout' className={`${styles.totalBtnLink} font-poppins`}>Procees to checkout</Link>
                     </button>
                 </div>
             </div>

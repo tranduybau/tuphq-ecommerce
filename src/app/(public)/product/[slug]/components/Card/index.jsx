@@ -15,12 +15,12 @@ export default function Card(props) {
                     src={props.img}
                     alt='product'
                     fill={true}
-                    className='lg:max-w-[270px]'
+                    className='lg:max-w-[270px] object-contain'
                     sizes={'(max-width: 768px) 100vw'}
                 />
-                <span className='card-discount'>
+                {props.discount && <span className='card-discount'>
                     <p className='font-poppins'>-{props.discount}</p>
-                </span>
+                </span>}
 
                 <div className='icon-wrapper'>
                     <div className='heart-small-icon'>

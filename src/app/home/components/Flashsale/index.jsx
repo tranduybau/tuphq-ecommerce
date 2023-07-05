@@ -106,6 +106,7 @@ export default function Flashsale() {
                     breakpoints={breakpointsSwiper}>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad 123"
@@ -116,6 +117,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -126,6 +128,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -136,6 +139,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -146,6 +150,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -156,6 +161,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -166,6 +172,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -176,6 +183,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"
@@ -186,6 +194,7 @@ export default function Flashsale() {
                     </SwiperSlide>
                     <SwiperSlide>
                         <Card
+                            id='1'
                             img='/image/Products/flashsale-product.png'
                             discount="40%"
                             name="HAVIT HV-G92 Gamepad"

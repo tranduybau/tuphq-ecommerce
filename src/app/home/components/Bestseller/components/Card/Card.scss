@@ -24,7 +24,6 @@
 
   .image {
     position: relative;
-    background-color: #f5f5f5;
     min-width: 270px;
     min-height: 250px;
     &:hover .add-card {
@@ -113,7 +112,7 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 24px;
-      color: #000;
+      color: #000 !important;
       opacity: 0.5;
     }
   }

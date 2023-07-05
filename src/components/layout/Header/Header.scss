@@ -173,6 +173,7 @@
 }
 
 .icon-heart {
+  position: relative;
   cursor: pointer;
   width: 32px;
   height: 32px;
@@ -182,12 +183,30 @@
 }
 
 .icon-cart {
+  position: relative;
   cursor: pointer;
   width: 32px;
   height: 32px;
   &:hover {
     fill: #000;
   }
+}
+
+.main-header-icon__count-product {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #db4444;
+  color: #fafafa;
+  text-align: center;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .bar-icon {
@@ -254,8 +273,6 @@
 
 @media (max-width: 1199.98px) {
   .main-header__menu {
-    display: flex;
-    margin-bottom: 0 !important;
     li {
       margin-right: 48px;
 
@@ -279,15 +296,11 @@
 
 @media (max-width: 991.98px) {
   .main-header__wrapper {
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 12px;
 
     .main-header__menu {
-      display: flex;
-      margin-bottom: 0 !important;
       li {
         margin-right: 48px;
 
@@ -317,15 +330,11 @@
 
 @media (max-width: 767.98px) {
   .main-header__wrapper {
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 16px;
 
     .main-header__menu {
-      display: flex;
-      margin-bottom: 0 !important;
       li {
         margin-right: 48px;
 
@@ -365,12 +374,11 @@
     margin-right: 0;
   }
 
-  .top-header__text-link{
+  .top-header__text-link {
     font-size: 12px;
   }
 
   .main-header__wrapper {
-    display: flex;
     justify-content: space-around;
 
     .main-header__menu {

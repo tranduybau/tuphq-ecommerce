@@ -95,20 +95,20 @@
   }
 }
 
-@media (max-width: 768px){
-  .inputWrapper{
+@media (max-width: 768px) {
+  .inputWrapper {
     width: 100%;
     flex-direction: column;
     gap: 24px;
   }
 
-  .item{
+  .item {
     width: 100%;
   }
 }
 
-@media (max-width: 576px){
-  .wrapper{
+@media (max-width: 576px) {
+  .wrapper {
     padding: 0;
   }
 }

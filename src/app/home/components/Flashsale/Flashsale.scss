@@ -42,8 +42,8 @@
 }
 
 .flashsale {
-  position: relative;
   display: flex;
+  position: relative;
   align-items: flex-end;
   gap: 87px;
   margin-top: 24px;
@@ -127,7 +127,6 @@
 
 @media (max-width: 768px) {
   .flashsale {
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
@@ -140,14 +139,7 @@
 
 @media (max-width: 576px) {
   .flashsale {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     gap: 30px;
-  }
-
-  .btn-swiper {
-    position: relative;
   }
 
   .product-fs {

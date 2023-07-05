@@ -1,37 +1,57 @@
-"use client"
-import { usePathname } from 'next/navigation'
-import styles from './Breadcrumb.module.scss'
-import Link from 'next/link'
+'use client';
 
-export default function Breadcrumb(props) {
-    let pathname = usePathname()
-    if(props.pathname){
-        pathname = props.pathname
-    }
-    const pathNameArray = pathname.split('/')
-    pathNameArray.shift()
-    const pathNameMainArray = pathNameArray.map(pathname => {
-        return pathname.slice(0).charAt(0).toUpperCase() + pathname.slice(1)
-    })
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import PropTypes from 'prop-types';
+
+import styles from './Breadcrumb.module.scss';
+
+function Breadcrumb({ pathname, urls }) {
+  Breadcrumb.propTypes = {
+    pathname: PropTypes.string,
+    urls: PropTypes.string,
+  };
+
+  Breadcrumb.defaultProps = {
+    pathname: '',
+    urls: '',
+  };
+  let pathnameVar = usePathname();
+  if (pathname) {
+    pathnameVar = pathname;
+  }
+  const pathNameArray = pathnameVar.split('/');
+  pathNameArray.shift();
+  const pathNameMainArray = pathNameArray.map((pathnameItem) => {
     return (
-        <div className={styles.wrapper}>
-            <Link href='/' className={`${styles.link} font-poppins`}>
-                Home
+      pathnameItem.slice(0).charAt(0).toUpperCase() + pathnameItem.slice(1)
+    );
+  });
+  return (
+    <div className={styles.wrapper}>
+      <Link href="/" className={`${styles.link} font-poppins`}>
+        Home
+      </Link>
+      {pathNameMainArray.map((url, index) => {
+        const id = index;
+        return (
+          <Link key={id} href="/" className={`${styles.link} font-poppins`}>
+            {url}
+          </Link>
+        );
+      })}
+      {urls &&
+        urls.map((url, index) => {
+          const id = index;
+          return (
+            <Link key={id} href="/" className={`${styles.link} font-poppins`}>
+              {url}
             </Link>
-            {pathNameMainArray.map((url, index) => {
-                return (
-                    <Link key={index} href={pathname} className={`${styles.link} font-poppins`}>
-                        {url}
-                    </Link>
-                )
-            })}
-            {props.urls && props.urls.map((url, index) => {
-                return (
-                    <Link key={index} href={'/'} className={`${styles.link} font-poppins`}>
-                        {url}
-                    </Link>
-                )
-            })}
-        </div>
-    )
+          );
+        })}
+    </div>
+  );
 }
+
+export default React.memo(Breadcrumb);

@@ -1,65 +1,167 @@
-import './Card.scss'
-import Image from 'next/image'
+'use client';
 
-//icon
-import HeartSmallIcon from '@/svgs/heart-small.svg'
-import QuickViewIcon from '@/svgs/Quick-View.svg'
-import StarIcon from '@/svgs/star.svg'
-import Link from 'next/link'
+import React, { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import PropTypes from 'prop-types';
 
-export default function Card(props) {
-    return (
-        <div className='card-fs lg:max-w-[270px]'>
-            <div className='image'>
-                <Image
-                    src={props.img}
-                    alt='product'
-                    fill={true}
-                    className='lg:max-w-[270px]'
-                    sizes={'(max-width: 768px) 100vw'}
-                />
-                <span className='card-discount'>
-                    <p className='font-poppins'>-{props.discount}</p>
-                </span>
+// icon
+import HeartSmallIcon from '@/svgs/heart-small.svg';
+import QuickViewIcon from '@/svgs/Quick-View.svg';
+import StarIcon from '@/svgs/star.svg';
 
-                <div className='icon-wrapper'>
-                    <div className='heart-small-icon'>
-                        <HeartSmallIcon className="card-icon" />
-                    </div>
-                    <Link href={`/product/${props.id}`} className='quick-view-icon' >
-                        <QuickViewIcon className="card-icon" />
-                    </Link>
-                </div>
+import './Card.scss';
 
-                <div className='add-card'>
-                    <span className='font-poppins'>Add To Card</span>
-                </div>
-            </div>
-            <div className='description'>
-                <div className='name'>
-                    <span className='font-poppins'>{props.name}</span>
-                </div>
+export default function Card({ id, img, discount, name, sale, price, count }) {
+  const [user, setUser] = useState();
+  const router = useRouter();
 
-                <div className='description__wrapper'>
-                    <div className='price'>
-                        <span className='price-sale font-poppins'>${props.sale}</span>
-                        <span className='price-default class-poppins'>${props.price}</span>
-                    </div>
+  const handleAddToCart = useCallback(() => {
+    const account = user ? JSON.parse(user) : null;
+    const productId = id;
+    const existingCartItems = localStorage.getItem('cartItems');
+    if (account) {
+      if (existingCartItems === null) {
+        const cartItem = { account: account.id, productId: [productId] };
+        localStorage.setItem('cartItems', JSON.stringify(cartItem));
+        toast.success('Thêm vào giỏ hàng thành công');
+        setTimeout(() => {
+          router.refresh();
+        }, 2000);
+      } else {
+        const existingData = JSON.parse(existingCartItems);
+        if (existingData.productId.includes(productId)) {
+          toast.error('Sản phẩm đã tồn tại trong giỏ hàng');
+        } else {
+          existingData.productId.push(productId);
+          localStorage.setItem('cartItems', JSON.stringify(existingData));
+          toast.success('Đã thêm sản phẩm vào giỏ hàng');
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
+        }
+      }
+    } else {
+      router.push('/signin');
+    }
+  }, [router, id, user]);
 
-                    <div className='rate'>
-                        <div className='star-fs'>
-                            <StarIcon className='star' />
-                            <StarIcon className='star' />
-                            <StarIcon className='star' />
-                            <StarIcon className='star' />
-                            <StarIcon className='star' />
-                        </div>
-                        <div className='count'>(
-                            <span className='font-poppins'>{props.count}</span>)
-                        </div>
-                    </div>
-                </div>
-            </div>
+  const handleAddToWishlist = useCallback(() => {
+    const account = user ? JSON.parse(user) : null;
+    const productId = id;
+    const existingWishlistItems = localStorage.getItem('wishlistItems');
+    if (account) {
+      if (existingWishlistItems === null) {
+        const wishlistItem = { account: account.id, productId: [productId] };
+        localStorage.setItem('wishlistItems', JSON.stringify(wishlistItem));
+        toast.success('Thêm vào danh sách yêu thích thành công');
+        setTimeout(() => {
+          router.refresh();
+        }, 2000);
+      } else {
+        const existingData = JSON.parse(existingWishlistItems);
+        if (existingData.productId.includes(productId)) {
+          toast.error('Sản phẩm đã tồn tại trong danh sách yêu thích');
+        } else {
+          existingData.productId.push(productId);
+          localStorage.setItem('wishlistItems', JSON.stringify(existingData));
+          toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
+        }
+      }
+    } else {
+      router.push('/signin');
+    }
+  }, [id, router, user]);
+
+  useEffect(() => {
+    const currentUser = Cookies.get('currentUser');
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, []);
+
+  return (
+    <div className="card-fs lg:max-w-[270px]">
+      <div className="image">
+        <Image
+          src={img}
+          alt="product"
+          fill
+          className="lg:max-w-[270px] object-scale-down"
+          sizes="(max-width: 768px) 100vw"
+        />
+        <span className="card-discount">
+          <p className="font-poppins">-{discount}</p>
+        </span>
+
+        <div className="icon-wrapper">
+          <button
+            aria-label="btn"
+            type="button"
+            onClick={handleAddToWishlist}
+            className="heart-small-icon"
+          >
+            <HeartSmallIcon className="card-icon" />
+          </button>
+          <Link
+            href={`/product/${id}`}
+            aria-label="quick view"
+            className="quick-view-icon"
+          >
+            <QuickViewIcon className="card-icon" />
+          </Link>
         </div>
-    )
+
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          aria-label="Add to cart"
+          className="add-card"
+        >
+          <span className="font-poppins">Add To Cart</span>
+        </button>
+      </div>
+      <div className="description">
+        <div className="name">
+          <span className="font-poppins">{name}</span>
+        </div>
+
+        <div className="description__wrapper">
+          <div className="price">
+            <span className="price-sale font-poppins">${sale}</span>
+            <span className="price-default class-poppins">${price}</span>
+          </div>
+
+          <div className="rate">
+            <div className="star-fs">
+              <StarIcon className="star" />
+              <StarIcon className="star" />
+              <StarIcon className="star" />
+              <StarIcon className="star" />
+              <StarIcon className="star" />
+            </div>
+            <div className="count">
+              (<span className="font-poppins">{count}</span>)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
+
+Card.propTypes = {
+  id: PropTypes.number.isRequired,
+  img: PropTypes.string.isRequired,
+  discount: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  sale: PropTypes.bool.isRequired,
+  price: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
+};

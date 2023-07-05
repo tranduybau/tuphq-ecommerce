@@ -1,47 +1,125 @@
-import Image from 'next/image'
-import styles from './WishlistCard.module.scss'
-import classNames from 'classnames'
+import React, { useCallback } from 'react';
+import { toast } from 'react-toastify';
+import classNames from 'classnames';
+import Cookies from 'js-cookie';
+import Image from 'next/image';
+import PropTypes from 'prop-types';
 
-//icon
-import DeleteIcon from '@/svgs/Wishlist/icon-delete.svg'
-import QuickViewIcon from '@/svgs/Quick-View.svg'
-import CartIcon from '@/svgs/Cart.svg'
+import CartIcon from '@/svgs/Cart.svg';
+import QuickViewIcon from '@/svgs/Quick-View.svg';
+// icon
+import DeleteIcon from '@/svgs/Wishlist/icon-delete.svg';
+
+import styles from './WishlistCard.module.scss';
 
 const imageStyle = {
-    objectFit: 'contain',
-}
-export default function WishlistCard(props) {
-    return (
-        <div className={`${styles.wrapper}`}>
-            <div className={`${styles.imageWrapper}`}>
-                <Image
-                    sizes='(max-width: 1200px) 100vw'
-                    src={props.img}
-                    alt='wishlist product'
-                    fill={true}
-                    style={imageStyle}
-                    priority={true}
-                />
-                <div className={`${styles.discountAndActions}`}>
-                    {props.discount && <span className={`${styles.discount} font-poppins`}>-{props.discount}%</span>}
-                    {props.type && <div className={`${styles.cardIconWrapper}`}>
-                        {props.type === 'wishlist' && <DeleteIcon className={`${styles.deleteIcon}`} />}
-                        {props.type === 'foryou' && <QuickViewIcon className={`${styles.quickViewIcon}`} />}
-                    </div>}
-                </div>
-                <div className={`${styles.addCart}`}>
-                    <CartIcon className={`${styles.cartIcon}`} />
-                    <span className={`${styles.addCartText} font-poppins`}>Add To Card</span>
-                </div>
+  objectFit: 'contain',
+};
+
+function WishlistCard({ id, img, discount, type, name, price }) {
+  const handleDeleteItem = useCallback(() => {
+    const wishlistItems = JSON.parse(localStorage.getItem('wishlistItems'));
+    const productIdSelected = id;
+    const currentUser = Cookies.get('currentUser')
+      ? JSON.parse(Cookies.get('currentUser'))
+      : null;
+
+    if (currentUser) {
+      const { productId } = wishlistItems;
+
+      const updatedProductId = productId.filter(
+        (item) => item !== productIdSelected
+      );
+
+      const updatedWishlistItems = {
+        ...wishlistItems,
+        productId: updatedProductId,
+      };
+
+      localStorage.setItem(
+        'wishlistItems',
+        JSON.stringify(updatedWishlistItems)
+      );
+      toast.success('Đã xóa thành công');
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
+  }, [id]);
+
+  return (
+    <div className={`${styles.wrapper}`}>
+      <div className={`${styles.imageWrapper}`}>
+        <Image
+          sizes="(max-width: 1200px) 100vw"
+          src={img}
+          alt="wishlist product"
+          fill
+          style={imageStyle}
+          priority
+        />
+        <div className={`${styles.discountAndActions}`}>
+          {discount && (
+            <span className={`${styles.discount} font-poppins`}>
+              -{discount}%
+            </span>
+          )}
+          {type && (
+            <div className={`${styles.cardIconWrapper}`}>
+              {type === 'wishlist' && (
+                <button
+                  aria-label="btn"
+                  type="button"
+                  onClick={handleDeleteItem}
+                >
+                  <DeleteIcon className={`${styles.deleteIcon}`} />
+                </button>
+              )}
+              {type === 'foryou' && (
+                <QuickViewIcon className={`${styles.quickViewIcon}`} />
+              )}
             </div>
-            <div className={`${styles.information}`}>
-                {props.name && <span className={`${styles.name} font-poppins`}>{props.name}</span>}
-                {props.price && <div className={styles.priceWrapper}>
-                    {props.discount && <span className={`${styles.discountPrice} font-poppins`}>${(props.price * ((100 - props.discount) / 100)).toFixed(3)}</span>}
-                    {props.price && <span className={classNames(styles.price, 'font-poppins', { [styles.priceLine]: props.discount != null })} >${props.price}</span>}
-                </div>
-                }
-            </div>
+          )}
         </div>
-    )
+        <div className={`${styles.addCart}`}>
+          <CartIcon className={`${styles.cartIcon}`} />
+          <span className={`${styles.addCartText} font-poppins`}>
+            Add To Cart
+          </span>
+        </div>
+      </div>
+      <div className={`${styles.information}`}>
+        {name && <span className={`${styles.name} font-poppins`}>{name}</span>}
+        {price && (
+          <div className={styles.priceWrapper}>
+            {discount && (
+              <span className={`${styles.discountPrice} font-poppins`}>
+                ${(price * ((100 - discount) / 100)).toFixed(3)}
+              </span>
+            )}
+            {price && (
+              <span
+                className={classNames(styles.price, 'font-poppins', {
+                  [styles.priceLine]: discount != null,
+                })}
+              >
+                ${price}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
+
+WishlistCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  img: PropTypes.string.isRequired,
+  discount: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+};
+
+export default React.memo(WishlistCard);

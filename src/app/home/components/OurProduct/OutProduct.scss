@@ -145,31 +145,5 @@
     .btn-swiper {
       position: relative;
     }
-    .flashsale {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-    }
-  }
-}
-
-@media (max-width: 576px) {
-  .ourproduct-wrapper {
-    .outproduct-control-swiper {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .btn-swiper {
-      position: relative;
-    }
-    .flashsale {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-    }
   }
 }

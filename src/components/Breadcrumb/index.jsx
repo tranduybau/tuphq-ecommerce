@@ -4,7 +4,10 @@ import styles from './Breadcrumb.module.scss'
 import Link from 'next/link'
 
 export default function Breadcrumb(props) {
-    const pathname = usePathname()
+    let pathname = usePathname()
+    if(props.pathname){
+        pathname = props.pathname
+    }
     const pathNameArray = pathname.split('/')
     pathNameArray.shift()
     const pathNameMainArray = pathNameArray.map(pathname => {

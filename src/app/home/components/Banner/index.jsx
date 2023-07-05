@@ -28,9 +28,9 @@ export default function Banner() {
     return (
         <div className="banner-wrapper">
             <div className="banner container flex">
-                <div onClick={toggleBars} className="fa-bars-icon">
+                <button onClick={toggleBars} className="fa-bars-icon">
                     <FontAwesomeIcon icon={faBars} />
-                </div>
+                </button>
                 <div className={classNames('sidebar', 'flex-auto', {showBars: isBarsOpen === true})}>
                     <ul className="sidebar__menu ">
                         <li className="sidebar-item sp-bw">

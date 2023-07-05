@@ -15,15 +15,38 @@ import 'swiper/swiper-bundle.css'
 //icon
 import ArrowLeft from '@/svgs/icons_arrow-left.svg'
 import ArrowRight from '@/svgs/icons_arrow-right.svg'
-import CellPhone from '@/svgs/Category-CellPhone.svg'
-import Computer from '@/svgs/Category-Computer.svg'
-import SmartWatch from '@/svgs/Category-SmartWatch.svg'
-import Camera from '@/svgs/Category-Camera.svg'
-import Headphone from '@/svgs/Category-Headphone.svg'
-import Gamepad from '@/svgs/Category-Gamepad.svg'
+import CellPhone from '@/svgs/Category/Category-CellPhone.svg'
+import Computer from '@/svgs/Category/Category-Computer.svg'
+import SmartWatch from '@/svgs/Category/Category-SmartWatch.svg'
+import Camera from '@/svgs/Category/Category-Camera.svg'
+import Headphone from '@/svgs/Category/Category-Headphone.svg'
+import Gamepad from '@/svgs/Category/Category-Gamepad.svg'
 
+const moduleSwiper = [Pagination, Navigation]
+const breakpointsSwiper = {
+    320: {
+        slidesPerView: 2,
+        spaceBetween: 20
+    },
+    576: {
+        slidesPerView: 2,
+        spaceBetween: 30
+    },
+    768: {
+        slidesPerView: 2,
+        spaceBetween: 40
+    },
+    992: {
+        slidesPerView: 3,
+        spaceBetween: 40
+    },
+    1200: {
+        slidesPerView: 6,
+        spaceBetween: 40
+    }
 
-SwiperCore.use([Navigation, Pagination]);
+}
+SwiperCore.use(moduleSwiper);
 
 export default function Category() {
     //ref
@@ -85,30 +108,8 @@ export default function Category() {
                     ref={swiperRef}
                     slidesPerView={6}
                     spaceBetween={30}
-                    modules={[Pagination, Navigation]}
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 2,
-                            spaceBetween: 20
-                        },
-                        480: {
-                            slidesPerView: 2,
-                            spaceBetween: 30
-                        },
-                        640: {
-                            slidesPerView: 2,
-                            spaceBetween: 40
-                        },
-                        750: {
-                            slidesPerView: 3,
-                            spaceBetween: 40
-                        },
-                        1000: {
-                            slidesPerView: 6,
-                            spaceBetween: 40
-                        }
-
-                    }}>
+                    modules={moduleSwiper}
+                    breakpoints={breakpointsSwiper}>
                     <SwiperSlide>
                         <CategoryItem category="Phones" >
                             <CellPhone className='category-img'></CellPhone>

@@ -63,6 +63,17 @@ function Header() {
         }
     }, [router]);
 
+    const handleCheckPrivateRoute = (pathname) => {
+        const currentUser = Cookies.get('currentUser') ? JSON.parse(Cookies.get('currentUser')) : null;
+        if (currentUser === null) {
+            router.push('/signin')
+            toast.error("Bạn cần phải đăng nhập")
+        }
+        else {
+            router.push('/' + pathname)
+        }
+    }
+
     useEffect(() => {
         const handleOutsideClick = (event) => {
             if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {

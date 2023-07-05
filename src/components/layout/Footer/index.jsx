@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -6,7 +6,6 @@ import CopyrightIcon from '@/svgs/Footer/icon-copyright.svg';
 import FacebookIcon from '@/svgs/Footer/Icon-Facebook.svg';
 import InstagramIcon from '@/svgs/Footer/icon-instagram.svg';
 import LinkedinIcon from '@/svgs/Footer/Icon-Linkedin.svg';
-// icon
 import SendIcon from '@/svgs/Footer/icon-send.svg';
 import TwitterIcon from '@/svgs/Footer/Icon-Twitter.svg';
 
@@ -242,4 +241,4 @@ function Footer() {
   );
 }
 
-export default memo(Footer);
+export default React.memo(Footer);

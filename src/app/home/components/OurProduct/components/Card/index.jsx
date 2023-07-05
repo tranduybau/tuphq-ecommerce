@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
@@ -50,7 +50,7 @@ export default function Card({ id, className, img, name, sale, count, color }) {
     setActive(!active);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     const account = user ? JSON.parse(user) : null;
     const productId = id;
     const existingCartItems = localStorage.getItem('cartItems');
@@ -59,7 +59,9 @@ export default function Card({ id, className, img, name, sale, count, color }) {
         const cartItem = { account: account.id, productId: [productId] };
         localStorage.setItem('cartItems', JSON.stringify(cartItem));
         toast.success('Thêm vào giỏ hàng thành công');
-        router.refresh();
+        setTimeout(() => {
+          router.refresh();
+        }, 2000);
       } else {
         const existingData = JSON.parse(existingCartItems);
         if (existingData.productId.includes(productId)) {
@@ -68,15 +70,17 @@ export default function Card({ id, className, img, name, sale, count, color }) {
           existingData.productId.push(productId);
           localStorage.setItem('cartItems', JSON.stringify(existingData));
           toast.success('Đã thêm sản phẩm vào giỏ hàng');
-          router.refresh();
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
         }
       }
     } else {
       router.push('/signin');
     }
-  };
+  }, [router, id, user]);
 
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = useCallback(() => {
     const account = user ? JSON.parse(user) : null;
     const productId = id;
     const existingWishlistItems = localStorage.getItem('wishlistItems');
@@ -85,7 +89,9 @@ export default function Card({ id, className, img, name, sale, count, color }) {
         const wishlistItem = { account: account.id, productId: [productId] };
         localStorage.setItem('wishlistItems', JSON.stringify(wishlistItem));
         toast.success('Thêm vào danh sách yêu thích thành công');
-        router.refresh();
+        setTimeout(() => {
+          router.refresh();
+        }, 2000);
       } else {
         const existingData = JSON.parse(existingWishlistItems);
         if (existingData.productId.includes(productId)) {
@@ -94,13 +100,15 @@ export default function Card({ id, className, img, name, sale, count, color }) {
           existingData.productId.push(productId);
           localStorage.setItem('wishlistItems', JSON.stringify(existingData));
           toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
-          router.refresh();
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
         }
       }
     } else {
       router.push('/signin');
     }
-  };
+  }, [id, router, user]);
   return (
     <div className={`card ${className} border-none`}>
       <div className="image lg:max-w-[270px]">
@@ -108,11 +116,12 @@ export default function Card({ id, className, img, name, sale, count, color }) {
           fill
           src={img}
           alt="product"
-          className="lg:max-w-[270px] object-contain"
+          className="lg:max-w-[270px] object-scale-down"
           sizes="(max-width: 768px) 100vw"
         />
         <div className="icon-wrapper">
           <button
+            aria-label="btn"
             type="button"
             onClick={handleAddToWishlist}
             className="heart-small-icon"

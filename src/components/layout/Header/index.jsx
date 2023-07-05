@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +15,6 @@ import CancelIcon from '@/svgs/Header/icon-cancel.svg';
 import LogoutIcon from '@/svgs/Header/Icon-logout.svg';
 import MallbagIcon from '@/svgs/Header/icon-mallbag.svg';
 import ReviewIcon from '@/svgs/Header/Icon-Reviews.svg';
-// icon
 import SearchIcon from '@/svgs/Header/SearchIcon.svg';
 import UserIcon from '@/svgs/Header/user.svg';
 import UserTooltipIcon from '@/svgs/Header/user-img.svg';
@@ -23,15 +22,14 @@ import UserTooltipIcon from '@/svgs/Header/user-img.svg';
 import './Header.scss';
 
 function Header() {
-  // state
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const [user, setUser] = useState();
   const [cartItemNumber, setCardItemNumber] = useState(0);
+  const [wishlistItemNumber, setWishlistItemNumber] = useState(0);
   const router = useRouter();
 
-  // ref
   const tooltipRef = useRef(null);
 
   useEffect(() => {
@@ -45,12 +43,19 @@ function Header() {
 
   useEffect(() => {
     const currentCartItems = JSON.parse(localStorage.getItem('cartItems'));
+    const currentWishlistItems = JSON.parse(
+      localStorage.getItem('wishlistItems')
+    );
     const currentUser = Cookies.get('currentUser')
       ? JSON.parse(Cookies.get('currentUser'))
       : null;
 
     if (currentCartItems && currentUser) {
       setCardItemNumber(currentCartItems.productId.length);
+    }
+
+    if (currentWishlistItems && currentUser) {
+      setWishlistItemNumber(currentWishlistItems.productId.length);
     }
   }, []);
 
@@ -61,13 +66,9 @@ function Header() {
   const handleLogout = useCallback(() => {
     Cookies.remove('currentUser');
     setTimeout(() => {
-      const isBrowser = typeof window !== 'undefined';
-      const currentLocation = isBrowser ? window.location : null;
-      if (currentLocation !== null) {
-        currentLocation.reload();
-      }
+      router.refresh();
     }, 100);
-  }, []);
+  }, [router]);
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prevState) => !prevState);
@@ -219,6 +220,11 @@ function Header() {
                   className="icon-heart"
                 >
                   <HeartIcon className="icon-heart" />
+                  {wishlistItemNumber > 0 && (
+                    <span className="main-header-icon__count-product">
+                      {wishlistItemNumber}
+                    </span>
+                  )}
                 </button>
               )}
               {pathname !== '/signin' && pathname !== '/signup' && (
@@ -282,4 +288,4 @@ function Header() {
   );
 }
 
-export default memo(Header);
+export default React.memo(Header);

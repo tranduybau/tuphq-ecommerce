@@ -5,7 +5,7 @@ import SignInForm from './components/SignInForm';
 
 import styles from './SignIn.module.scss';
 
-export default function SignIn() {
+function SignIn() {
   return (
     <section className={`${styles.wrapper}`}>
       <div className={`${styles.sideImg}`}>
@@ -29,3 +29,5 @@ export default function SignIn() {
     </section>
   );
 }
+
+export default React.memo(SignIn);

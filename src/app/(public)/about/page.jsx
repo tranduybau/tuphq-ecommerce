@@ -60,17 +60,17 @@ function AboutPage() {
       >
         <DetailItem
           icon={ShopIcon}
-          count="10.5k "
+          count={10.5}
           text="Sallers active our site"
         />
         <DetailItem
           icon={SaleIcon}
-          count="33k"
+          count={33.0}
           text="Mopnthly Produduct Sale"
         />
         <DetailItem
           icon={ShoppingIcon}
-          count="45.5k"
+          count={45.5}
           text="Customer active in our site"
         />
         <DetailItem
@@ -112,4 +112,4 @@ function AboutPage() {
   );
 }
 
-export default AboutPage;
+export default React.memo(AboutPage);

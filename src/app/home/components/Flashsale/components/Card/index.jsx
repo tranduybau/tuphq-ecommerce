@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
@@ -18,24 +18,8 @@ import './Card.scss';
 export default function Card({ id, img, discount, name, sale, price, count }) {
   const [user, setUser] = useState();
   const router = useRouter();
-  Card.propTypes = {
-    id: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
-    discount: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    sale: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    count: PropTypes.number.isRequired,
-  };
 
-  useEffect(() => {
-    const currentUser = Cookies.get('currentUser');
-    if (currentUser) {
-      setUser(currentUser);
-    }
-  }, []);
-
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     const account = user ? JSON.parse(user) : null;
     const productId = id;
     const existingCartItems = localStorage.getItem('cartItems');
@@ -44,7 +28,9 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
         const cartItem = { account: account.id, productId: [productId] };
         localStorage.setItem('cartItems', JSON.stringify(cartItem));
         toast.success('Thêm vào giỏ hàng thành công');
-        router.refresh();
+        setTimeout(() => {
+          router.refresh();
+        }, 2000);
       } else {
         const existingData = JSON.parse(existingCartItems);
         if (existingData.productId.includes(productId)) {
@@ -53,15 +39,17 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
           existingData.productId.push(productId);
           localStorage.setItem('cartItems', JSON.stringify(existingData));
           toast.success('Đã thêm sản phẩm vào giỏ hàng');
-          router.refresh();
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
         }
       }
     } else {
       router.push('/signin');
     }
-  };
+  }, [router, id, user]);
 
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = useCallback(() => {
     const account = user ? JSON.parse(user) : null;
     const productId = id;
     const existingWishlistItems = localStorage.getItem('wishlistItems');
@@ -70,7 +58,9 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
         const wishlistItem = { account: account.id, productId: [productId] };
         localStorage.setItem('wishlistItems', JSON.stringify(wishlistItem));
         toast.success('Thêm vào danh sách yêu thích thành công');
-        router.refresh();
+        setTimeout(() => {
+          router.refresh();
+        }, 2000);
       } else {
         const existingData = JSON.parse(existingWishlistItems);
         if (existingData.productId.includes(productId)) {
@@ -79,13 +69,22 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
           existingData.productId.push(productId);
           localStorage.setItem('wishlistItems', JSON.stringify(existingData));
           toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
-          router.refresh();
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
         }
       }
     } else {
       router.push('/signin');
     }
-  };
+  }, [id, router, user]);
+
+  useEffect(() => {
+    const currentUser = Cookies.get('currentUser');
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, []);
 
   return (
     <div className="card-fs lg:max-w-[270px]">
@@ -94,7 +93,7 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
           src={img}
           alt="product"
           fill
-          className="lg:max-w-[270px] object-contain"
+          className="lg:max-w-[270px] object-scale-down"
           sizes="(max-width: 768px) 100vw"
         />
         <span className="card-discount">
@@ -103,6 +102,7 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
 
         <div className="icon-wrapper">
           <button
+            aria-label="btn"
             type="button"
             onClick={handleAddToWishlist}
             className="heart-small-icon"
@@ -155,3 +155,13 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
     </div>
   );
 }
+
+Card.propTypes = {
+  id: PropTypes.number.isRequired,
+  img: PropTypes.string.isRequired,
+  discount: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  sale: PropTypes.bool.isRequired,
+  price: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
+};

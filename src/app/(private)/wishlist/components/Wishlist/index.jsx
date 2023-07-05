@@ -3,20 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 import WishlistCard from '../WishlistCard';
 
-// swiper css
-import 'swiper/css';
-import 'swiper/swiper-bundle.css';
 import styles from './Wishlist.module.scss';
 
-const modulesSwiper = [Pagination, Navigation];
 const breakpointsSwiper = {
   320: {
     slidesPerView: 1,
@@ -40,10 +32,7 @@ const breakpointsSwiper = {
   },
 };
 
-SwiperCore.use([Navigation, Pagination]);
-
 export default function Wishlist() {
-  let keyId = 0;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -83,6 +72,7 @@ export default function Wishlist() {
           Wishlist ({products.length})
         </span>
         <button
+          aria-label="btn"
           type="button"
           className={`${styles.wishlistHeadingBtn} font-poppins`}
         >
@@ -94,13 +84,11 @@ export default function Wishlist() {
           className={`${styles.swiperContainer}`}
           slidesPerView={4}
           spaceBetween={30}
-          modules={modulesSwiper}
           breakpoints={breakpointsSwiper}
         >
           {products.map((product) => {
-            keyId += 1;
             return (
-              <SwiperSlide key={keyId}>
+              <SwiperSlide key={product.id}>
                 <WishlistCard
                   id={product.id}
                   name={product.title}

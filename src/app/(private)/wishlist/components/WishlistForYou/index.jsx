@@ -9,7 +9,6 @@ import WishlistCard from '../WishlistCard';
 import styles from './WishlistForYou.module.scss';
 
 export default function WishlistForYou() {
-  let keyId = 0;
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
     try {
@@ -41,14 +40,13 @@ export default function WishlistForYou() {
         className={`${styles.forYouList} grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1  gap-[30px]`}
       >
         {products.map((product, index) => {
-          keyId += 1;
           const lastIndex = products.length - 1;
           const showLastFour = index >= lastIndex - 3;
           const listItemClassName = showLastFour
             ? styles.forYouListItem
             : styles.hiddenListItem;
           return (
-            <div key={keyId} className={listItemClassName}>
+            <div key={product.id} className={listItemClassName}>
               <WishlistCard
                 name={product.title}
                 img={product.image}

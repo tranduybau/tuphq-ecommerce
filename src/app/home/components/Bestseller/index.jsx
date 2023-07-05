@@ -1,24 +1,17 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 import Card from './components/Card';
 import TimeCountDown from './components/TimeCountDown';
 
 import './Bestseller.scss';
-import 'swiper/css';
-import 'swiper/swiper-bundle.css';
 
-const moduleSwiper = [Pagination, Navigation];
 const breakpointsSwiper = {
   320: {
     slidesPerView: 1,
@@ -44,13 +37,10 @@ const breakpointsSwiper = {
   },
 };
 
-SwiperCore.use(moduleSwiper);
-export default function BestSeller({ data }) {
-  let keyId = 0;
+function BestSeller({ data }) {
   BestSeller.propTypes = {
     data: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
   };
-  const swiperRef = useRef(null);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -68,7 +58,7 @@ export default function BestSeller({ data }) {
       <div className="bestseller-control">
         <h1 className="font-inter">Best Selling Products</h1>
         <div className="view-all">
-          <button type="button" className="btn-view-all">
+          <button aria-label="btn" type="button" className="btn-view-all">
             <Link href="/" className="btn-view-all__link font-poppins">
               View All
             </Link>
@@ -77,17 +67,14 @@ export default function BestSeller({ data }) {
       </div>
       <div className="product-bs">
         <Swiper
-          ref={swiperRef}
           slidesPerView={4}
           spaceBetween={30}
-          modules={moduleSwiper}
           breakpoints={breakpointsSwiper}
         >
           {products &&
             products.map((product) => {
-              keyId += 1;
               return (
-                <SwiperSlide key={keyId}>
+                <SwiperSlide key={product.id}>
                   <Card
                     id={product.id}
                     img={product.image}
@@ -120,7 +107,11 @@ export default function BestSeller({ data }) {
             Enhance Your Music Experience
           </span>
           <TimeCountDown />
-          <button type="button" className="banner-product__btn">
+          <button
+            aria-label="btn"
+            type="button"
+            className="banner-product__btn"
+          >
             <Link className="font-poppins" href="/">
               Buy Now
             </Link>
@@ -131,3 +122,5 @@ export default function BestSeller({ data }) {
     </div>
   );
 }
+
+export default React.memo(BestSeller);

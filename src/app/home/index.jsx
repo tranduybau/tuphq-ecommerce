@@ -6,10 +6,8 @@ import Bestseller from './components/Bestseller';
 import Category from './components/Category';
 import Featured from './components/Featured';
 import Flashsale from './components/Flashsale';
-// Component
 import OutProduct from './components/OurProduct';
 
-import 'react-toastify/dist/ReactToastify.css';
 import './Home.scss';
 
 const fetchData = async () => {
@@ -35,4 +33,4 @@ const Home = async () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);

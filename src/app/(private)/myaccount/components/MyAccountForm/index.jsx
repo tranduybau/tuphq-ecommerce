@@ -2,10 +2,11 @@
 
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
+import Cookies from 'js-cookie';
 import * as yup from 'yup';
 
 import InputForm from '@/components/InputForm';
@@ -26,6 +27,7 @@ const schema = yup.object().shape({
 });
 
 export default function MyAccountForm() {
+  const [user, setUser] = useState();
   const methods = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -38,8 +40,29 @@ export default function MyAccountForm() {
       confirmPassword: '',
     },
   });
-  // eslint-disable-next-line no-unused-vars
-  const { handleSubmit } = methods;
+  const { setValue } = methods;
+
+  const updateInputValue = (fieldName, newValue) => {
+    setValue(fieldName, newValue);
+  };
+
+  useEffect(() => {
+    const currentUser = Cookies.get('currentUser')
+      ? JSON.parse(Cookies.get('currentUser'))
+      : null;
+    if (currentUser) {
+      setUser(currentUser);
+      setValue('fname', currentUser.name ? currentUser.name.firstname : '');
+      setValue('lname', currentUser.name ? currentUser.name.lastname : '');
+      setValue('email', currentUser.email || '');
+      setValue(
+        'address',
+        currentUser.address
+          ? `${currentUser.address.street}, ${currentUser.address.number}, ${currentUser.address.city}`
+          : ''
+      );
+    }
+  }, [setValue]);
 
   return (
     <FormProvider {...methods}>
@@ -57,7 +80,11 @@ export default function MyAccountForm() {
               id="fname"
               name="fname"
               className={classNames(styles.input)}
-              placeholder="Md"
+              placeholder={user && user.name ? user.name.firstname : ''}
+              defaultValues={user && user.name ? user.name.firstname : ''}
+              onChange={(event) =>
+                updateInputValue('fname', event.target.value)
+              }
             />
           </div>
           <div className={classNames(styles.item)}>
@@ -68,7 +95,11 @@ export default function MyAccountForm() {
               id="lname"
               name="lname"
               className={classNames(styles.input)}
-              placeholder="Rimel"
+              placeholder={user && user.name ? user.name.lastname : ''}
+              defaultValues={user && user.name ? user.name.lastname : ''}
+              onChange={(event) =>
+                updateInputValue('lname', event.target.value)
+              }
             />
           </div>
         </div>
@@ -81,7 +112,11 @@ export default function MyAccountForm() {
               id="email"
               name="email"
               className={classNames(styles.input)}
-              placeholder="rimel111@gmail.com"
+              placeholder={user ? user.email : ''}
+              defaultValues={user ? user.email : ''}
+              onChange={(event) =>
+                updateInputValue('email', event.target.value)
+              }
             />
           </div>
           <div className={classNames(styles.item)}>
@@ -92,7 +127,19 @@ export default function MyAccountForm() {
               id="address"
               name="address"
               className={classNames(styles.input)}
-              placeholder="Kingston, 5236, United State"
+              placeholder={
+                user && user.address
+                  ? `${user.address.street}, ${user.address.number}, ${user.address.city}`
+                  : ''
+              }
+              defaultValues={
+                user && user.address
+                  ? `${user.address.street}, ${user.address.number}, ${user.address.city}`
+                  : ''
+              }
+              onChange={(event) =>
+                updateInputValue('address', event.target.value)
+              }
             />
           </div>
         </div>
@@ -118,10 +165,18 @@ export default function MyAccountForm() {
           />
         </div>
         <div className={classNames(styles.btnWrapper)}>
-          <button className={classNames(styles.btnCancel)} type="button">
+          <button
+            aria-label="btn"
+            className={classNames(styles.btnCancel)}
+            type="button"
+          >
             Cancel
           </button>
-          <button className={classNames(styles.btnSave)} type="submit">
+          <button
+            aria-label="btn"
+            className={classNames(styles.btnSave)}
+            type="submit"
+          >
             Save Changes
           </button>
         </div>

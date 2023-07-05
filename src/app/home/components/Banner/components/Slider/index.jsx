@@ -8,7 +8,7 @@ import ArrowRight from '@/svgs/Banner/arrow-right.svg';
 
 import './Slider.scss';
 
-export default function Slider({ title, discount }) {
+function Slider({ title, discount }) {
   Slider.propTypes = {
     title: PropTypes.string.isRequired,
     discount: PropTypes.string.isRequired,
@@ -51,3 +51,5 @@ export default function Slider({ title, discount }) {
     </div>
   );
 }
+
+export default React.memo(Slider);

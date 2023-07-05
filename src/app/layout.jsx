@@ -6,18 +6,21 @@ import PropTypes from 'prop-types';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 
+import 'swiper/css';
+import 'swiper/swiper-bundle.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './globals.scss';
 
 const inter = Inter({
   variable: '--font-inter',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
 });
 
 const poppins = Poppins({
   variable: '--font-poppins',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  style: ['italic', 'normal'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
   subsets: ['latin'],
 });
 
@@ -41,7 +44,7 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
       </head>
-      <body className={classNames(inter.variable, poppins.variable)}>
+      <body className={classNames(poppins.variable, inter.variable)}>
         <Header />
         <div className={classNames('min-h-[40vh]')}>{children}</div>
         <Footer />

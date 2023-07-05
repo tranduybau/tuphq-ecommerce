@@ -1,29 +1,19 @@
 'use client';
 
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import classNames from 'classnames';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import SwiperCore, { Grid, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css/grid';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-
-// icon
 import ArrowLeft from '@/svgs/icons_arrow-left.svg';
 import ArrowRight from '@/svgs/icons_arrow-right.svg';
 
 import Card from './components/Card';
 
 import './OutProduct.scss';
-import 'swiper/swiper-bundle.css';
-import 'swiper/css';
 
-const modulesSwiper = [Grid, Pagination, Navigation];
 const breakpointsSwiper = {
   320: {
     slidesPerView: 1,
@@ -47,21 +37,19 @@ const breakpointsSwiper = {
   },
 };
 
-SwiperCore.use(modulesSwiper);
-
-export default function OutProduct({ data }) {
+function OutProduct({ data }) {
   OutProduct.propTypes = {
     data: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
   };
-  // state
+
   const [swiper, setSwiper] = useState(true);
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
   const [products, setProducts] = useState([]);
 
-  let count = 0;
-  // ref
   const swiperRef = useRef();
+
+  let count = 0;
 
   useEffect(() => {
     if (data) {
@@ -132,7 +120,6 @@ export default function OutProduct({ data }) {
           ref={swiperRef}
           slidesPerView={4}
           spaceBetween={30}
-          modules={modulesSwiper}
           breakpoints={breakpointsSwiper}
         >
           {products.map((product, index) => {
@@ -178,7 +165,11 @@ export default function OutProduct({ data }) {
         </Swiper>
       </div>
       <div className="view-all-product">
-        <button type="button" className="view-all-product__btn">
+        <button
+          aria-label="btn"
+          type="button"
+          className="view-all-product__btn"
+        >
           <Link className="font-poppins" href="/">
             View All Products
           </Link>
@@ -188,3 +179,5 @@ export default function OutProduct({ data }) {
     </div>
   );
 }
+
+export default React.memo(OutProduct);

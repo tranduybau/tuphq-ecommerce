@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import styles from './Breadcrumb.module.scss';
 
-export default function Breadcrumb({ pathname, urls }) {
+function Breadcrumb({ pathname, urls }) {
   Breadcrumb.propTypes = {
     pathname: PropTypes.string,
     urls: PropTypes.string,
@@ -17,7 +17,6 @@ export default function Breadcrumb({ pathname, urls }) {
     pathname: '',
     urls: '',
   };
-  let keyId = 0;
   let pathnameVar = usePathname();
   if (pathname) {
     pathnameVar = pathname;
@@ -34,23 +33,19 @@ export default function Breadcrumb({ pathname, urls }) {
       <Link href="/" className={`${styles.link} font-poppins`}>
         Home
       </Link>
-      {pathNameMainArray.map((url) => {
-        keyId += 1;
+      {pathNameMainArray.map((url, index) => {
+        const id = index;
         return (
-          <Link key={keyId} href="/" className={`${styles.link} font-poppins`}>
+          <Link key={id} href="/" className={`${styles.link} font-poppins`}>
             {url}
           </Link>
         );
       })}
       {urls &&
-        urls.map((url) => {
-          keyId += 1;
+        urls.map((url, index) => {
+          const id = index;
           return (
-            <Link
-              key={keyId}
-              href="/"
-              className={`${styles.link} font-poppins`}
-            >
+            <Link key={id} href="/" className={`${styles.link} font-poppins`}>
               {url}
             </Link>
           );
@@ -58,3 +53,5 @@ export default function Breadcrumb({ pathname, urls }) {
     </div>
   );
 }
+
+export default React.memo(Breadcrumb);

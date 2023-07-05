@@ -61,12 +61,17 @@ export default function SignUpForm() {
         />
 
         <button
+          aria-label="btn"
           className={`font-poppins ${styles.SignUpFormSubmitBtn}`}
           type="submit"
         >
           Create Account
         </button>
-        <button className={`${styles.SignUpFormGoogleBtn}`} type="button">
+        <button
+          aria-label="btn"
+          className={`${styles.SignUpFormGoogleBtn}`}
+          type="button"
+        >
           <GoogleIcon className={`${styles.googleIcon}`} />
           <span className={`${styles.googleBtnText} font-poppins`}>
             Sign up with Google

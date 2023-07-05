@@ -8,7 +8,7 @@ import RelatedProduct from './components/RelatedProduct';
 
 import styles from './ProductDetail.module.scss';
 
-export default function ProductDetail() {
+function ProductDetail() {
   return (
     <section className={classNames(styles.wrapper, 'container', 'px-0')}>
       <div className={classNames('my-[80px]')}>
@@ -31,3 +31,5 @@ export default function ProductDetail() {
     </section>
   );
 }
+
+export default React.memo(ProductDetail);

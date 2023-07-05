@@ -11,7 +11,7 @@ import ContactForm from './components/ContactForm';
 
 import styles from './ContactPage.module.scss';
 
-export default function ContactPage() {
+function ContactPage() {
   return (
     <div className={classNames(styles.wrapper, 'container', 'px-0')}>
       <div className={classNames(styles.breadcrumb)}>
@@ -56,3 +56,5 @@ export default function ContactPage() {
     </div>
   );
 }
+
+export default React.memo(ContactPage);

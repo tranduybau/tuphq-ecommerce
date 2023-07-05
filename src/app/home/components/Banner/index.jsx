@@ -4,12 +4,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { faBars, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { A11y, Navigation, Pagination, Scrollbar } from 'swiper';
+import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
 
 // icon
 import DropdownRight from '@/svgs/DropDown-right.svg';
@@ -18,9 +16,8 @@ import Slider from './components/Slider';
 
 import './Banner.scss';
 // Import Swiper styles
-import 'swiper/css';
 
-const modulesSwiper = [Navigation, Pagination, Scrollbar, A11y];
+const modulesSwiper = [Pagination];
 const paginationSwiper = { clickable: true };
 const breakpointsSwiper = {
   320: {
@@ -29,7 +26,7 @@ const breakpointsSwiper = {
   },
   576: {
     slidesPerView: 1,
-    spaceBetween: 30,
+    spaceBetween: 10,
   },
   768: {
     slidesPerView: 1,
@@ -45,7 +42,7 @@ const breakpointsSwiper = {
   },
 };
 
-export default function Banner() {
+function Banner() {
   const [isBarsOpen, setIsBarsOpen] = useState(false);
   const sidebarRef = useRef(null);
 
@@ -103,11 +100,11 @@ export default function Banner() {
           )}
           <ul className="sidebar__menu ">
             <li className="sidebar-item sp-bw">
-              <span className="font-poppins">Woman{`&apos;`}s Fashion</span>
+              <span className="font-poppins">Woman&apos;s Fashion</span>
               <DropdownRight className="dropdown-right-icon" />
             </li>
             <li className="sidebar-item sp-bw">
-              <span className="font-poppins">Men{`&apos;`}s Fashion</span>
+              <span className="font-poppins">Men&apos;s Fashion</span>
               <DropdownRight className="dropdown-right-icon" />
             </li>
             <li className="sidebar-item">
@@ -133,10 +130,10 @@ export default function Banner() {
             </li>
           </ul>
         </div>
-        <div className="slider flex-auto ">
+        <div className="slider flex-auto w-full">
           <Swiper
             modules={modulesSwiper}
-            spaceBetween={50}
+            spaceBetween={0}
             slidesPerView={1}
             pagination={paginationSwiper}
             breakpoints={breakpointsSwiper}
@@ -165,3 +162,5 @@ export default function Banner() {
     </div>
   );
 }
+
+export default React.memo(Banner);

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import Breadcrumb from '@/components/Breadcrumb';
 
-export default function NotFound() {
+function NotFound() {
   return (
     <div className={classNames('container', 'px-0')}>
       <div className={classNames('mt-[80px]')}>
@@ -75,3 +75,5 @@ export default function NotFound() {
     </div>
   );
 }
+
+export default React.memo(NotFound);

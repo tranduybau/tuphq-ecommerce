@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
@@ -13,7 +13,7 @@ import StarIcon from '@/svgs/star.svg';
 
 import './Card.scss';
 
-export default function Card({ id, img, discount, name, sale, price, count }) {
+function Card({ id, img, discount, name, sale, price, count }) {
   Card.propTypes = {
     id: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
@@ -33,7 +33,7 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
     }
   }, []);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     const account = user ? JSON.parse(user) : null;
     const productId = id;
     const existingCartItems = localStorage.getItem('cartItems');
@@ -42,7 +42,9 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
         const cartItem = { account: account.id, productId: [productId] };
         localStorage.setItem('cartItems', JSON.stringify(cartItem));
         toast.success('Thêm vào giỏ hàng thành công');
-        router.refresh();
+        setTimeout(() => {
+          router.refresh();
+        }, 2000);
       } else {
         const existingData = JSON.parse(existingCartItems);
         if (existingData.productId.includes(productId)) {
@@ -51,15 +53,17 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
           existingData.productId.push(productId);
           localStorage.setItem('cartItems', JSON.stringify(existingData));
           toast.success('Đã thêm sản phẩm vào giỏ hàng');
-          router.refresh();
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
         }
       }
     } else {
       router.push('/signin');
     }
-  };
+  }, [router, id, user]);
 
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = useCallback(() => {
     const account = user ? JSON.parse(user) : null;
     const productId = id;
     const existingWishlistItems = localStorage.getItem('wishlistItems');
@@ -68,7 +72,9 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
         const wishlistItem = { account: account.id, productId: [productId] };
         localStorage.setItem('wishlistItems', JSON.stringify(wishlistItem));
         toast.success('Thêm vào danh sách yêu thích thành công');
-        router.refresh();
+        setTimeout(() => {
+          router.refresh();
+        }, 2000);
       } else {
         const existingData = JSON.parse(existingWishlistItems);
         if (existingData.productId.includes(productId)) {
@@ -77,13 +83,15 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
           existingData.productId.push(productId);
           localStorage.setItem('wishlistItems', JSON.stringify(existingData));
           toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
-          router.refresh();
+          setTimeout(() => {
+            router.refresh();
+          }, 2000);
         }
       }
     } else {
       router.push('/signin');
     }
-  };
+  }, [id, router, user]);
   return (
     <div className="card-fs lg:max-w-[270px]">
       <div className="image">
@@ -102,6 +110,7 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
 
         <div className="icon-wrapper">
           <button
+            aria-label="btn"
             type="button"
             onClick={handleAddToWishlist}
             className="heart-small-icon"
@@ -150,3 +159,5 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
     </div>
   );
 }
+
+export default React.memo(Card);

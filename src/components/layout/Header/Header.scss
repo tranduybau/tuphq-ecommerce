@@ -173,6 +173,7 @@
 }
 
 .icon-heart {
+  position: relative;
   cursor: pointer;
   width: 32px;
   height: 32px;
@@ -272,8 +273,6 @@
 
 @media (max-width: 1199.98px) {
   .main-header__menu {
-    display: flex;
-    margin-bottom: 0 !important;
     li {
       margin-right: 48px;
 
@@ -297,15 +296,11 @@
 
 @media (max-width: 991.98px) {
   .main-header__wrapper {
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 12px;
 
     .main-header__menu {
-      display: flex;
-      margin-bottom: 0 !important;
       li {
         margin-right: 48px;
 
@@ -335,15 +330,11 @@
 
 @media (max-width: 767.98px) {
   .main-header__wrapper {
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 16px;
 
     .main-header__menu {
-      display: flex;
-      margin-bottom: 0 !important;
       li {
         margin-right: 48px;
 
@@ -388,7 +379,6 @@
   }
 
   .main-header__wrapper {
-    display: flex;
     justify-content: space-around;
 
     .main-header__menu {

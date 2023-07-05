@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import './TimeCountDown.scss';
 
 export default function TimeCountDown() {
-  const [secondLeft, setSecondLeft] = useState(60); // 60 giây
-  const [minuteLeft, setMinuteLeft] = useState(59); // 60 phút
-  const [hourLeft, setHourLeft] = useState(23); // 23 giờ
-  const [dayLeft, setDayLeft] = useState(5); // 5 ngày
+  const [secondLeft, setSecondLeft] = useState(60);
+  const [minuteLeft, setMinuteLeft] = useState(59);
+  const [hourLeft, setHourLeft] = useState(23);
+  const [dayLeft, setDayLeft] = useState(5);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -26,8 +26,6 @@ export default function TimeCountDown() {
         setSecondLeft(60);
       }
     }, 1000);
-
-    // Clear interval when finished counting down to 0
     if (secondLeft === 0 && minuteLeft === 0 && hourLeft === 0) {
       clearInterval(intervalId);
     }

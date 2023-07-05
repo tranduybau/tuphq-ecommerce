@@ -109,6 +109,7 @@ export default function ProductDetailItem() {
           </span>
           <div className={classNames(styles.listColors)}>
             <button
+              aria-label="btn"
               type="button"
               onClick={() => setColorSeleted(1)}
               className={classNames('flex', {
@@ -120,6 +121,7 @@ export default function ProductDetailItem() {
               />
             </button>
             <button
+              aria-label="btn"
               type="button"
               onClick={() => setColorSeleted(2)}
               className={classNames('flex', {
@@ -138,6 +140,7 @@ export default function ProductDetailItem() {
           </span>
           <div className={classNames(styles.listSize)}>
             <button
+              aria-label="btn"
               type="button"
               onClick={() => {
                 setSizeSeleted(1);
@@ -149,6 +152,7 @@ export default function ProductDetailItem() {
               XS
             </button>
             <button
+              aria-label="btn"
               type="button"
               onClick={() => {
                 setSizeSeleted(2);
@@ -160,6 +164,7 @@ export default function ProductDetailItem() {
               S
             </button>
             <button
+              aria-label="btn"
               type="button"
               onClick={() => {
                 setSizeSeleted(3);
@@ -171,6 +176,7 @@ export default function ProductDetailItem() {
               M
             </button>
             <button
+              aria-label="btn"
               type="button"
               onClick={() => {
                 setSizeSeleted(4);
@@ -182,6 +188,7 @@ export default function ProductDetailItem() {
               L
             </button>
             <button
+              aria-label="btn"
               type="button"
               onClick={() => {
                 setSizeSeleted(5);
@@ -196,7 +203,11 @@ export default function ProductDetailItem() {
         </div>
         <div className={classNames(styles.buy)}>
           <div className={classNames(styles.quantity)}>
-            <button type="button" onClick={handleDecreaseQuantity}>
+            <button
+              aria-label="btn"
+              type="button"
+              onClick={handleDecreaseQuantity}
+            >
               <MinusIcon className={classNames(styles.minusIcon)} />
             </button>
             <input
@@ -205,18 +216,27 @@ export default function ProductDetailItem() {
               value={quantity}
               className={classNames(styles.quantityInput)}
             />
-            <button type="button" onClick={handleIncreaseQuantity}>
+            <button
+              aria-label="btn"
+              type="button"
+              onClick={handleIncreaseQuantity}
+            >
               <PlusIcon className={classNames(styles.plusIcon)} />
             </button>
           </div>
           <div className={classNames(styles.buyBtnWrapper)}>
             <button
+              aria-label="btn"
               type="button"
               className={classNames(styles.buyBtn, 'font-poppins')}
             >
               Buy Now
             </button>
-            <button type="button" className={classNames(styles.heartBtn)}>
+            <button
+              aria-label="btn"
+              type="button"
+              className={classNames(styles.heartBtn)}
+            >
               <WishlistIcon
                 className={classNames('w-[39px]', 'h-[39px]', 'p-[3px]')}
               />

@@ -22,7 +22,6 @@ import CheckOutCard from '../CheckOutCard';
 import styles from './CheckOutTable.module.scss';
 
 export default function CheckOutTable() {
-  let keyId = 0;
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -65,9 +64,8 @@ export default function CheckOutTable() {
       <div className={classNames(styles.wrapper)}>
         <div className={classNames(styles.list)}>
           {products.map((product) => {
-            keyId += 1;
             return (
-              <div key={keyId} className={classNames(styles.item)}>
+              <div key={product.id} className={classNames(styles.item)}>
                 <CheckOutCard
                   name={product.title}
                   price={product.price}
@@ -149,6 +147,7 @@ export default function CheckOutTable() {
               placeholder="Apply Coupon"
             />
             <button
+              aria-label="btn"
               type="button"
               className={classNames(styles.couponBtn, 'font-poppins')}
             >
@@ -156,6 +155,7 @@ export default function CheckOutTable() {
             </button>
           </div>
           <button
+            aria-label="btn"
             type="submit"
             className={classNames(styles.orderBtn, 'font-poppins')}
           >

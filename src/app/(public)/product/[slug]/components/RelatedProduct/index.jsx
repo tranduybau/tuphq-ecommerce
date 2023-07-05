@@ -8,7 +8,6 @@ import Card from '../Card';
 
 export default function RelatedProduct() {
   const [products, setProducts] = useState([]);
-  let keyId = 0;
   useEffect(() => {
     axios
       .get('https://fakestoreapi.com/products', {
@@ -35,10 +34,9 @@ export default function RelatedProduct() {
       )}
     >
       {products.map((product) => {
-        keyId += 1;
         return (
           <Card
-            key={keyId}
+            key={product.id}
             name={product.title}
             img={product.image}
             discount={40}

@@ -2,11 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 import Camera from '@/svgs/Category/Category-Camera.svg';
 import CellPhone from '@/svgs/Category/Category-CellPhone.svg';
@@ -21,10 +17,7 @@ import ArrowRight from '@/svgs/icons_arrow-right.svg';
 import CategoryItem from './components/CategoryItem';
 
 import './Category.scss';
-import 'swiper/css';
-import 'swiper/swiper-bundle.css';
 
-const moduleSwiper = [Pagination, Navigation];
 const breakpointsSwiper = {
   320: {
     slidesPerView: 2,
@@ -47,9 +40,8 @@ const breakpointsSwiper = {
     spaceBetween: 40,
   },
 };
-SwiperCore.use(moduleSwiper);
 
-export default function Category() {
+function Category() {
   // ref
   const swiperRef = useRef();
 
@@ -121,7 +113,6 @@ export default function Category() {
           ref={swiperRef}
           slidesPerView={6}
           spaceBetween={30}
-          modules={moduleSwiper}
           breakpoints={breakpointsSwiper}
         >
           <SwiperSlide>
@@ -194,3 +185,5 @@ export default function Category() {
     </div>
   );
 }
+
+export default React.memo(Category);

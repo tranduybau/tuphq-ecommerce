@@ -83,12 +83,12 @@ export default function TableCart() {
         })}
       </div>
       <div className={`${styles.btnWrapper}`}>
-        <button type="button" className={`${styles.btnTable}`}>
+        <button aria-label="btn" type="button" className={`${styles.btnTable}`}>
           <Link className={`${styles.btnTableLink} font-poppins`} href="/">
             Return To Shop
           </Link>
         </button>
-        <button type="button" className={`${styles.btnTable}`}>
+        <button aria-label="btn" type="button" className={`${styles.btnTable}`}>
           <Link className={`${styles.btnTableLink} font-poppins`} href="/">
             Update Cart
           </Link>
@@ -101,7 +101,11 @@ export default function TableCart() {
             type="text"
             placeholder="Coupon Code"
           />
-          <button type="button" className={`${styles.couponBtn} font-poppins`}>
+          <button
+            aria-label="btn"
+            type="button"
+            className={`${styles.couponBtn} font-poppins`}
+          >
             <span>Apply Coupon</span>
           </button>
         </div>
@@ -125,7 +129,11 @@ export default function TableCart() {
               ${total.toFixed(2)}
             </span>
           </div>
-          <button type="button" className={`${styles.totalBtn}`}>
+          <button
+            aria-label="btn"
+            type="button"
+            className={`${styles.totalBtn}`}
+          >
             <Link
               href="/checkout"
               className={`${styles.totalBtnLink} font-poppins`}

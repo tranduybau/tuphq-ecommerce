@@ -14,7 +14,6 @@ import * as yup from 'yup';
 import InputForm from '@/components/InputForm';
 
 // css
-import 'react-toastify/dist/ReactToastify.css';
 import styles from './SignInForm.module.scss';
 
 export default function SignInForm() {
@@ -85,6 +84,7 @@ export default function SignInForm() {
         />
         <div className={`${styles.SignInFormBtnWrapper}`}>
           <button
+            aria-label="btn"
             className={`font-poppins ${styles.SignInFormSubmitBtn}`}
             type="submit"
           >

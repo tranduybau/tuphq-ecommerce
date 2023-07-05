@@ -65,7 +65,11 @@ export default function ContactForm() {
           placeholder="Your Massage"
         />
 
-        <button type="submit" className={classNames(styles.btn)}>
+        <button
+          aria-label="btn"
+          type="submit"
+          className={classNames(styles.btn)}
+        >
           Send Massage
         </button>
       </form>

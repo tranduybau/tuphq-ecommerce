@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
@@ -15,17 +15,9 @@ import styles from './WishlistCard.module.scss';
 const imageStyle = {
   objectFit: 'contain',
 };
-export default function WishlistCard({ id, img, discount, type, name, price }) {
-  WishlistCard.propTypes = {
-    id: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
-    discount: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-  };
-  const handleDeleteItem = () => {
-    // Gọi hàm onTotalChange để cập nhật giá trị tổng
+
+function WishlistCard({ id, img, discount, type, name, price }) {
+  const handleDeleteItem = useCallback(() => {
     const wishlistItems = JSON.parse(localStorage.getItem('wishlistItems'));
     const productIdSelected = id;
     const currentUser = Cookies.get('currentUser')
@@ -33,7 +25,7 @@ export default function WishlistCard({ id, img, discount, type, name, price }) {
       : null;
 
     if (currentUser) {
-      const { productId } = wishlistItems; // Lấy mảng productId từ cartItems
+      const { productId } = wishlistItems;
 
       const updatedProductId = productId.filter(
         (item) => item !== productIdSelected
@@ -53,7 +45,8 @@ export default function WishlistCard({ id, img, discount, type, name, price }) {
         window.location.reload();
       }, 2000);
     }
-  };
+  }, [id]);
+
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.imageWrapper}`}>
@@ -74,7 +67,11 @@ export default function WishlistCard({ id, img, discount, type, name, price }) {
           {type && (
             <div className={`${styles.cardIconWrapper}`}>
               {type === 'wishlist' && (
-                <button type="button" onClick={handleDeleteItem}>
+                <button
+                  aria-label="btn"
+                  type="button"
+                  onClick={handleDeleteItem}
+                >
                   <DeleteIcon className={`${styles.deleteIcon}`} />
                 </button>
               )}
@@ -115,3 +112,14 @@ export default function WishlistCard({ id, img, discount, type, name, price }) {
     </div>
   );
 }
+
+WishlistCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  img: PropTypes.string.isRequired,
+  discount: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+};
+
+export default React.memo(WishlistCard);

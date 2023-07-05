@@ -5,11 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import classNames from 'classnames';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 // icon
 import ArrowLeft from '@/svgs/icons_arrow-left.svg';
@@ -19,10 +15,7 @@ import Card from './components/Card';
 import TimeCountDown from './components/TimeCountDown';
 
 import './Flashsale.scss';
-import 'swiper/swiper-bundle.css';
-import 'swiper/css';
 
-const moduleSwiper = [Pagination, Navigation];
 const breakpointsSwiper = {
   320: {
     slidesPerView: 1,
@@ -45,13 +38,11 @@ const breakpointsSwiper = {
     spaceBetween: 40,
   },
 };
-SwiperCore.use(moduleSwiper);
 
-export default function Flashsale({ data }) {
+function Flashsale({ data }) {
   Flashsale.propTypes = {
     data: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
   };
-  let keyId = 0;
   // state
   const [swiper, setSwiper] = useState(true);
   const [canGoPrev, setCanGoPrev] = useState(false);
@@ -89,7 +80,7 @@ export default function Flashsale({ data }) {
     <div className="flashsale-wrapper container">
       <div className="today">
         <span className="block" />
-        <span className="font-poppins">Today{`&apos;`}s</span>
+        <span className="font-poppins">Today&apos;s</span>
       </div>
       <div className="flashsale">
         <h1 className="font-inter">Flash Sales</h1>
@@ -129,14 +120,12 @@ export default function Flashsale({ data }) {
           ref={swiperRef}
           slidesPerView={4}
           spaceBetween={30}
-          modules={moduleSwiper}
           breakpoints={breakpointsSwiper}
         >
           {products.length > 0 &&
             products.map((product) => {
-              keyId += 1;
               return (
-                <SwiperSlide key={keyId}>
+                <SwiperSlide key={product.id}>
                   <Card
                     id={product.id}
                     img={product.image}
@@ -152,7 +141,11 @@ export default function Flashsale({ data }) {
         </Swiper>
       </div>
       <div className="view-all-product">
-        <button type="button" className="view-all-product__btn">
+        <button
+          aria-label="btn"
+          type="button"
+          className="view-all-product__btn"
+        >
           <Link className="font-poppins" href="/">
             View All Products
           </Link>
@@ -162,3 +155,5 @@ export default function Flashsale({ data }) {
     </div>
   );
 }
+
+export default React.memo(Flashsale);

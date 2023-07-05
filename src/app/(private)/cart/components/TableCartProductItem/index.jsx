@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
@@ -11,28 +11,15 @@ import DeleteIcon from '@/svgs/Cart/icon-delete.svg';
 
 import styles from './TableCartProductItem.module.scss';
 
-export default function TableCartProductItem({
-  id,
-  name,
-  img,
-  price,
-  onTotalChange,
-}) {
-  TableCartProductItem.propTypes = {
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    onTotalChange: PropTypes.func.isRequired,
-  };
+function TableCartProductItem({ id, name, img, price, onTotalChange }) {
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(price);
-  useEffect(() => {
-    onTotalChange(price * 1);
-  }, []);
 
-  const handleDeleteItem = () => {
-    // Gọi hàm onTotalChange để cập nhật giá trị tổng
+  useEffect(() => {
+    onTotalChange(price * quantity);
+  }, [onTotalChange, price, quantity]);
+
+  const handleDeleteItem = useCallback(() => {
     const cartItems = JSON.parse(localStorage.getItem('cartItems'));
     const productIdSelected = id;
     const currentUser = Cookies.get('currentUser')
@@ -40,7 +27,7 @@ export default function TableCartProductItem({
       : null;
 
     if (currentUser) {
-      const { productId } = cartItems; // Lấy mảng productId từ cartItems
+      const { productId } = cartItems;
 
       const updatedProductId = productId.filter(
         (item) => item !== productIdSelected
@@ -57,20 +44,23 @@ export default function TableCartProductItem({
         window.location.reload();
       }, 2000);
     }
-  };
+  }, [id]);
 
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseInt(event.target.value, 10);
-    setQuantity(newQuantity);
-    const newTotal = price * newQuantity;
-    setTotal(newTotal);
-    onTotalChange(newTotal - price * quantity); // Cập nhật giá trị mới của total
-  };
+  const handleQuantityChange = useCallback(
+    (event) => {
+      const newQuantity = parseInt(event.target.value, 10);
+      setQuantity(newQuantity);
+      const newTotal = price * newQuantity;
+      setTotal(newTotal);
+      onTotalChange(newTotal - price * quantity);
+    },
+    [onTotalChange, price, quantity]
+  );
 
   return (
     <div className={`${styles.wrapper} row mx-0 mt-[40px]`}>
       <div className={`${styles.item} px-0 col font-poppins`}>
-        <button type="button" onClick={handleDeleteItem}>
+        <button aria-label="btn" type="button" onClick={handleDeleteItem}>
           <DeleteIcon className={styles.deleteIcon} />
         </button>
         <Image
@@ -92,7 +82,6 @@ export default function TableCartProductItem({
           type="number"
           min={1}
           max={99}
-          inputMode="numeric"
           value={quantity}
           onChange={handleQuantityChange}
         />
@@ -103,3 +92,13 @@ export default function TableCartProductItem({
     </div>
   );
 }
+
+TableCartProductItem.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  onTotalChange: PropTypes.func.isRequired,
+};
+
+export default React.memo(TableCartProductItem);

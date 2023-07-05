@@ -16,7 +16,7 @@ export default function DetailItem({ icon, count, text }) {
       <div className={classNames(styles.iconWrapper)}>
         <Icon className={classNames(styles.icon)} />
       </div>
-      <span className={classNames(styles.count, 'font-inter')}>{count}</span>
+      <span className={classNames(styles.count, 'font-inter')}>{count}k</span>
       <span className={classNames(styles.text, 'font-poppins')}>{text}</span>
     </div>
   );

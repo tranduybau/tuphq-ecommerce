@@ -30,7 +30,7 @@ export default function MyAccountSidebar() {
 
   return (
     <div className={classNames(styles.wrapper)}>
-      <button type="button" onClick={toggleSidebar}>
+      <button aria-label="btn" type="button" onClick={toggleSidebar}>
         <FontAwesomeIcon
           icon={faBars}
           className={classNames(styles.barsIcon)}
@@ -44,6 +44,7 @@ export default function MyAccountSidebar() {
       >
         {showSidebar === true && (
           <button
+            aria-label="btn"
             type="button"
             onClick={toggleSidebar}
             className={classNames(

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import Image from 'next/image';
 
 import SignUpForm from './components/SignUpForm';
@@ -26,6 +27,7 @@ export default function SignUp() {
         </span>
         <SignUpForm />
       </div>
+      <ToastContainer />
     </section>
   );
 }

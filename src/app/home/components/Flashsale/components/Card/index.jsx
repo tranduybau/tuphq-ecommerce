@@ -1,7 +1,13 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/forbid-prop-types */
+
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,39 +21,139 @@ import StarIcon from '@/svgs/star.svg';
 
 import './Card.scss';
 
-export default function Card({ id, img, discount, name, sale, price, count }) {
+export default function Card({
+  id,
+  img,
+  typeDiscount,
+  discount,
+  sizes = null,
+  name,
+  sale,
+  price,
+  count,
+  slug,
+}) {
   const [user, setUser] = useState();
   const router = useRouter();
+  const { register, handleSubmit } = useForm();
+  const [cart, setCart] = useState({});
 
-  const handleAddToCart = useCallback(() => {
-    const account = user ? JSON.parse(user) : null;
-    const productId = id;
-    const existingCartItems = localStorage.getItem('cartItems');
-    if (account) {
-      if (existingCartItems === null) {
-        const cartItem = { account: account.id, productId: [productId] };
-        localStorage.setItem('cartItems', JSON.stringify(cartItem));
-        toast.success('Thêm vào giỏ hàng thành công');
-        setTimeout(() => {
-          router.refresh();
-        }, 2000);
-      } else {
-        const existingData = JSON.parse(existingCartItems);
-        if (existingData.productId.includes(productId)) {
-          toast.error('Sản phẩm đã tồn tại trong giỏ hàng');
-        } else {
-          existingData.productId.push(productId);
-          localStorage.setItem('cartItems', JSON.stringify(existingData));
-          toast.success('Đã thêm sản phẩm vào giỏ hàng');
-          setTimeout(() => {
-            router.refresh();
-          }, 2000);
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        const userData = Cookies.get('userData')
+          ? JSON.parse(Cookies.get('userData'))
+          : null;
+        if (userData) {
+          const headers = {
+            Authorization: userData.token,
+          };
+          const response = await axios.get(
+            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
+            { headers }
+          );
+          if (response !== undefined) {
+            setCart(response.data);
+          }
         }
+        return null;
+      } catch {
+        return 0;
       }
-    } else {
-      router.push('/signin');
+    };
+    getCart();
+  }, []);
+
+  useEffect(() => {
+    const currentUser = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
+      : null;
+    if (currentUser) {
+      setUser(currentUser);
     }
-  }, [router, id, user]);
+  }, []);
+
+  const handlePostApi = async (userToken, formData) => {
+    const headers = {
+      Authorization: userToken,
+    };
+    const response = await axios.post(
+      'https://gmen-admin.wii.camp/api/v1.0/carts/me/products',
+      formData,
+      { headers }
+    );
+    if (response.data) {
+      toast.success('Thêm vào giỏ hàng thành công');
+      setTimeout(() => {
+        router.refresh();
+      }, 1000);
+    }
+  };
+
+  const handlePutApi = async (userToken, formData, ProductId) => {
+    const headers = {
+      Authorization: userToken,
+    };
+    const response = await axios.put(
+      `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${ProductId}`,
+      formData,
+      { headers }
+    );
+    if (response.data) {
+      toast.success('Thêm vào giỏ hàng thành công');
+      setTimeout(() => {
+        router.refresh();
+      }, 1000);
+    }
+  };
+
+  const handleAddToCart = async (data) => {
+    try {
+      const account = Cookies.get('userData')
+        ? JSON.parse(Cookies.get('userData'))
+        : null;
+      const productId = id;
+      if (data.size === undefined) {
+        data.size = '';
+      }
+      const formData = {
+        product: productId,
+        quantity: 1,
+        size: data.size,
+      };
+      if (account) {
+        if (cart) {
+          if (cart.body) {
+            if (cart.body.products) {
+              const existingProduct = cart.body.products.find(
+                (productCheck) => {
+                  return (
+                    (productCheck.product._id === productId &&
+                      productCheck.size === data.size) ||
+                    (productCheck.product._id === productId &&
+                      productCheck.size === null)
+                  );
+                }
+              );
+              if (existingProduct) {
+                const formPutData = {
+                  quantity: existingProduct.quantity + 1,
+                };
+                handlePutApi(account.token, formPutData, existingProduct._id);
+              } else {
+                handlePostApi(account.token, formData);
+              }
+            }
+          }
+        }
+      } else {
+        router.push('/signin');
+      }
+    } catch (error) {
+      return null;
+    }
+    return null;
+  };
 
   const handleAddToWishlist = useCallback(() => {
     const account = user ? JSON.parse(user) : null;
@@ -60,7 +166,7 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
         toast.success('Thêm vào danh sách yêu thích thành công');
         setTimeout(() => {
           router.refresh();
-        }, 2000);
+        }, 1500);
       } else {
         const existingData = JSON.parse(existingWishlistItems);
         if (existingData.productId.includes(productId)) {
@@ -71,20 +177,13 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
           toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
           setTimeout(() => {
             router.refresh();
-          }, 2000);
+          }, 1500);
         }
       }
     } else {
       router.push('/signin');
     }
   }, [id, router, user]);
-
-  useEffect(() => {
-    const currentUser = Cookies.get('currentUser');
-    if (currentUser) {
-      setUser(currentUser);
-    }
-  }, []);
 
   return (
     <div className="card-fs lg:max-w-[270px]">
@@ -93,12 +192,19 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
           src={img}
           alt="product"
           fill
-          className="lg:max-w-[270px] object-scale-down"
+          className="lg:max-w-[270px]"
           sizes="(max-width: 768px) 100vw"
+          priority
         />
-        <span className="card-discount">
-          <p className="font-poppins">-{discount}</p>
-        </span>
+        {typeDiscount === 'PERCENT' ? (
+          <span className="card-discount">
+            <p className="font-poppins">-{discount}%</p>
+          </span>
+        ) : (
+          <span className="card-discount">
+            <p className="font-poppins">-{discount}đ</p>
+          </span>
+        )}
 
         <div className="icon-wrapper">
           <button
@@ -110,7 +216,7 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
             <HeartSmallIcon className="card-icon" />
           </button>
           <Link
-            href={`/product/${id}`}
+            href={`/product/${slug}`}
             aria-label="quick view"
             className="quick-view-icon"
           >
@@ -118,14 +224,42 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          aria-label="Add to cart"
-          className="add-card"
+        <form
+          className={classNames(
+            'absolute',
+            'flex',
+            'flex-col',
+            'items-center',
+            'bottom-0',
+            'w-full'
+          )}
+          onSubmit={handleSubmit(handleAddToCart)}
         >
-          <span className="font-poppins">Add To Cart</span>
-        </button>
+          {sizes && sizes[0] !== null && (
+            <select
+              className={classNames(
+                'relative',
+                'text-[28px]',
+                'h-[36px]',
+                'shadow-sm',
+                'w-[80%]'
+              )}
+              {...register('size')}
+            >
+              {sizes.map((size, index) => {
+                return (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <option key={index} value={`${size}`}>
+                    {size}
+                  </option>
+                );
+              })}
+            </select>
+          )}
+          <button type="submit" aria-label="Add to cart" className="add-card">
+            <span className="font-poppins">Add To Cart</span>
+          </button>
+        </form>
       </div>
       <div className="description">
         <div className="name">
@@ -157,11 +291,15 @@ export default function Card({ id, img, discount, name, sale, price, count }) {
 }
 
 Card.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
+  typeDiscount: PropTypes.string.isRequired,
   discount: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  sale: PropTypes.bool.isRequired,
+  sale: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   count: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
+  sizes: PropTypes.array,
+  slug: PropTypes.string.isRequired,
 };

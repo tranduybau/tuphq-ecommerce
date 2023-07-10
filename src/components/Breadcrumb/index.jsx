@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+
 'use client';
 
 import React from 'react';
@@ -7,16 +9,7 @@ import PropTypes from 'prop-types';
 
 import styles from './Breadcrumb.module.scss';
 
-function Breadcrumb({ pathname, urls }) {
-  Breadcrumb.propTypes = {
-    pathname: PropTypes.string,
-    urls: PropTypes.string,
-  };
-
-  Breadcrumb.defaultProps = {
-    pathname: '',
-    urls: '',
-  };
+function Breadcrumb({ pathname = '', urls = '' }) {
   let pathnameVar = usePathname();
   if (pathname) {
     pathnameVar = pathname;
@@ -53,5 +46,10 @@ function Breadcrumb({ pathname, urls }) {
     </div>
   );
 }
+
+Breadcrumb.propTypes = {
+  pathname: PropTypes.string,
+  urls: PropTypes.string,
+};
 
 export default React.memo(Breadcrumb);

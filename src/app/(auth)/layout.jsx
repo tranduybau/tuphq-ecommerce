@@ -6,13 +6,10 @@ import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 
 export default function AuthLayout({ children }) {
-  AuthLayout.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
   const router = useRouter();
   if (typeof window !== 'undefined') {
-    const currentUser = Cookies.get('currentUser')
-      ? JSON.parse(Cookies.get('currentUser'))
+    const currentUser = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
       : null;
     if (currentUser !== null) {
       router.push('/');
@@ -20,3 +17,7 @@ export default function AuthLayout({ children }) {
     return <div>{children}</div>;
   }
 }
+
+AuthLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

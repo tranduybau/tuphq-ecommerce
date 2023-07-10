@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
@@ -11,48 +12,97 @@ import DeleteIcon from '@/svgs/Cart/icon-delete.svg';
 
 import styles from './TableCartProductItem.module.scss';
 
-function TableCartProductItem({ id, name, img, price, onTotalChange }) {
-  const [quantity, setQuantity] = useState(1);
-  const [total, setTotal] = useState(price);
+function TableCartProductItem({
+  id,
+  size = null,
+  name,
+  img,
+  price,
+  quantity,
+  onTotalChange,
+}) {
+  const [user, setUser] = useState();
+  const [total, setTotal] = useState(price * quantity);
+
+  useEffect(() => {
+    const account = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
+      : null;
+    if (account) {
+      setUser(account);
+    }
+  }, []);
 
   useEffect(() => {
     onTotalChange(price * quantity);
   }, [onTotalChange, price, quantity]);
 
-  const handleDeleteItem = useCallback(() => {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-    const productIdSelected = id;
-    const currentUser = Cookies.get('currentUser')
-      ? JSON.parse(Cookies.get('currentUser'))
-      : null;
+  const handleDeleteApi = async (productId) => {
+    try {
+      if (user) {
+        const headers = {
+          Authorization: user.token,
+        };
+        const response = axios.delete(
+          `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${productId}`,
+          { headers }
+        );
 
-    if (currentUser) {
-      const { productId } = cartItems;
-
-      const updatedProductId = productId.filter(
-        (item) => item !== productIdSelected
-      );
-
-      const updatedCartItems = {
-        ...cartItems,
-        productId: updatedProductId,
-      };
-
-      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-      toast.success('Đã xóa thành công');
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+        if (response) {
+          toast.success('Đã xóa sản phẩm khỏi giỏ hàng');
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        }
+      }
+    } catch {
+      return null;
     }
-  }, [id]);
+    return null;
+  };
+
+  const handleDeleteItem = () => {
+    handleDeleteApi(id);
+  };
+
+  const updateProductQuantity = async (productId, newQuantity) => {
+    try {
+      const userData = Cookies.get('userData')
+        ? JSON.parse(Cookies.get('userData'))
+        : null;
+      if (userData) {
+        const headers = {
+          Authorization: userData.token,
+        };
+        const payload = {
+          quantity: newQuantity,
+        };
+        const response = await axios.put(
+          `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${productId}`,
+          payload,
+          { headers }
+        );
+
+        if (response) {
+          // Cập nhật số lượng sản phẩm thành công
+          toast.success('Số lượng sản phẩm đã được cập nhật');
+        }
+      }
+    } catch (error) {
+      // Xử lý lỗi khi cập nhật số lượng sản phẩm
+      toast.error('Lỗi khi cập nhật số lượng sản phẩm:', error);
+    }
+  };
 
   const handleQuantityChange = useCallback(
     (event) => {
       const newQuantity = parseInt(event.target.value, 10);
-      setQuantity(newQuantity);
       const newTotal = price * newQuantity;
       setTotal(newTotal);
       onTotalChange(newTotal - price * quantity);
+
+      // Gửi yêu cầu PUT tới API để cập nhật số lượng sản phẩm
+      updateProductQuantity(id, newQuantity);
     },
     [onTotalChange, price, quantity]
   );
@@ -73,7 +123,10 @@ function TableCartProductItem({ id, name, img, price, onTotalChange }) {
         <span>{name}</span>
       </div>
       <div className={`${styles.item} px-0 col font-poppins`}>
-        <span>${price.toFixed(2)}</span>
+        <span>{size !== null ? size : ''}</span>
+      </div>
+      <div className={`${styles.item} px-0 col font-poppins`}>
+        <span>${price}</span>
       </div>
       <div
         className={`${styles.item} ${styles.inputWrapper} px-0 col font-poppins`}
@@ -82,23 +135,25 @@ function TableCartProductItem({ id, name, img, price, onTotalChange }) {
           type="number"
           min={1}
           max={99}
-          value={quantity}
+          defaultValue={quantity}
           onChange={handleQuantityChange}
         />
       </div>
       <div className={`${styles.item} px-0 col font-poppins`}>
-        <span>${total.toFixed(2)}</span>
+        <span>${total}</span>
       </div>
     </div>
   );
 }
 
 TableCartProductItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   onTotalChange: PropTypes.func.isRequired,
+  size: PropTypes.string.isRequired,
 };
 
 export default React.memo(TableCartProductItem);

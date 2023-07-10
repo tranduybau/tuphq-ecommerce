@@ -114,7 +114,7 @@ function WishlistCard({ id, img, discount, type, name, price }) {
 }
 
 WishlistCard.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   discount: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,

@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+
 'use client';
 
 import React from 'react';
@@ -8,29 +10,15 @@ import styles from './InputForm.module.scss';
 
 export default function InputForm({
   name,
-  type,
-  className,
-  placeholder,
+  type = 'text',
+  className = '',
+  placeholder = '',
   ...props
 }) {
   const {
     register,
     formState: { errors },
   } = useFormContext();
-
-  InputForm.propTypes = {
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string,
-    className: PropTypes.string,
-    placeholder: PropTypes.string,
-    // ...props: PropTypes.any, // Nếu bạn muốn chấp nhận bất kỳ thuộc tính nào khác
-  };
-
-  InputForm.defaultProps = {
-    type: 'text',
-    className: '',
-    placeholder: '',
-  };
   return (
     <div>
       {errors[name] && (
@@ -47,3 +35,10 @@ export default function InputForm({
     </div>
   );
 }
+
+InputForm.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  className: PropTypes.string,
+  placeholder: PropTypes.string,
+};

@@ -38,14 +38,11 @@ const breakpointsSwiper = {
 };
 
 function BestSeller({ data }) {
-  BestSeller.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
-  };
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if (data) {
-      setProducts(data);
+      setProducts(data.body.items);
     }
   }, [data]);
 
@@ -71,17 +68,19 @@ function BestSeller({ data }) {
           spaceBetween={30}
           breakpoints={breakpointsSwiper}
         >
-          {products &&
+          {products.length > 0 &&
             products.map((product) => {
               return (
-                <SwiperSlide key={product.id}>
+                <SwiperSlide key={product._id}>
                   <Card
-                    id={product.id}
-                    img={product.image}
-                    name={product.title}
-                    sale={product.price * 30}
+                    id={product._id}
+                    img={product.cover}
+                    name={product.name}
+                    sale={product.discountedPrice}
                     price={product.price}
-                    count={product.rating.count}
+                    count={80}
+                    sizes={product.variants}
+                    slug={product.slug}
                   />
                 </SwiperSlide>
               );
@@ -122,5 +121,10 @@ function BestSeller({ data }) {
     </div>
   );
 }
+
+BestSeller.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  data: PropTypes.object.isRequired,
+};
 
 export default React.memo(BestSeller);

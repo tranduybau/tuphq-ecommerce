@@ -33,8 +33,8 @@ function Header() {
   const tooltipRef = useRef(null);
 
   useEffect(() => {
-    const currentUser = Cookies.get('currentUser')
-      ? JSON.parse(Cookies.get('currentUser'))
+    const currentUser = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
       : null;
     if (currentUser) {
       setUser(currentUser);
@@ -46,8 +46,8 @@ function Header() {
     const currentWishlistItems = JSON.parse(
       localStorage.getItem('wishlistItems')
     );
-    const currentUser = Cookies.get('currentUser')
-      ? JSON.parse(Cookies.get('currentUser'))
+    const currentUser = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
       : null;
 
     if (currentCartItems && currentUser) {
@@ -64,24 +64,27 @@ function Header() {
   }, []);
 
   const handleLogout = useCallback(() => {
-    Cookies.remove('currentUser');
+    Cookies.remove('userData');
+    toast.success('Đăng xuất thành công');
     setTimeout(() => {
       router.refresh();
-    }, 100);
+    }, 1500);
   }, [router]);
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prevState) => !prevState);
   }, []);
 
-  const handleCheckPrivateRoute = useCallback(
+  const handleCheckRoute = useCallback(
     (pathnameCheck) => {
-      const currentUser = Cookies.get('currentUser')
-        ? JSON.parse(Cookies.get('currentUser'))
+      const currentUser = Cookies.get('userData')
+        ? JSON.parse(Cookies.get('userData'))
         : null;
       if (currentUser === null) {
-        router.push('/signin');
         toast.error('Bạn cần phải đăng nhập');
+        setTimeout(() => {
+          router.push('/signin');
+        }, 2000);
       } else {
         router.push(`/${pathnameCheck}`);
       }
@@ -215,7 +218,7 @@ function Header() {
                   type="button"
                   aria-label="wishlist"
                   onClick={() => {
-                    handleCheckPrivateRoute('wishlist');
+                    handleCheckRoute('wishlist');
                   }}
                   className="icon-heart"
                 >
@@ -232,7 +235,7 @@ function Header() {
                   type="button"
                   aria-label="cart"
                   onClick={() => {
-                    handleCheckPrivateRoute('cart');
+                    handleCheckRoute('cart');
                   }}
                   className="icon-cart"
                 >

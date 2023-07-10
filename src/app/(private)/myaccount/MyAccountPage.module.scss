@@ -2,12 +2,6 @@
   width: 100%;
 }
 
-.breadcrumb {
-  margin: 80px 0 80px;
-  display: flex;
-  justify-content: space-between;
-}
-
 .main {
   width: 100%;
   margin-bottom: 140px;
@@ -15,27 +9,8 @@
   justify-content: space-between;
 }
 
-.welcomeText {
-  color: #000;
-  font-size: 14px;
-  line-height: 21px;
-  min-width: 140px;
-  gap: 4px;
-}
-
-.welcomeName {
-  color: #db4444;
-}
-
 @media (max-width: 1200px) {
   .main {
     flex-direction: column;
-  }
-}
-
-@media (max-width: 576px) {
-  .breadcrumb {
-    flex-direction: column;
-    gap: 12px;
   }
 }

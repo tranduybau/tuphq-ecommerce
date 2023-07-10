@@ -17,7 +17,7 @@ import './OutProduct.scss';
 const breakpointsSwiper = {
   320: {
     slidesPerView: 1,
-    spaceBetween: 40,
+    spaceBetween: 10,
   },
   576: {
     slidesPerView: 2,
@@ -25,23 +25,19 @@ const breakpointsSwiper = {
   },
   768: {
     slidesPerView: 2,
-    spaceBetween: 40,
+    spaceBetween: 30,
   },
   992: {
     slidesPerView: 3,
-    spaceBetween: 40,
+    spaceBetween: 30,
   },
   1200: {
     slidesPerView: 4,
-    spaceBetween: 40,
+    spaceBetween: 30,
   },
 };
 
 function OutProduct({ data }) {
-  OutProduct.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
-  };
-
   const [swiper, setSwiper] = useState(true);
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
@@ -53,7 +49,7 @@ function OutProduct({ data }) {
 
   useEffect(() => {
     if (data) {
-      setProducts(data);
+      setProducts(data.body.items);
     }
   }, [data]);
 
@@ -134,26 +130,26 @@ function OutProduct({ data }) {
               return (
                 <SwiperSlide key={count}>
                   <Card
-                    id={product.id}
+                    id={product._id}
                     className="mb-[60px]"
-                    img={product.image}
-                    discount={product.discount}
-                    name={product.title}
-                    sale={product.price * 40}
-                    price={product.price}
-                    count={product.rating.count}
+                    img={product.cover}
+                    name={product.name}
+                    sale={product.price}
+                    count={80}
+                    sizes={product.variants}
+                    slug={product.slug}
                   />
                   {newProduct && (
                     <SwiperSlide>
                       <Card
-                        id={newProduct.id}
-                        img={newProduct.image}
-                        discount={newProduct.discount}
-                        name={newProduct.title}
-                        sale={newProduct.price * 40}
-                        price={newProduct.price}
-                        count={newProduct.rating.count}
+                        className={classNames('flex-1')}
+                        id={newProduct._id}
+                        img={newProduct.cover}
+                        name={newProduct.name}
+                        sale={newProduct.price}
+                        count={80}
                         color
+                        sizes={newProduct.variants}
                       />
                     </SwiperSlide>
                   )}
@@ -179,5 +175,10 @@ function OutProduct({ data }) {
     </div>
   );
 }
+
+OutProduct.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  data: PropTypes.object.isRequired,
+};
 
 export default React.memo(OutProduct);

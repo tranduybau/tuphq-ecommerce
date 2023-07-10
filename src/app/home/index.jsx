@@ -12,7 +12,9 @@ import './Home.scss';
 
 const fetchData = async () => {
   try {
-    const response = await axios.get('https://fakestoreapi.com/products');
+    const response = await axios.get(
+      'https://gmen-admin.wii.camp/api/v1.0/products?perPage=20&page=1&sort=1'
+    );
     return response.data;
   } catch (error) {
     return 1;

@@ -4,11 +4,6 @@ import PropTypes from 'prop-types';
 import styles from './ServiceItem.module.scss';
 
 export default function ServiceItem({ children, name, description }) {
-  ServiceItem.propTypes = {
-    children: PropTypes.node.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  };
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.icon}`}>{children}</div>
@@ -19,3 +14,9 @@ export default function ServiceItem({ children, name, description }) {
     </div>
   );
 }
+
+ServiceItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};

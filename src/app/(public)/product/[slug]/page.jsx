@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import classNames from 'classnames';
 
 import Breadcrumb from '@/components/Breadcrumb';
@@ -28,6 +29,7 @@ function ProductDetail() {
           <RelatedProduct />
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 }

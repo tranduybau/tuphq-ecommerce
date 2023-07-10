@@ -1,3 +1,5 @@
+/* eslint-disable react/forbid-prop-types */
+
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -7,7 +9,6 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// icon
 import ArrowLeft from '@/svgs/icons_arrow-left.svg';
 import ArrowRight from '@/svgs/icons_arrow-right.svg';
 
@@ -40,9 +41,6 @@ const breakpointsSwiper = {
 };
 
 function Flashsale({ data }) {
-  Flashsale.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
-  };
   // state
   const [swiper, setSwiper] = useState(true);
   const [canGoPrev, setCanGoPrev] = useState(false);
@@ -50,9 +48,10 @@ function Flashsale({ data }) {
   const [products, setProducts] = useState([]);
   // ref
   const swiperRef = useRef();
+
   useEffect(() => {
     if (data) {
-      setProducts(data);
+      setProducts(data.body.items);
     }
   }, [data]);
 
@@ -125,15 +124,18 @@ function Flashsale({ data }) {
           {products.length > 0 &&
             products.map((product) => {
               return (
-                <SwiperSlide key={product.id}>
+                <SwiperSlide key={product._id}>
                   <Card
-                    id={product.id}
-                    img={product.image}
-                    discount="40%"
-                    name={product.title}
-                    sale={product.price * 40}
+                    id={product._id}
+                    img={product.cover}
+                    typeDiscount={product.discountType}
+                    discount={product.discount}
+                    name={product.name}
+                    sale={product.discountedPrice}
                     price={product.price}
-                    count={product.rating.count}
+                    count={80}
+                    sizes={product.variants}
+                    slug={product.slug}
                   />
                 </SwiperSlide>
               );
@@ -155,5 +157,9 @@ function Flashsale({ data }) {
     </div>
   );
 }
+
+Flashsale.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export default React.memo(Flashsale);

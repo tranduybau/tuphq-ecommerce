@@ -5,13 +5,17 @@
   flex-direction: column;
 
   .add-card {
-    position: absolute;
+    opacity: 0;
     width: 100%;
     height: 41px;
     background-color: #000;
     bottom: 0;
-    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    transform: translateY(50%);
+    transition: transform 0.1s linear;
 
     span {
       font-style: normal;
@@ -27,10 +31,8 @@
     min-width: 270px;
     min-height: 250px;
     &:hover .add-card {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.3 linear;
+      opacity: 1;
+      transform: translateY(0);
     }
     .image-clothes {
       width: 100%;

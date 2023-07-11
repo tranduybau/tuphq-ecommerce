@@ -1,29 +1,34 @@
+/* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import * as yup from 'yup';
 
-import InputForm from '@/components/InputForm';
-
 import styles from './MyAccountForm.module.scss';
+
+const InputForm = React.lazy(() => import('@/components/InputForm'));
 
 const schema = yup.object().shape({
   fname: yup.string().required('First name is required'),
-  lname: yup.string().required('Last name is required'),
+  phone: yup
+    .string()
+    .matches(/^[0-9]{10}$/, 'Invalid phone number')
+    .required('Phone number is required'),
   email: yup.string().email('Invalid email').required('Email is required'),
-  address: yup.string().required('Address is required'),
-  currentPassword: yup.string().required('Current password is required'),
-  newPassword: yup.string().required('New password is required'),
+  currentPassword: yup.string(),
+  newPassword: yup.string(),
+  birthday: yup.date().nullable(),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
-    .required('Confirm password is required'),
+    .oneOf([yup.ref('newPassword'), null], 'Passwords must match'),
 });
 
 export default function MyAccountForm() {
@@ -31,42 +36,116 @@ export default function MyAccountForm() {
   const methods = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      fname: '',
-      lname: '',
-      email: '',
-      address: '',
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
     },
   });
-  const { setValue } = methods;
+  const { setValue, handleSubmit } = methods;
 
   const updateInputValue = (fieldName, newValue) => {
     setValue(fieldName, newValue);
   };
 
   useEffect(() => {
-    const currentUser = Cookies.get('currentUser')
-      ? JSON.parse(Cookies.get('currentUser'))
-      : null;
-    if (currentUser) {
-      setUser(currentUser);
-      setValue('fname', currentUser.name ? currentUser.name.firstname : '');
-      setValue('lname', currentUser.name ? currentUser.name.lastname : '');
-      setValue('email', currentUser.email || '');
-      setValue(
-        'address',
-        currentUser.address
-          ? `${currentUser.address.street}, ${currentUser.address.number}, ${currentUser.address.city}`
-          : ''
-      );
-    }
+    const fetchData = async () => {
+      try {
+        const currentUser = Cookies.get('userData')
+          ? JSON.parse(Cookies.get('userData'))
+          : null;
+        if (currentUser) {
+          const headers = {
+            Authorization: currentUser.token,
+          };
+          const response = await axios.get(
+            'https://gmen-admin.wii.camp/api/v1.0/users/me',
+            { headers }
+          );
+          if (response) {
+            return response.data;
+          }
+        }
+      } catch (error) {
+        return null;
+      }
+      return null;
+    };
+
+    const fetchUserData = async () => {
+      const userData = await fetchData();
+      if (userData) {
+        setUser(userData);
+        setValue('fname', userData.body ? userData.body.fullName : '');
+        setValue('email', userData.body ? userData.body.email : '');
+        setValue('phone', userData.body ? userData.body.phoneNumber : '');
+        setValue('birthday', userData.body ? userData.body.birthday : '');
+      }
+    };
+
+    fetchUserData();
   }, [setValue]);
+
+  const onSubmit = async (data) => {
+    try {
+      if (
+        data.currentPassword === '' &&
+        data.newPassword === '' &&
+        data.confirmPassword === ''
+      ) {
+        const formData = {
+          fullName: data.fname,
+          birthday: `${data.birthday.getFullYear()}-${
+            data.birthday.getMonth() < 9
+              ? `0${data.birthday.getMonth() + 1}`
+              : data.birthday.getMonth() + 1
+          }-${
+            data.birthday.getDate() < 10
+              ? `0${data.birthday.getDate()}`
+              : data.birthday.getDate()
+          }`,
+        };
+        if (user) {
+          const headers = {
+            Authorization: user?.token,
+          };
+          const response = await axios.put(
+            'https://gmen-admin.wii.camp/api/v1.0/users/me',
+            formData,
+            { headers }
+          );
+          if (response) {
+            toast.success('Cập nhật thành công');
+          }
+        }
+      } else {
+        const formData = {
+          password: data.currentPassword,
+          newPassword: data.newPassword,
+          confirmPassword: data.confirmPassword,
+        };
+        if (user) {
+          const headers = {
+            Authorization: user?.token,
+          };
+          const response = await axios.put(
+            'https://gmen-admin.wii.camp/api/v1.0/users/me/password',
+            formData,
+            { headers }
+          );
+          if (response) {
+            toast.success('Đổi mật khẩu thành công');
+          }
+        }
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <FormProvider {...methods}>
       <form
+        onSubmit={handleSubmit(onSubmit)}
         method="POST"
         className={classNames(styles.wrapper, 'font-poppins')}
       >
@@ -81,24 +160,25 @@ export default function MyAccountForm() {
               name="fname"
               className={classNames(styles.input)}
               placeholder={user && user.name ? user.name.firstname : ''}
-              defaultValues={user && user.name ? user.name.firstname : ''}
+              defaultvalues={user && user.name ? user.name.firstname : ''}
               onChange={(event) =>
                 updateInputValue('fname', event.target.value)
               }
             />
           </div>
           <div className={classNames(styles.item)}>
-            <label htmlFor="lname" className={classNames(styles.label)}>
-              Last Name
+            <label htmlFor="phone" className={classNames(styles.label)}>
+              Phone Number
             </label>
             <InputForm
-              id="lname"
-              name="lname"
-              className={classNames(styles.input)}
+              id="phone"
+              name="phone"
+              disabled
+              className={classNames(styles.input, 'opacity-50')}
               placeholder={user && user.name ? user.name.lastname : ''}
-              defaultValues={user && user.name ? user.name.lastname : ''}
+              defaultvalues={user && user.name ? user.name.lastname : ''}
               onChange={(event) =>
-                updateInputValue('lname', event.target.value)
+                updateInputValue('phone', event.target.value)
               }
             />
           </div>
@@ -111,34 +191,28 @@ export default function MyAccountForm() {
             <InputForm
               id="email"
               name="email"
-              className={classNames(styles.input)}
+              disabled
+              className={classNames(styles.input, 'opacity-50')}
               placeholder={user ? user.email : ''}
-              defaultValues={user ? user.email : ''}
+              defaultvalues={user ? user.email : ''}
               onChange={(event) =>
                 updateInputValue('email', event.target.value)
               }
             />
           </div>
           <div className={classNames(styles.item)}>
-            <label htmlFor="address" className={classNames(styles.label)}>
-              Address
+            <label htmlFor="birthday" className={classNames(styles.label)}>
+              BirthDay
             </label>
             <InputForm
-              id="address"
-              name="address"
+              type="date"
+              id="birthday"
+              name="birthday"
               className={classNames(styles.input)}
-              placeholder={
-                user && user.address
-                  ? `${user.address.street}, ${user.address.number}, ${user.address.city}`
-                  : ''
-              }
-              defaultValues={
-                user && user.address
-                  ? `${user.address.street}, ${user.address.number}, ${user.address.city}`
-                  : ''
-              }
+              placeholder={user && user.birthday ? user.birthday : ''}
+              defaultvalues={user && user.birthday ? user.birthday : ''}
               onChange={(event) =>
-                updateInputValue('address', event.target.value)
+                updateInputValue('birthday', event.target.value)
               }
             />
           </div>

@@ -54,8 +54,15 @@
   }
 }
 
+@media (max-width: 992px) {
+  .item {
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 768px) {
   .item {
+    gap: 8px;
     .deleteIcon {
       display: block;
     }
@@ -64,23 +71,17 @@
 
 @media (max-width: 576px) {
   .item {
-    gap: 8px;
+    span {
+      font-size: 14px;
+      line-height: 16px;
+    }
+
     .deleteIcon {
-      display: block;
       left: 0;
     }
   }
 
   .wrapper {
     padding: 0;
-  }
-
-  .item {
-    flex-direction: column;
-
-    span {
-      font-size: 14px;
-      line-height: 16px;
-    }
   }
 }

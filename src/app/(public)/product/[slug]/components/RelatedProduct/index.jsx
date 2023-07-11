@@ -4,23 +4,26 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import classNames from 'classnames';
 
-import Card from '../Card';
+const Card = React.lazy(() => import('../Card'));
 
-export default function RelatedProduct() {
+function RelatedProduct() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    axios
-      .get('https://fakestoreapi.com/products', {
-        params: {
-          limit: 4,
-        },
-      })
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch(() => {
-        return 0;
-      });
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          'https://gmen-admin.wii.camp/api/v1.0/products?perPage=20&page=1&sort=1'
+        );
+        if (response) {
+          setProducts(response.data.body?.items);
+        }
+      } catch (error) {
+        return 1;
+      }
+      return null;
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -33,19 +36,29 @@ export default function RelatedProduct() {
         'md:justify-items-center'
       )}
     >
-      {products.map((product) => {
-        return (
-          <Card
-            key={product.id}
-            name={product.title}
-            img={product.image}
-            discount={40}
-            price={product.price}
-            sale={product.price * 40}
-            count={20}
-          />
-        );
-      })}
+      {products &&
+        products.map((product, index) => {
+          if (index < 4) {
+            return (
+              <Card
+                key={product._id}
+                id={product._id}
+                name={product.name}
+                img={product.cover}
+                discount={product.dícount}
+                price={product.price}
+                sale={product.discountedPrice}
+                count={20}
+                sizes={product.variants}
+                slug={product.slug}
+              />
+            );
+          }
+          // eslint-disable-next-line react/jsx-no-useless-fragment
+          return <></>;
+        })}
     </div>
   );
 }
+
+export default React.memo(RelatedProduct);

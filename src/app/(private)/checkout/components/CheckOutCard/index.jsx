@@ -8,12 +8,6 @@ import PropTypes from 'prop-types';
 import styles from './CheckOutCard.module.scss';
 
 export default function CheckOutCard({ name, img, price, onTotalChange }) {
-  CheckOutCard.propTypes = {
-    name: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    onTotalChange: PropTypes.func.isRequired,
-  };
   useEffect(() => {
     onTotalChange(price);
   }, [onTotalChange, price]);
@@ -41,3 +35,10 @@ export default function CheckOutCard({ name, img, price, onTotalChange }) {
     </div>
   );
 }
+
+CheckOutCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  onTotalChange: PropTypes.func.isRequired,
+};

@@ -2,9 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
 
-import Breadcrumb from '@/components/Breadcrumb';
-
-// icon
 import ShopIcon from '@/svgs/About/icon_shop.svg';
 import MoneyBagIcon from '@/svgs/About/Icon-Moneybag.svg';
 import SaleIcon from '@/svgs/About/Icon-Sale.svg';
@@ -13,11 +10,13 @@ import CustomerServiceIcon from '@/svgs/Featured/Icon-Customer-service.svg';
 import DeliveryIcon from '@/svgs/Featured/icon-delivery.svg';
 import SecureIcon from '@/svgs/Featured/Icon-secure.svg';
 
-import AboutSlider from './components/AboutSlider';
-import DetailItem from './components/DetailItem';
-import ServiceItem from './components/ServiceItem';
-
 import styles from './AboutPage.module.scss';
+
+const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
+
+const AboutSlider = React.lazy(() => import('./components/AboutSlider'));
+const DetailItem = React.lazy(() => import('./components/DetailItem'));
+const ServiceItem = React.lazy(() => import('./components/ServiceItem'));
 
 function AboutPage() {
   return (

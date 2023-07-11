@@ -1,48 +1,44 @@
+/* eslint-disable react/no-array-index-key */
+
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
-// import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 
-import TableCartProductItem from '../TableCartProductItem';
-
 import styles from './TableCart.module.scss';
+
+const TableCartProductItem = React.lazy(() =>
+  import('../TableCartProductItem')
+);
 
 export default function TableCart() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    let getCart;
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://fakestoreapi.com/products');
-        const { data } = response;
-        setProducts(data);
-        getCart(data);
+        const userData = Cookies.get('userData')
+          ? JSON.parse(Cookies.get('userData'))
+          : null;
+        if (userData) {
+          const headers = {
+            Authorization: userData?.token,
+          };
+          const response = await axios.get(
+            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
+            { headers }
+          );
+          if (response) {
+            setProducts(response.data.body.products);
+          }
+        }
       } catch {
         return 0;
       }
       return null;
-    };
-    getCart = (productsInput) => {
-      const cartItem = localStorage.getItem('cartItems');
-      const parsedCartItem = JSON.parse(cartItem);
-
-      if (parsedCartItem && parsedCartItem.productId) {
-        const { productId } = parsedCartItem;
-
-        // Tạo mảng mới cho sản phẩm dựa trên productId
-        const filteredProducts = productsInput.filter((product) =>
-          productId.includes(product.id)
-        );
-
-        setProducts(filteredProducts);
-      } else {
-        setProducts([]);
-      }
     };
     fetchProducts();
   }, []);
@@ -53,10 +49,12 @@ export default function TableCart() {
 
   return (
     <div className={`${styles.wrapper} mx-0`}>
-      <ToastContainer />
       <div className={`${styles.heading} mx-0 row`}>
         <span className={`${styles.headingText} px-0 col font-poppins`}>
           Product
+        </span>
+        <span className={`${styles.headingText} px-0 col font-poppins`}>
+          Size
         </span>
         <span className={`${styles.headingText} px-0 col font-poppins`}>
           Price
@@ -69,18 +67,21 @@ export default function TableCart() {
         </span>
       </div>
       <div className={`${styles.list}`}>
-        {products.map((product) => {
-          return (
-            <TableCartProductItem
-              key={product.id}
-              id={product.id}
-              img={product.image}
-              name={product.title}
-              price={product.price}
-              onTotalChange={handleTotalChange}
-            />
-          );
-        })}
+        {products &&
+          products.map((product, index) => {
+            return (
+              <TableCartProductItem
+                key={index}
+                id={product._id}
+                img={product.product.cover}
+                name={product.product.name}
+                price={product.product.discountedPrice}
+                size={product.size}
+                quantity={product.quantity}
+                onTotalChange={handleTotalChange}
+              />
+            );
+          })}
       </div>
       <div className={`${styles.btnWrapper}`}>
         <button aria-label="btn" type="button" className={`${styles.btnTable}`}>
@@ -116,7 +117,7 @@ export default function TableCart() {
           <div className={`${styles.totalBody}`}>
             <span className={`${styles.totalName} font-poppins`}>Subtotal</span>
             <span className={`${styles.totalPrice} font-poppins`}>
-              ${total.toFixed(2)}
+              ${total}
             </span>
           </div>
           <div className={`${styles.totalBody}`}>
@@ -126,7 +127,7 @@ export default function TableCart() {
           <div className={`${styles.totalBody} border-b-[transparent]`}>
             <span className={`${styles.totalName} font-poppins`}>Total</span>
             <span className={`${styles.totalPrice} font-poppins`}>
-              ${total.toFixed(2)}
+              ${total}
             </span>
           </div>
           <button

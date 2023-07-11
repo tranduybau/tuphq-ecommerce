@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
@@ -10,72 +9,63 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import ArrowLeft from '@/svgs/icons_arrow-left.svg';
 import ArrowRight from '@/svgs/icons_arrow-right.svg';
 
-import Card from './components/Card';
-
 import './OutProduct.scss';
 
-const breakpointsSwiper = {
-  320: {
-    slidesPerView: 1,
-    spaceBetween: 40,
-  },
-  576: {
-    slidesPerView: 2,
-    spaceBetween: 30,
-  },
-  768: {
-    slidesPerView: 2,
-    spaceBetween: 40,
-  },
-  992: {
-    slidesPerView: 3,
-    spaceBetween: 40,
-  },
-  1200: {
-    slidesPerView: 4,
-    spaceBetween: 40,
-  },
-};
+const Card = React.lazy(() => import('./components/Card'));
 
 function OutProduct({ data }) {
-  OutProduct.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
-  };
-
   const [swiper, setSwiper] = useState(true);
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
-  const [products, setProducts] = useState([]);
-
   const swiperRef = useRef();
 
+  const products = useMemo(() => data?.body?.items || [], [data]);
+  const breakpointsSwiper = useMemo(
+    () => ({
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 50,
+      },
+      576: {
+        slidesPerView: 2,
+        spaceBetween: 30,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 40,
+      },
+      992: {
+        slidesPerView: 3,
+        spaceBetween: 40,
+      },
+      1200: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }),
+    []
+  );
   let count = 0;
 
-  useEffect(() => {
-    if (data) {
-      setProducts(data);
-    }
-  }, [data]);
-
-  const handleControlSwiperLeft = () => {
+  const handleControlSwiperLeft = useCallback(() => {
     swiperRef.current.swiper.slidePrev();
     setCanGoNext(true);
     if (swiper.isBeginning) {
       setCanGoPrev(false);
     }
-  };
+  }, [swiper.isBeginning]);
 
-  const handleControlSwiperRight = () => {
+  const handleControlSwiperRight = useCallback(() => {
     swiperRef.current.swiper.slideNext();
     setCanGoPrev(true);
     if (swiper.isEnd) {
       setCanGoNext(false);
     }
-  };
+  }, [swiper.isEnd]);
 
-  const handleSwiper = (swiperInput) => {
+  const handleSwiper = useCallback((swiperInput) => {
     setSwiper(swiperInput);
-  };
+  }, []);
 
   return (
     <div className="ourproduct-wrapper container">
@@ -134,26 +124,27 @@ function OutProduct({ data }) {
               return (
                 <SwiperSlide key={count}>
                   <Card
-                    id={product.id}
+                    id={product._id}
                     className="mb-[60px]"
-                    img={product.image}
-                    discount={product.discount}
-                    name={product.title}
-                    sale={product.price * 40}
-                    price={product.price}
-                    count={product.rating.count}
+                    img={product.cover}
+                    name={product.name}
+                    sale={product.price}
+                    count={80}
+                    sizes={product.variants}
+                    slug={product.slug}
                   />
                   {newProduct && (
                     <SwiperSlide>
                       <Card
-                        id={newProduct.id}
-                        img={newProduct.image}
-                        discount={newProduct.discount}
-                        name={newProduct.title}
-                        sale={newProduct.price * 40}
-                        price={newProduct.price}
-                        count={newProduct.rating.count}
+                        className={classNames('flex-1')}
+                        id={newProduct._id}
+                        img={newProduct.cover}
+                        name={newProduct.name}
+                        sale={newProduct.price}
+                        count={80}
                         color
+                        sizes={newProduct.variants}
+                        slug={newProduct.slug}
                       />
                     </SwiperSlide>
                   )}
@@ -175,9 +166,13 @@ function OutProduct({ data }) {
           </Link>
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 }
+
+OutProduct.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  data: PropTypes.object.isRequired,
+};
 
 export default React.memo(OutProduct);

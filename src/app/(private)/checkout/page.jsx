@@ -1,12 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import Breadcrumb from '@/components/Breadcrumb';
-
-import CheckOutForm from './components/CheckOutForm';
-import CheckOutTable from './components/ChecOutTable';
-
 import styles from './CheckOutPage.module.scss';
+
+const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
+const CheckOutForm = React.lazy(() => import('./components/CheckOutForm'));
+const CheckOutTable = React.lazy(() => import('./components/ChecOutTable'));
 
 export default function CheckOutPage() {
   return (

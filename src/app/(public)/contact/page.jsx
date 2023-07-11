@@ -1,15 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import Breadcrumb from '@/components/Breadcrumb';
-
-// icon
 import EmailIcon from '@/svgs/Contact/icons-mail.svg';
 import PhoneIcon from '@/svgs/Contact/icons-phone.svg';
 
-import ContactForm from './components/ContactForm';
-
 import styles from './ContactPage.module.scss';
+
+const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
+const ContactForm = React.lazy(() => import('./components/ContactForm'));
 
 function ContactPage() {
   return (

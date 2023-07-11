@@ -2,20 +2,22 @@
 
 import React, { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 
-import InputForm from '@/components/InputForm';
-
-// icon
 import GoogleIcon from '@/svgs/Signup/Icon-Google.svg';
 
 import styles from './SignUpForm.module.scss';
 
+const InputForm = React.lazy(() => import('@/components/InputForm'));
+
 export default function SignUpForm() {
   const validationSchema = yup.object().shape({
-    name: yup.string().required('Vui lòng nhập tên'),
+    fullName: yup.string().required('Vui lòng nhập tên'),
     email: yup
       .string()
       .email('Email không hợp lệ')
@@ -24,15 +26,53 @@ export default function SignUpForm() {
       .string()
       .min(6, 'Mật khẩu phải chứa ít nhất 6 ký tự')
       .required('Vui lòng nhập mật khẩu'),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Mật khẩu không khớp')
+      .required('Vui lòng xác nhận mật khẩu'),
+    phoneNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, 'Số điện thoại không hợp lệ')
+      .required('Vui lòng nhập số điện thoại'),
+    birthday: yup.date(),
   });
 
+  const router = useRouter();
   const methods = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = useCallback((data) => {
-    return data;
-  }, []);
+  const onSubmit = useCallback(
+    (data) => {
+      const handleSignUp = async (formData) => {
+        try {
+          const response = await axios.post(
+            'https://gmen-admin.wii.camp/api/v1.0/auth/register',
+            formData
+          );
+          toast.success('Đăng ký thành công');
+          setTimeout(() => {
+            router.push('/signin');
+          }, 1500);
+          return response.data;
+        } catch (error) {
+          toast.error('Lỗi ! Email hoặc số điện thoại đã tồn tại !');
+        }
+        return null;
+      };
+      const formData = data;
+      const { birthday } = data;
+      const birthdayData = `${birthday.getFullYear()}-${
+        birthday.getMonth() < 9
+          ? `0${birthday.getMonth()}`
+          : birthday.getMonth() + 1
+      }-${birthday.getDate()}`;
+      formData.birthday = birthdayData;
+      handleSignUp(formData);
+      return data;
+    },
+    [router]
+  );
 
   return (
     <FormProvider {...methods}>
@@ -43,21 +83,39 @@ export default function SignUpForm() {
       >
         <InputForm
           type="text"
-          name="name"
+          name="fullName"
           className={`${styles.signUpFormInput}`}
-          placeholder="Name"
+          placeholder="full name"
         />
         <InputForm
           type="text"
           name="email"
           className={`${styles.signUpFormInput}`}
-          placeholder="Email or Phone Number"
+          placeholder="Email"
+        />
+        <InputForm
+          type="text"
+          name="phoneNumber"
+          className={`${styles.signUpFormInput}`}
+          placeholder="Phone Number"
         />
         <InputForm
           type="password"
           name="password"
           className={`${styles.signUpFormInput}`}
           placeholder="Password"
+        />
+        <InputForm
+          type="password"
+          name="confirmPassword"
+          className={`${styles.signUpFormInput}`}
+          placeholder="Confirm password"
+        />
+        <InputForm
+          type="date"
+          name="birthday"
+          className={`${styles.signUpFormInput}`}
+          placeholder="Birthday"
         />
 
         <button

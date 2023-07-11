@@ -1,14 +1,12 @@
 'use client';
 
-import React from 'react';
-import SwiperCore, { Pagination } from 'swiper';
+import React, { useMemo } from 'react';
+import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css/pagination';
-
-import AboutMemberCard from '../AboutMemberCard';
-
 import './AboutSlider.scss';
+
+const AboutMemberCard = React.lazy(() => import('../AboutMemberCard'));
 
 const members = [
   {
@@ -44,32 +42,33 @@ const members = [
 ];
 
 const modulesSwiper = [Pagination];
-const breakpointsSwiper = {
-  320: {
-    slidesPerView: 1,
-    spaceBetween: 40,
-  },
-  576: {
-    slidesPerView: 1,
-    spaceBetween: 30,
-  },
-  768: {
-    slidesPerView: 2,
-    spaceBetween: 30,
-  },
-  992: {
-    slidesPerView: 2,
-    spaceBetween: 30,
-  },
-  1200: {
-    slidesPerView: 3,
-    spaceBetween: 30,
-  },
-};
-
-SwiperCore.use(modulesSwiper);
 
 export default function AboutSlider() {
+  const breakpointsSwiper = useMemo(
+    () => ({
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 40,
+      },
+      576: {
+        slidesPerView: 1,
+        spaceBetween: 30,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30,
+      },
+      992: {
+        slidesPerView: 2,
+        spaceBetween: 30,
+      },
+      1200: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+    }),
+    []
+  );
   return (
     <Swiper
       slidesPerView={3}

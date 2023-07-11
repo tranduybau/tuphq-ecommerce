@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -10,24 +10,21 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 
-// icon
-import InputForm from '@/components/InputForm';
-
-// css
 import styles from './SignInForm.module.scss';
+
+const InputForm = React.lazy(() => import('@/components/InputForm'));
 
 export default function SignInForm() {
   const router = useRouter();
-
   useEffect(() => {
-    Cookies.remove('currentUser');
+    Cookies.remove('userData');
   }, []);
 
   const validationSchema = yup.object().shape({
-    email: yup
+    phoneNumber: yup
       .string()
-      .email('Email không hợp lệ')
-      .required('Vui lòng nhập email'),
+      .matches(/^[0-9]{10}$/, 'Số điện thoại không hợp lệ')
+      .required('Vui lòng nhập số điện thoại'),
     password: yup
       .string()
       .min(6, 'Mật khẩu phải chứa ít nhất 6 ký tự')
@@ -38,29 +35,34 @@ export default function SignInForm() {
     resolver: yupResolver(validationSchema),
   });
 
+  const handleSignIn = async (formData) => {
+    try {
+      const response = await axios.post(
+        'https://gmen-admin.wii.camp/api/v1.0/auth/login',
+        formData
+      );
+      if (response) {
+        const { token, fullName, _id } = response.data.body;
+        const userData = {
+          token,
+          fullName,
+          _id,
+        };
+        Cookies.set('userData', JSON.stringify(userData));
+      }
+      toast.success('Đăng nhập thành công');
+      setTimeout(() => {
+        router.refresh();
+        router.push('/');
+      }, 1500);
+    } catch (error) {
+      toast.error('Lỗi ! Sai tài khoản hoặc mật khẩu');
+    }
+    return null;
+  };
+
   const onSubmit = (data) => {
-    axios
-      .get('https://fakestoreapi.com/users')
-      .then((response) => {
-        const foundUser = response.data.find(
-          (user) => user.email === data.email && user.password === data.password
-        );
-        if (foundUser) {
-          toast.success('Đăng nhập thành công');
-          Cookies.set('currentUser', JSON.stringify(foundUser));
-          setTimeout(() => {
-            router.push('/');
-          }, 1200);
-          setTimeout(() => {
-            router.refresh();
-          }, 2000);
-        } else {
-          toast.error('Sai tài khoản hoặc mật khẩu');
-        }
-      })
-      .catch(() => {
-        return 0;
-      });
+    handleSignIn(data);
   };
 
   return (
@@ -72,9 +74,9 @@ export default function SignInForm() {
       >
         <InputForm
           type="text"
-          name="email"
+          name="phoneNumber"
           className={`${styles.signInFormInput}`}
-          placeholder="Email or Phone Number"
+          placeholder="Phone Number"
         />
         <InputForm
           type="password"
@@ -97,7 +99,6 @@ export default function SignInForm() {
             Forget Password?
           </Link>
         </div>
-        <ToastContainer />
       </form>
     </FormProvider>
   );

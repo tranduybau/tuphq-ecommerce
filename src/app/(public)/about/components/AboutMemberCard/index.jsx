@@ -5,17 +5,11 @@ import PropTypes from 'prop-types';
 
 import InstagramIcon from '@/svgs/About/icon-instagram.svg';
 import LinkedinIcon from '@/svgs/About/Icon-Linkedin.svg';
-// icon
 import TwitterIcon from '@/svgs/About/Icon-Twitter.svg';
 
 import styles from './AboutMemberCard.module.scss';
 
 export default function AboutMemberCard({ img, name, position }) {
-  AboutMemberCard.propTypes = {
-    img: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    position: PropTypes.string.isRequired,
-  };
   return (
     <div className={classNames(styles.wrapper)}>
       <div className={classNames(styles.image)}>
@@ -41,3 +35,9 @@ export default function AboutMemberCard({ img, name, position }) {
     </div>
   );
 }
+
+AboutMemberCard.propTypes = {
+  img: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  position: PropTypes.string.isRequired,
+};

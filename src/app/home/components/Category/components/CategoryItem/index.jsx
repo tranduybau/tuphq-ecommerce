@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 
 import './CategoryItem.scss';
 
-export default function CategoryItem({ children, category }) {
-  CategoryItem.propTypes = {
-    children: PropTypes.node.isRequired,
-    category: PropTypes.string.isRequired,
-  };
+function CategoryItem({ children, category }) {
   return (
     <div className="category-item lg:max-w-[170px]">
       <div className="category-icon">{children}</div>
@@ -15,3 +11,10 @@ export default function CategoryItem({ children, category }) {
     </div>
   );
 }
+
+CategoryItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  category: PropTypes.string.isRequired,
+};
+
+export default React.memo(CategoryItem);

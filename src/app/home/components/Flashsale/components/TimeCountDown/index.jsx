@@ -25,7 +25,7 @@ function TimeCountDown() {
         setMinuteLeft(59);
         setSecondLeft(60);
       }
-    }, 1000);
+    }, 1500);
 
     if (secondLeft === 0 && minuteLeft === 0 && hourLeft === 0) {
       clearInterval(intervalId);

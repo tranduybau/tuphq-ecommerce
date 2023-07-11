@@ -4,16 +4,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 
-import WishlistCard from '../WishlistCard';
-
 import styles from './WishlistForYou.module.scss';
+
+const WishlistCard = React.lazy(() => import('../WishlistCard'));
 
 export default function WishlistForYou() {
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('https://fakestoreapi.com/products');
-      setProducts(response.data);
+      const response = await axios.get(
+        'https://gmen-admin.wii.camp/api/v1.0/products?perPage=20&page=1&sort=1'
+      );
+      if (response) {
+        setProducts(response.data.body?.items);
+      }
     } catch {
       return 0;
     }
@@ -48,10 +52,13 @@ export default function WishlistForYou() {
           return (
             <div key={product.id} className={listItemClassName}>
               <WishlistCard
-                name={product.title}
-                img={product.image}
+                id={product._id}
+                name={product.name}
+                img={product.cover}
                 price={product.price}
                 type="foryou"
+                sizes={product.variants}
+                slug={product.slug}
                 discount={Math.floor(Math.random() * 100) + 1}
               />
             </div>

@@ -1,9 +1,12 @@
+/* eslint-disable no-prototype-builtins */
+
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
@@ -25,16 +28,16 @@ function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-  const [user, setUser] = useState();
-  const [cartItemNumber, setCardItemNumber] = useState(0);
+  const [user, setUser] = useState(null);
+  const [cartItemNumber, setCartItemNumber] = useState(0);
   const [wishlistItemNumber, setWishlistItemNumber] = useState(0);
   const router = useRouter();
 
   const tooltipRef = useRef(null);
 
   useEffect(() => {
-    const currentUser = Cookies.get('currentUser')
-      ? JSON.parse(Cookies.get('currentUser'))
+    const currentUser = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
       : null;
     if (currentUser) {
       setUser(currentUser);
@@ -42,51 +45,71 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    const currentCartItems = JSON.parse(localStorage.getItem('cartItems'));
+    const fetchCart = async () => {
+      try {
+        if (user) {
+          const headers = {
+            Authorization: user?.token,
+          };
+          const response = await axios.get(
+            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
+            { headers }
+          );
+          if (response) {
+            setCartItemNumber(response.data.body.products.length);
+          }
+          return response.data;
+        }
+      } catch (error) {
+        return error;
+      }
+      return null;
+    };
+
+    fetchCart();
+
     const currentWishlistItems = JSON.parse(
       localStorage.getItem('wishlistItems')
     );
-    const currentUser = Cookies.get('currentUser')
-      ? JSON.parse(Cookies.get('currentUser'))
-      : null;
 
-    if (currentCartItems && currentUser) {
-      setCardItemNumber(currentCartItems.productId.length);
+    if (user && currentWishlistItems) {
+      const accountToken = user.token;
+      if (currentWishlistItems.hasOwnProperty(accountToken)) {
+        const productList = currentWishlistItems[accountToken];
+        setWishlistItemNumber(productList.length);
+      }
     }
-
-    if (currentWishlistItems && currentUser) {
-      setWishlistItemNumber(currentWishlistItems.productId.length);
-    }
-  }, []);
+  }, [user]);
 
   const handleShowTooltip = useCallback(() => {
     setIsTooltipOpen((prevState) => !prevState);
   }, []);
 
   const handleLogout = useCallback(() => {
-    Cookies.remove('currentUser');
+    Cookies.remove('userData');
+    toast.success('Đăng xuất thành công');
     setTimeout(() => {
       router.refresh();
-    }, 100);
+      router.push('/');
+    }, 1500);
   }, [router]);
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prevState) => !prevState);
   }, []);
 
-  const handleCheckPrivateRoute = useCallback(
+  const handleCheckRoute = useCallback(
     (pathnameCheck) => {
-      const currentUser = Cookies.get('currentUser')
-        ? JSON.parse(Cookies.get('currentUser'))
-        : null;
-      if (currentUser === null) {
-        router.push('/signin');
+      if (user === null) {
         toast.error('Bạn cần phải đăng nhập');
+        setTimeout(() => {
+          router.push('/signin');
+        }, 1500);
       } else {
         router.push(`/${pathnameCheck}`);
       }
     },
-    [router]
+    [router, user]
   );
 
   useEffect(() => {
@@ -103,6 +126,7 @@ function Header() {
 
   return (
     <header className="header">
+      <ToastContainer />
       <div className="top-header">
         <div className="top-header-main container">
           <div className="top-header__text ">
@@ -215,7 +239,7 @@ function Header() {
                   type="button"
                   aria-label="wishlist"
                   onClick={() => {
-                    handleCheckPrivateRoute('wishlist');
+                    handleCheckRoute('wishlist');
                   }}
                   className="icon-heart"
                 >
@@ -232,7 +256,7 @@ function Header() {
                   type="button"
                   aria-label="cart"
                   onClick={() => {
-                    handleCheckPrivateRoute('cart');
+                    handleCheckRoute('cart');
                   }}
                   className="icon-cart"
                 >

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
@@ -5,24 +6,12 @@ import PropTypes from 'prop-types';
 import styles from './FeaturedItem.module.scss';
 
 export default function FeaturedItem({
-  className,
-  imgClassName,
+  className = '',
+  imgClassName = '',
   children,
   name,
   description,
 }) {
-  FeaturedItem.propTypes = {
-    className: PropTypes.string,
-    imgClassName: PropTypes.string,
-    children: PropTypes.node.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  };
-  FeaturedItem.defaultProps = {
-    className: '',
-    imgClassName: '',
-  };
-
   return (
     <div className={`${className} ${styles.wrapper}`}>
       <div className={`${imgClassName} ${styles.image} relative`}>
@@ -40,3 +29,11 @@ export default function FeaturedItem({
     </div>
   );
 }
+
+FeaturedItem.propTypes = {
+  className: PropTypes.string,
+  imgClassName: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};

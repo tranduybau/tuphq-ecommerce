@@ -2,14 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 
 import CustomerServiceIcon from '@/svgs/Featured/Icon-Customer-service.svg';
-// icon
 import DeliveryIcon from '@/svgs/Featured/icon-delivery.svg';
 import SecureIcon from '@/svgs/Featured/Icon-secure.svg';
 
-import FeaturedItem from './components/FeaturedItem';
-import ServiceItem from './components/ServiceItem';
-
 import styles from './Featured.module.scss';
+
+const FeaturedItem = React.lazy(() => import('./components/FeaturedItem'));
+const ServiceItem = React.lazy(() => import('./components/ServiceItem'));
 
 export default function Featured() {
   return (

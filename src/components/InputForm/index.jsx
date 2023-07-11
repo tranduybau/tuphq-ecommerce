@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import styles from './InputForm.module.scss';
 
-export default function InputForm({
+function InputForm({
   name,
   type = 'text',
   className = '',
@@ -42,3 +42,5 @@ InputForm.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
 };
+
+export default React.memo(InputForm);

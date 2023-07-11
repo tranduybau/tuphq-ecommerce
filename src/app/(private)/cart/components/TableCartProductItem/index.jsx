@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -7,14 +9,13 @@ import Cookies from 'js-cookie';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 
-// icon
 import DeleteIcon from '@/svgs/Cart/icon-delete.svg';
 
 import styles from './TableCartProductItem.module.scss';
 
 function TableCartProductItem({
   id,
-  size = null,
+  size = '',
   name,
   img,
   price,
@@ -41,7 +42,7 @@ function TableCartProductItem({
     try {
       if (user) {
         const headers = {
-          Authorization: user.token,
+          Authorization: user?.token,
         };
         const response = axios.delete(
           `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${productId}`,
@@ -65,46 +66,39 @@ function TableCartProductItem({
     handleDeleteApi(id);
   };
 
-  const updateProductQuantity = async (productId, newQuantity) => {
-    try {
-      const userData = Cookies.get('userData')
-        ? JSON.parse(Cookies.get('userData'))
-        : null;
-      if (userData) {
-        const headers = {
-          Authorization: userData.token,
-        };
-        const payload = {
-          quantity: newQuantity,
-        };
-        const response = await axios.put(
-          `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${productId}`,
-          payload,
-          { headers }
-        );
-
-        if (response) {
-          // Cập nhật số lượng sản phẩm thành công
-          toast.success('Số lượng sản phẩm đã được cập nhật');
-        }
-      }
-    } catch (error) {
-      // Xử lý lỗi khi cập nhật số lượng sản phẩm
-      toast.error('Lỗi khi cập nhật số lượng sản phẩm:', error);
-    }
-  };
-
   const handleQuantityChange = useCallback(
     (event) => {
+      const updateProductQuantity = async (productId, newQuantity) => {
+        try {
+          if (user) {
+            const payload = {
+              quantity: newQuantity,
+            };
+            const headers = {
+              Authorization: user?.token,
+            };
+            const response = await axios.put(
+              `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${productId}`,
+              payload,
+              { headers }
+            );
+
+            if (response) {
+              toast.success('Số lượng sản phẩm đã được cập nhật');
+            }
+          }
+        } catch (error) {
+          toast.error('Lỗi khi cập nhật số lượng sản phẩm:', error);
+        }
+      };
+
       const newQuantity = parseInt(event.target.value, 10);
       const newTotal = price * newQuantity;
       setTotal(newTotal);
       onTotalChange(newTotal - price * quantity);
-
-      // Gửi yêu cầu PUT tới API để cập nhật số lượng sản phẩm
       updateProductQuantity(id, newQuantity);
     },
-    [onTotalChange, price, quantity]
+    [id, onTotalChange, price, quantity, user]
   );
 
   return (
@@ -153,7 +147,7 @@ TableCartProductItem.propTypes = {
   quantity: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   onTotalChange: PropTypes.func.isRequired,
-  size: PropTypes.string.isRequired,
+  size: PropTypes.string,
 };
 
 export default React.memo(TableCartProductItem);

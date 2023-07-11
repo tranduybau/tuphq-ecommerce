@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import classNames from 'classnames';
 
-import Card from '../Card';
+const Card = React.lazy(() => import('../Card'));
 
-export default function RelatedProduct() {
+function RelatedProduct() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -14,7 +14,9 @@ export default function RelatedProduct() {
         const response = await axios.get(
           'https://gmen-admin.wii.camp/api/v1.0/products?perPage=20&page=1&sort=1'
         );
-        setProducts(response.data.body.items);
+        if (response) {
+          setProducts(response.data.body?.items);
+        }
       } catch (error) {
         return 1;
       }
@@ -48,6 +50,7 @@ export default function RelatedProduct() {
                 sale={product.discountedPrice}
                 count={20}
                 sizes={product.variants}
+                slug={product.slug}
               />
             );
           }
@@ -57,3 +60,5 @@ export default function RelatedProduct() {
     </div>
   );
 }
+
+export default React.memo(RelatedProduct);

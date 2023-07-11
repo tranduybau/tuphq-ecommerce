@@ -1,14 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 
-import Banner from './components/Banner';
-import Bestseller from './components/Bestseller';
-import Category from './components/Category';
-import Featured from './components/Featured';
-import Flashsale from './components/Flashsale';
-import OutProduct from './components/OurProduct';
-
 import './Home.scss';
+
+const Banner = React.lazy(() => import('./components/Banner'));
+const Bestseller = React.lazy(() => import('./components/Bestseller'));
+const Category = React.lazy(() => import('./components/Category'));
+const Featured = React.lazy(() => import('./components/Featured'));
+const Flashsale = React.lazy(() => import('./components/Flashsale'));
+const OurProduct = React.lazy(() => import('./components/OurProduct'));
 
 const fetchData = async () => {
   try {
@@ -29,7 +29,7 @@ const Home = async () => {
       <Flashsale data={products} />
       <Category />
       <Bestseller data={products} />
-      <OutProduct data={products} />
+      <OurProduct data={products} />
       <Featured />
     </main>
   );

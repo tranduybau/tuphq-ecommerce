@@ -1,6 +1,12 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { faBars, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -10,7 +16,7 @@ import DropdownRight from '@/svgs/DropDown-right.svg';
 
 import './Sidebar.scss';
 
-export default function SidebarBanner() {
+function SidebarBanner() {
   const [isBarsOpen, setIsBarsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
@@ -26,13 +32,14 @@ export default function SidebarBanner() {
       } catch (error) {
         return null;
       }
+      return null;
     };
     fetchData();
   }, []);
 
-  const toggleBars = () => {
-    setIsBarsOpen(!isBarsOpen);
-  };
+  const toggleBars = useCallback(() => {
+    setIsBarsOpen((prevIsBarsOpen) => !prevIsBarsOpen);
+  }, []);
 
   const handleOutsideClick = useCallback((event) => {
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -47,15 +54,56 @@ export default function SidebarBanner() {
     };
   }, [handleOutsideClick]);
 
-  const handleCategoryClick = (category) => {
+  const handleCategoryClick = useCallback((category) => {
     if (category.childCategories && category.childCategories.length > 0) {
-      if (activeCategory && activeCategory._id === category._id) {
-        setActiveCategory(null);
-      } else {
-        setActiveCategory(category);
-      }
+      setActiveCategory((prevActiveCategory) =>
+        prevActiveCategory && prevActiveCategory._id === category._id
+          ? null
+          : category
+      );
     }
-  };
+  }, []);
+
+  const categoryElements = useMemo(
+    () =>
+      categories?.body?.map((category) => (
+        <div key={category._id}>
+          <button
+            type="button"
+            aria-label="btn item category"
+            className={classNames(
+              'sidebar-item sp-bw',
+              'w-full',
+              'flex',
+              'justify-between',
+              {
+                'mb-0': activeCategory && activeCategory._id === category._id,
+              }
+            )}
+            onClick={() => handleCategoryClick(category)}
+          >
+            <span
+              className={classNames('font-poppins', 'self-start', 'text-start')}
+            >
+              {category.name}
+            </span>
+            {category.isMainCategory && (
+              <DropdownRight className="dropdown-right-icon" />
+            )}
+          </button>
+          {activeCategory &&
+            activeCategory._id === category._id &&
+            category.childCategories && (
+              <ul className="sub-menu ml-[20px] list-disc">
+                {category.childCategories.map((childCategory) => (
+                  <li key={childCategory._id}>{childCategory.name}</li>
+                ))}
+              </ul>
+            )}
+        </div>
+      )),
+    [categories.body, activeCategory, handleCategoryClick]
+  );
 
   return (
     <div className="xl:border-solid xl:border-r-[1px]">
@@ -78,48 +126,7 @@ export default function SidebarBanner() {
             <FontAwesomeIcon icon={faClose} className="close-icon" />
           </button>
         )}
-        <ul className="sidebar__menu">
-          {categories &&
-            categories.body &&
-            categories.body.map((category) => (
-              <div key={category._id}>
-                <button
-                  type="button"
-                  aria-label="btn item category"
-                  className={classNames(
-                    'sidebar-item sp-bw',
-                    'w-full',
-                    'flex',
-                    'justify-between',
-                    { 'mb-0': activeCategory }
-                  )}
-                  onClick={() => handleCategoryClick(category)}
-                >
-                  <span
-                    className={classNames(
-                      'font-poppins',
-                      'self-start',
-                      'text-start'
-                    )}
-                  >
-                    {category.name}
-                  </span>
-                  {category.isMainCategory && (
-                    <DropdownRight className="dropdown-right-icon" />
-                  )}
-                </button>
-                {activeCategory &&
-                  activeCategory._id === category._id &&
-                  category.childCategories && (
-                    <ul className="sub-menu ml-[20px] list-disc">
-                      {category.childCategories.map((childCategory) => (
-                        <li key={childCategory._id}>{childCategory.name}</li>
-                      ))}
-                    </ul>
-                  )}
-              </div>
-            ))}
-        </ul>
+        <ul className="sidebar__menu">{categoryElements}</ul>
       </div>
       <button
         aria-label="sidebar"
@@ -132,3 +139,5 @@ export default function SidebarBanner() {
     </div>
   );
 }
+
+export default React.memo(SidebarBanner);

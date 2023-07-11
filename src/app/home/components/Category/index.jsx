@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,65 +10,64 @@ import Computer from '@/svgs/Category/Category-Computer.svg';
 import Gamepad from '@/svgs/Category/Category-Gamepad.svg';
 import Headphone from '@/svgs/Category/Category-Headphone.svg';
 import SmartWatch from '@/svgs/Category/Category-SmartWatch.svg';
-// icon
 import ArrowLeft from '@/svgs/icons_arrow-left.svg';
 import ArrowRight from '@/svgs/icons_arrow-right.svg';
 
-import CategoryItem from './components/CategoryItem';
-
 import './Category.scss';
 
-const breakpointsSwiper = {
-  320: {
-    slidesPerView: 2,
-    spaceBetween: 20,
-  },
-  576: {
-    slidesPerView: 3,
-    spaceBetween: 30,
-  },
-  768: {
-    slidesPerView: 4,
-    spaceBetween: 40,
-  },
-  992: {
-    slidesPerView: 4,
-    spaceBetween: 40,
-  },
-  1200: {
-    slidesPerView: 6,
-    spaceBetween: 40,
-  },
-};
+const CategoryItem = React.lazy(() => import('./components/CategoryItem'));
 
 function Category() {
-  // ref
   const swiperRef = useRef();
-
-  // state
   const [swiper, setSwiper] = useState(true);
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
 
-  const handleControlSwiperLeft = () => {
+  const breakpointsSwiper = useMemo(
+    () => ({
+      320: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      576: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+      768: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+      992: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+      1200: {
+        slidesPerView: 6,
+        spaceBetween: 40,
+      },
+    }),
+    []
+  );
+
+  const handleControlSwiperLeft = useCallback(() => {
     swiperRef.current.swiper.slidePrev();
     setCanGoNext(true);
     if (swiper.isBeginning) {
       setCanGoPrev(false);
     }
-  };
+  }, [swiper.isBeginning]);
 
-  const handleControlSwiperRight = () => {
+  const handleControlSwiperRight = useCallback(() => {
     swiperRef.current.swiper.slideNext();
     setCanGoPrev(true);
     if (swiper.isEnd) {
       setCanGoNext(false);
     }
-  };
+  }, [swiper.isEnd]);
 
-  const handleSwiper = (swiperInput) => {
+  const handleSwiper = useCallback((swiperInput) => {
     setSwiper(swiperInput);
-  };
+  }, []);
 
   return (
     <div className="category-wrapper container">

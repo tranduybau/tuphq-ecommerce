@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 'use client';
@@ -7,19 +8,19 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import classNames from 'classnames';
+import Cookies from 'js-cookie';
 import * as Yup from 'yup';
-
-import InputForm from '@/components/InputForm';
 
 import BkashIcon from '@/svgs/Checkout/Bkash.svg';
 import MastercartIcon from '@/svgs/Checkout/Mastercard.svg';
 import NagadIcon from '@/svgs/Checkout/Nagad.svg';
-// icon
 import VisaIcon from '@/svgs/Checkout/Visa.svg';
 
-import CheckOutCard from '../CheckOutCard';
-
 import styles from './CheckOutTable.module.scss';
+
+const CheckOutCard = React.lazy(() => import('../CheckOutCard'));
+
+const InputForm = React.lazy(() => import('@/components/InputForm'));
 
 export default function CheckOutTable() {
   const [products, setProducts] = useState([]);
@@ -37,18 +38,31 @@ export default function CheckOutTable() {
   const { handleSubmit } = methods;
 
   useEffect(() => {
-    axios
-      .get('https://fakestoreapi.com/products', {
-        params: {
-          limit: 2,
-        },
-      })
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch(() => {
-        return 0;
-      });
+    const userData = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
+      : null;
+
+    const fetchData = async () => {
+      try {
+        if (userData) {
+          const headers = {
+            Authorization: userData?.token,
+          };
+          const response = await axios.get(
+            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
+            { headers }
+          );
+          if (response) {
+            setProducts(response.data.body?.products);
+          }
+        }
+      } catch (error) {
+        return error;
+      }
+      return null;
+    };
+
+    fetchData();
   }, []);
 
   const handleTotalChange = useCallback((newTotal) => {
@@ -63,13 +77,13 @@ export default function CheckOutTable() {
     <FormProvider {...methods}>
       <div className={classNames(styles.wrapper)}>
         <div className={classNames(styles.list)}>
-          {products.map((product) => {
+          {products.map((product, index) => {
             return (
-              <div key={product.id} className={classNames(styles.item)}>
+              <div key={index} className={classNames(styles.item)}>
                 <CheckOutCard
-                  name={product.title}
-                  price={product.price}
-                  img={product.image}
+                  name={product.product.name}
+                  price={product.product.price * product.quantity}
+                  img={product.product.cover}
                   onTotalChange={handleTotalChange}
                 />
               </div>

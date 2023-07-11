@@ -1,50 +1,44 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import Card from './components/Card';
-import TimeCountDown from './components/TimeCountDown';
-
 import './Bestseller.scss';
 
-const breakpointsSwiper = {
-  320: {
-    slidesPerView: 1,
-    spaceBetween: 20,
-  },
-
-  576: {
-    slidesPerView: 2,
-    spaceBetween: 30,
-  },
-
-  768: {
-    slidesPerView: 2,
-    spaceBetween: 40,
-  },
-  992: {
-    slidesPerView: 3,
-    spaceBetween: 40,
-  },
-  1200: {
-    slidesPerView: 4,
-    spaceBetween: 40,
-  },
-};
+const Card = React.lazy(() => import('./components/Card'));
+const TimeCountDown = React.lazy(() => import('./components/TimeCountDown'));
 
 function BestSeller({ data }) {
-  const [products, setProducts] = useState([]);
+  const products = useMemo(() => data?.body?.items || [], [data]);
 
-  useEffect(() => {
-    if (data) {
-      setProducts(data.body.items);
-    }
-  }, [data]);
+  const breakpointsSwiper = useMemo(
+    () => ({
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 50,
+      },
+      576: {
+        slidesPerView: 2,
+        spaceBetween: 30,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 40,
+      },
+      992: {
+        slidesPerView: 3,
+        spaceBetween: 40,
+      },
+      1200: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }),
+    []
+  );
 
   return (
     <div className="bestseller-wrapper container">
@@ -96,6 +90,7 @@ function BestSeller({ data }) {
             fill
             sizes="(max-width: 768px) 100vw"
             quality={80}
+            priority
           />
         </div>
         <div className="banner-product__text">
@@ -117,7 +112,6 @@ function BestSeller({ data }) {
           </button>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

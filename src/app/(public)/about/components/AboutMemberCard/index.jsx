@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import InstagramIcon from '@/svgs/About/icon-instagram.svg';
 import LinkedinIcon from '@/svgs/About/Icon-Linkedin.svg';
-// icon
 import TwitterIcon from '@/svgs/About/Icon-Twitter.svg';
 
 import styles from './AboutMemberCard.module.scss';

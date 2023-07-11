@@ -2,8 +2,7 @@
 
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
@@ -12,68 +11,59 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import ArrowLeft from '@/svgs/icons_arrow-left.svg';
 import ArrowRight from '@/svgs/icons_arrow-right.svg';
 
-import Card from './components/Card';
-import TimeCountDown from './components/TimeCountDown';
-
 import './Flashsale.scss';
 
-const breakpointsSwiper = {
-  320: {
-    slidesPerView: 1,
-    spaceBetween: 50,
-  },
-  576: {
-    slidesPerView: 2,
-    spaceBetween: 30,
-  },
-  768: {
-    slidesPerView: 2,
-    spaceBetween: 40,
-  },
-  992: {
-    slidesPerView: 3,
-    spaceBetween: 40,
-  },
-  1200: {
-    slidesPerView: 4,
-    spaceBetween: 40,
-  },
-};
+const Card = React.lazy(() => import('./components/Card'));
+const TimeCountDown = React.lazy(() => import('./components/TimeCountDown'));
 
 function Flashsale({ data }) {
-  // state
-  const [swiper, setSwiper] = useState(true);
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
-  const [products, setProducts] = useState([]);
-  // ref
   const swiperRef = useRef();
 
-  useEffect(() => {
-    if (data) {
-      setProducts(data.body.items);
-    }
-  }, [data]);
+  const products = useMemo(() => data?.body?.items || [], [data]);
 
-  const handleControlSwiperLeft = () => {
+  const breakpointsSwiper = useMemo(
+    () => ({
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 50,
+      },
+      576: {
+        slidesPerView: 2,
+        spaceBetween: 30,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 40,
+      },
+      992: {
+        slidesPerView: 3,
+        spaceBetween: 40,
+      },
+      1200: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }),
+    []
+  );
+
+  const handleControlSwiperLeft = useCallback(() => {
     swiperRef.current.swiper.slidePrev();
     setCanGoNext(true);
-    if (swiper.isBeginning) {
+    if (swiperRef.current.swiper.isBeginning) {
       setCanGoPrev(false);
     }
-  };
+  }, []);
 
-  const handleControlSwiperRight = () => {
+  const handleControlSwiperRight = useCallback(() => {
     swiperRef.current.swiper.slideNext();
     setCanGoPrev(true);
-    if (swiper.isEnd) {
+    if (swiperRef.current.swiper.isEnd) {
       setCanGoNext(false);
     }
-  };
-
-  const handleSwiper = (swiperInput) => {
-    setSwiper(swiperInput);
-  };
+  }, []);
 
   return (
     <div className="flashsale-wrapper container">
@@ -90,7 +80,7 @@ function Flashsale({ data }) {
             aria-label="button control"
             onClick={handleControlSwiperLeft}
             className={classNames('btn-control-swiper', {
-              disabled: canGoPrev === false,
+              disabled: !canGoPrev,
             })}
           >
             <ArrowLeft className="arrow-left" />
@@ -100,7 +90,7 @@ function Flashsale({ data }) {
             aria-label="button control"
             onClick={handleControlSwiperRight}
             className={classNames('btn-control-swiper', {
-              disabled: canGoNext === false,
+              disabled: !canGoNext,
             })}
           >
             <ArrowRight className="arrow-right" />
@@ -109,37 +99,29 @@ function Flashsale({ data }) {
       </div>
       <div className="product-fs">
         <Swiper
-          onSwiper={handleSwiper}
-          onReachEnd={() => {
-            setCanGoPrev(true);
-          }}
-          onReachBeginning={() => {
-            setCanGoPrev(true);
-          }}
+          onReachEnd={() => setCanGoPrev(true)}
+          onReachBeginning={() => setCanGoPrev(true)}
           ref={swiperRef}
           slidesPerView={4}
           spaceBetween={30}
           breakpoints={breakpointsSwiper}
         >
-          {products.length > 0 &&
-            products.map((product) => {
-              return (
-                <SwiperSlide key={product._id}>
-                  <Card
-                    id={product._id}
-                    img={product.cover}
-                    typeDiscount={product.discountType}
-                    discount={product.discount}
-                    name={product.name}
-                    sale={product.discountedPrice}
-                    price={product.price}
-                    count={80}
-                    sizes={product.variants}
-                    slug={product.slug}
-                  />
-                </SwiperSlide>
-              );
-            })}
+          {products.map((product) => (
+            <SwiperSlide key={product._id}>
+              <Card
+                id={product._id}
+                img={product.cover}
+                typeDiscount={product.discountType}
+                discount={product.discount}
+                name={product.name}
+                sale={product.discountedPrice}
+                price={product.price}
+                count={80}
+                sizes={product.variants}
+                slug={product.slug}
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
       <div className="view-all-product">
@@ -153,7 +135,6 @@ function Flashsale({ data }) {
           </Link>
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 }

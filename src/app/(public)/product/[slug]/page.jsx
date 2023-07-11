@@ -1,13 +1,14 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import classNames from 'classnames';
 
-import Breadcrumb from '@/components/Breadcrumb';
-
-import ProductDetailItem from './components/DetailProductItem';
-import RelatedProduct from './components/RelatedProduct';
-
 import styles from './ProductDetail.module.scss';
+
+const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
+
+const ProductDetailItem = React.lazy(() =>
+  import('./components/DetailProductItem')
+);
+const RelatedProduct = React.lazy(() => import('./components/RelatedProduct'));
 
 function ProductDetail() {
   return (
@@ -29,7 +30,6 @@ function ProductDetail() {
           <RelatedProduct />
         </div>
       </div>
-      <ToastContainer />
     </section>
   );
 }

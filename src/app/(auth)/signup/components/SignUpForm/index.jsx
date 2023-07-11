@@ -2,19 +2,18 @@
 
 import React, { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 
-import InputForm from '@/components/InputForm';
-
-// icon
 import GoogleIcon from '@/svgs/Signup/Icon-Google.svg';
 
 import styles from './SignUpForm.module.scss';
+
+const InputForm = React.lazy(() => import('@/components/InputForm'));
 
 export default function SignUpForm() {
   const validationSchema = yup.object().shape({
@@ -54,7 +53,7 @@ export default function SignUpForm() {
           toast.success('Đăng ký thành công');
           setTimeout(() => {
             router.push('/signin');
-          }, 2000);
+          }, 1500);
           return response.data;
         } catch (error) {
           toast.error('Lỗi ! Email hoặc số điện thoại đã tồn tại !');
@@ -77,7 +76,6 @@ export default function SignUpForm() {
 
   return (
     <FormProvider {...methods}>
-      <ToastContainer />
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
         method="POST"

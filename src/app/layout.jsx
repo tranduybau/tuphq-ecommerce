@@ -3,13 +3,13 @@ import classNames from 'classnames';
 import { Inter, Poppins } from 'next/font/google';
 import PropTypes from 'prop-types';
 
-import Footer from '@/components/layout/Footer';
-import Header from '@/components/layout/Header';
-
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.scss';
+
+const Footer = React.lazy(() => import('@/components/layout/Footer'));
+const Header = React.lazy(() => import('@/components/layout/Header'));
 
 const inter = Inter({
   variable: '--font-inter',

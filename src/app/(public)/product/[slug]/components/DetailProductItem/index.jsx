@@ -4,7 +4,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
@@ -22,7 +22,7 @@ import WishlistIcon from '@/svgs/DetailProduct/Wishlist.svg';
 
 import styles from './DetailProductItem.module.scss';
 
-export default function ProductDetailItem() {
+function ProductDetailItem() {
   const pathname = usePathname();
   const [quantity, setQuantity] = useState(1);
   const [colorSelected, setColorSeleted] = useState(1);
@@ -30,16 +30,23 @@ export default function ProductDetailItem() {
   const [sizeSelected, setSizeSeleted] = useState(null);
   const [cart, setCart] = useState({});
   const router = useRouter();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const userData = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
+      : null;
+    if (userData) {
+      setUser(userData);
+    }
+  }, []);
 
   useEffect(() => {
     const getCart = async () => {
       try {
-        const userData = Cookies.get('userData')
-          ? JSON.parse(Cookies.get('userData'))
-          : null;
-        if (userData) {
+        if (user) {
           const headers = {
-            Authorization: userData.token,
+            Authorization: user?.token,
           };
           const response = await axios.get(
             'https://gmen-admin.wii.camp/api/v1.0/carts/me',
@@ -55,7 +62,7 @@ export default function ProductDetailItem() {
       }
     };
     getCart();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +83,7 @@ export default function ProductDetailItem() {
     };
 
     fetchData();
-  }, []);
+  }, [pathname]);
 
   const handlePostApi = async (userToken, formData) => {
     const headers = {
@@ -114,16 +121,13 @@ export default function ProductDetailItem() {
 
   const handleAddToCart = async () => {
     try {
-      const account = Cookies.get('userData')
-        ? JSON.parse(Cookies.get('userData'))
-        : null;
       const productId = product._id;
       const formData = {
         product: productId,
         quantity: 1,
         size: sizeSelected === null ? '' : sizeSelected,
       };
-      if (account) {
+      if (user) {
         if (cart && cart.body && cart.body.products) {
           const existingProduct = cart.body.products.find((productCheck) => {
             return (
@@ -135,11 +139,11 @@ export default function ProductDetailItem() {
             const formPutData = {
               quantity: existingProduct.quantity + quantity,
             };
-            handlePutApi(account.token, formPutData, existingProduct._id);
+            handlePutApi(user.token, formPutData, existingProduct._id);
           } else {
-            handlePostApi(account.token, formData);
+            handlePostApi(user.token, formData);
           }
-        } 
+        }
       } else {
         router.push('/signin');
       }
@@ -158,7 +162,6 @@ export default function ProductDetailItem() {
   };
   return (
     <div className={classNames(styles.wrapper)}>
-      <ToastContainer />
       <div className={classNames(styles.lineImg)}>
         {product?.images &&
           product.images.map((image) => {
@@ -358,3 +361,5 @@ export default function ProductDetailItem() {
     </div>
   );
 }
+
+export default React.memo(ProductDetailItem);

@@ -8,9 +8,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import * as Yup from 'yup';
 
-import InputForm from '@/components/InputForm';
-
 import styles from './CheckOutForm.module.scss';
+
+const InputForm = React.lazy(() => import('@/components/InputForm'));
 
 const schema = Yup.object().shape({
   fname: Yup.string().required('Bạn cần phải nhập trường này'),

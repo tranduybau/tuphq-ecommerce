@@ -1,43 +1,45 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css/pagination';
-
-import Slider from '../Slider';
-
 import './SwiperSlider.scss';
+
+const Slider = React.lazy(() => import('../Slider'));
 
 const modulesSwiper = [Pagination];
 const paginationSwiper = { clickable: true };
-const breakpointsSwiper = {
-  320: {
-    slidesPerView: 1,
-    spaceBetween: 10,
-  },
-  576: {
-    slidesPerView: 1,
-    spaceBetween: 10,
-  },
-  768: {
-    slidesPerView: 1,
-    spaceBetween: 40,
-  },
-  992: {
-    slidesPerView: 1,
-    spaceBetween: 40,
-  },
-  1200: {
-    slidesPerView: 1,
-    spaceBetween: 50,
-  },
-};
 
-export default function SwiperSlider() {
+function SwiperSlider() {
   const [slides, setSlides] = useState([]);
+  const breakpointsSwiper = useMemo(
+    () => ({
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      576: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      768: {
+        slidesPerView: 1,
+        spaceBetween: 40,
+      },
+      992: {
+        slidesPerView: 1,
+        spaceBetween: 40,
+      },
+      1200: {
+        slidesPerView: 1,
+        spaceBetween: 50,
+      },
+    }),
+    []
+  );
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,6 +54,21 @@ export default function SwiperSlider() {
     };
     fetchData();
   }, []);
+
+  const swiperSlides = useMemo(
+    () =>
+      slides.body?.map((slide) => (
+        <SwiperSlide key={slide._id}>
+          <Slider
+            img={slide.image}
+            title={slide.title}
+            discount={slide.description}
+          />
+        </SwiperSlide>
+      )),
+    [slides.body]
+  );
+
   return (
     <div className="slider flex-auto w-full">
       <Swiper
@@ -61,20 +78,10 @@ export default function SwiperSlider() {
         pagination={paginationSwiper}
         breakpoints={breakpointsSwiper}
       >
-        {slides &&
-          slides.body &&
-          slides.body.map((slide) => {
-            return (
-              <SwiperSlide key={slide._id}>
-                <Slider
-                  img={slide.image}
-                  title={slide.title}
-                  discount={slide.description}
-                />
-              </SwiperSlide>
-            );
-          })}
+        {swiperSlides}
       </Swiper>
     </div>
   );
 }
+
+export default React.memo(SwiperSlider);

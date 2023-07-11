@@ -1,10 +1,9 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import Image from 'next/image';
 
-import SignUpForm from './components/SignUpForm';
-
 import styles from './SignUp.module.scss';
+
+const SignUpForm = React.lazy(() => import('./components/SignUpForm'));
 
 export default function SignUp() {
   return (
@@ -27,7 +26,6 @@ export default function SignUp() {
         </span>
         <SignUpForm />
       </div>
-      <ToastContainer />
     </section>
   );
 }

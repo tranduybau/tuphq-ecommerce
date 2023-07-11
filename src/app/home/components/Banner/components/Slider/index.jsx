@@ -5,33 +5,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-// icon
 import ArrowRight from '@/svgs/Banner/arrow-right.svg';
 
 import './Slider.scss';
 
-function Slider({ img, title, discount, logo = null }) {
+function Slider({ img, title, discount }) {
   return (
     <div className="slider-item relative container">
       <div className="wrapper absolute">
         <div className="slider-item__content">
           <div className="slider-item__title">
-            {logo && (
-              <Image
-                src={logo}
-                alt="logo banner"
-                width={40}
-                height={49}
-                quality={80}
-                priority
-              />
-            )}
             <span className="font-poppins">{title}</span>
           </div>
           <div className="slider-item__discount">
-            <span className={classNames('font-inter', { 'ml-[24px]': logo })}>
-              {discount}
-            </span>
+            <span className={classNames('font-inter')}>{discount}</span>
           </div>
           <div className="slider-item__link">
             <Link className="font-poppins" href="/">
@@ -56,7 +43,6 @@ Slider.propTypes = {
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   discount: PropTypes.string.isRequired,
-  logo: PropTypes.string,
 };
 
 export default React.memo(Slider);

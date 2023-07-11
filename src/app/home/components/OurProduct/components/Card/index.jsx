@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/require-default-props */
 
@@ -14,14 +15,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 
-// icon
 import HeartSmallIcon from '@/svgs/heart-small.svg';
 import QuickViewIcon from '@/svgs/Quick-View.svg';
 import Star from '@/svgs/star.svg';
 
 import './Card.scss';
 
-export default function Card({
+function Card({
   id,
   className = '',
   img,
@@ -30,7 +30,7 @@ export default function Card({
   count,
   color = false,
   sizes = null,
-  slug,
+  slug = null,
 }) {
   const [active, setActive] = useState(true);
   const [user, setUser] = useState();
@@ -39,14 +39,20 @@ export default function Card({
   const [cart, setCart] = useState({});
 
   useEffect(() => {
+    const currentUser = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
+      : null;
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, []);
+
+  useEffect(() => {
     const getCart = async () => {
       try {
-        const userData = Cookies.get('userData')
-          ? JSON.parse(Cookies.get('userData'))
-          : null;
-        if (userData) {
+        if (user) {
           const headers = {
-            Authorization: userData.token,
+            Authorization: user?.token,
           };
           const response = await axios.get(
             'https://gmen-admin.wii.camp/api/v1.0/carts/me',
@@ -62,110 +68,100 @@ export default function Card({
       }
     };
     getCart();
-  }, []);
-
-  useEffect(() => {
-    const currentUser = Cookies.get('userData')
-      ? JSON.parse(Cookies.get('userData'))
-      : null;
-    if (currentUser) {
-      setUser(currentUser);
-    }
-  }, []);
+  }, [user]);
 
   const handleClick = () => {
     setActive(!active);
   };
 
-  const handlePostApi = async (userToken, formData) => {
-    const headers = {
-      Authorization: userToken,
-    };
-    const response = await axios.post(
-      'https://gmen-admin.wii.camp/api/v1.0/carts/me/products',
-      formData,
-      { headers }
-    );
-    if (response.data) {
-      toast.success('Thêm vào giỏ hàng thành công');
-      setTimeout(() => {
-        router.refresh();
-      }, 1000);
-    }
-  };
-
-  const handlePutApi = async (userToken, formData, ProductId) => {
-    const headers = {
-      Authorization: userToken,
-    };
-    const response = await axios.put(
-      `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${ProductId}`,
-      formData,
-      { headers }
-    );
-    if (response.data) {
-      toast.success('Thêm vào giỏ hàng thành công');
-      setTimeout(() => {
-        router.refresh();
-      }, 1000);
-    }
-  };
-
-  const handleAddToCart = async (data) => {
-    try {
-      const account = Cookies.get('userData')
-        ? JSON.parse(Cookies.get('userData'))
-        : null;
-      const productId = id;
-      if (data.size === undefined) {
-        data.size = '';
-      }
-      const formData = {
-        product: productId,
-        quantity: 1,
-        size: data.size,
+  const handleAddToCart = useCallback(
+    async (data) => {
+      const handlePostApi = async (userToken, formData) => {
+        const headers = {
+          Authorization: userToken,
+        };
+        const response = await axios.post(
+          'https://gmen-admin.wii.camp/api/v1.0/carts/me/products',
+          formData,
+          { headers }
+        );
+        if (response.data) {
+          toast.success('Thêm vào giỏ hàng thành công');
+          setTimeout(() => {
+            router.refresh();
+          }, 1500);
+        }
       };
-      if (account) {
-        if (cart) {
-          if (cart.body) {
-            if (cart.body.products) {
-              const existingProduct = cart.body.products.find(
-                (productCheck) => {
-                  return (
-                    (productCheck.product._id === productId &&
-                      productCheck.size === data.size) ||
-                    (productCheck.product._id === productId &&
-                      productCheck.size === null)
-                  );
+
+      const handlePutApi = async (userToken, formData, ProductId) => {
+        const headers = {
+          Authorization: userToken,
+        };
+        const response = await axios.put(
+          `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${ProductId}`,
+          formData,
+          { headers }
+        );
+        if (response.data) {
+          toast.success('Thêm vào giỏ hàng thành công');
+          setTimeout(() => {
+            router.refresh();
+          }, 1500);
+        }
+      };
+      try {
+        const productId = id;
+        if (data.size === undefined) {
+          data.size = '';
+        }
+        const formData = {
+          product: productId,
+          quantity: 1,
+          size: data.size,
+        };
+        if (user) {
+          if (cart) {
+            if (cart.body) {
+              if (cart.body.products) {
+                const existingProduct = cart.body.products.find(
+                  (productCheck) => {
+                    return (
+                      (productCheck.product._id === productId &&
+                        productCheck.size === data.size) ||
+                      (productCheck.product._id === productId &&
+                        productCheck.size === null)
+                    );
+                  }
+                );
+                if (existingProduct) {
+                  const formPutData = {
+                    quantity: existingProduct.quantity + 1,
+                  };
+                  handlePutApi(user.token, formPutData, existingProduct._id);
+                } else {
+                  handlePostApi(user.token, formData);
                 }
-              );
-              if (existingProduct) {
-                const formPutData = {
-                  quantity: existingProduct.quantity + 1,
-                };
-                handlePutApi(account.token, formPutData, existingProduct._id);
-              } else {
-                handlePostApi(account.token, formData);
               }
             }
           }
+        } else {
+          router.push('/signin');
         }
-      } else {
-        router.push('/signin');
+      } catch (error) {
+        return null;
       }
-    } catch (error) {
       return null;
-    }
-    return null;
-  };
+    },
+    [cart, id, router, user]
+  );
 
   const handleAddToWishlist = useCallback(() => {
-    const account = user ? JSON.parse(user) : null;
     const productId = id;
     const existingWishlistItems = localStorage.getItem('wishlistItems');
-    if (account) {
+
+    if (user) {
       if (existingWishlistItems === null) {
-        const wishlistItem = { account: account.id, productId: [productId] };
+        const wishlistItem = { [user.token]: [productId] };
         localStorage.setItem('wishlistItems', JSON.stringify(wishlistItem));
         toast.success('Thêm vào danh sách yêu thích thành công');
         setTimeout(() => {
@@ -173,12 +169,21 @@ export default function Card({
         }, 1500);
       } else {
         const existingData = JSON.parse(existingWishlistItems);
-        if (existingData.productId.includes(productId)) {
-          toast.error('Sản phẩm đã tồn tại trong danh sách yêu thích');
+        if (existingData.hasOwnProperty(user.token)) {
+          if (existingData[user.token].includes(productId)) {
+            toast.error('Sản phẩm đã tồn tại trong danh sách yêu thích');
+          } else {
+            existingData[user.token].push(productId);
+            localStorage.setItem('wishlistItems', JSON.stringify(existingData));
+            toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
+            setTimeout(() => {
+              router.refresh();
+            }, 1500);
+          }
         } else {
-          existingData.productId.push(productId);
+          existingData[user.token] = [productId];
           localStorage.setItem('wishlistItems', JSON.stringify(existingData));
-          toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
+          toast.success('Thêm vào danh sách yêu thích thành công');
           setTimeout(() => {
             router.refresh();
           }, 1500);
@@ -188,6 +193,7 @@ export default function Card({
       router.push('/signin');
     }
   }, [id, router, user]);
+
   return (
     <div className={`card ${className} border-none`}>
       <div className="image lg:max-w-[270px]">
@@ -315,3 +321,5 @@ Card.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   sizes: PropTypes.array.isRequired,
 };
+
+export default React.memo(Card);

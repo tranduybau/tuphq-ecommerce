@@ -5,22 +5,22 @@
 
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import * as yup from 'yup';
 
-import InputForm from '@/components/InputForm';
-
 import styles from './MyAccountForm.module.scss';
+
+const InputForm = React.lazy(() => import('@/components/InputForm'));
 
 const schema = yup.object().shape({
   fname: yup.string().required('First name is required'),
   phone: yup
     .string()
-    .matches(/^[0-9]{10}$/, 'Invalid phone number') // Kiểm tra định dạng số điện thoại
+    .matches(/^[0-9]{10}$/, 'Invalid phone number')
     .required('Phone number is required'),
   email: yup.string().email('Invalid email').required('Email is required'),
   currentPassword: yup.string(),
@@ -36,9 +36,6 @@ export default function MyAccountForm() {
   const methods = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      fname: '',
-      phone: '',
-      email: '',
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
@@ -86,7 +83,7 @@ export default function MyAccountForm() {
     };
 
     fetchUserData();
-  }, []);
+  }, [setValue]);
 
   const onSubmit = async (data) => {
     try {
@@ -95,9 +92,6 @@ export default function MyAccountForm() {
         data.newPassword === '' &&
         data.confirmPassword === ''
       ) {
-        const currentUser = Cookies.get('userData')
-          ? JSON.parse(Cookies.get('userData'))
-          : null;
         const formData = {
           fullName: data.fname,
           birthday: `${data.birthday.getFullYear()}-${
@@ -110,9 +104,9 @@ export default function MyAccountForm() {
               : data.birthday.getDate()
           }`,
         };
-        if (currentUser) {
+        if (user) {
           const headers = {
-            Authorization: currentUser.token,
+            Authorization: user?.token,
           };
           const response = await axios.put(
             'https://gmen-admin.wii.camp/api/v1.0/users/me',
@@ -124,17 +118,14 @@ export default function MyAccountForm() {
           }
         }
       } else {
-        const currentUser = Cookies.get('userData')
-          ? JSON.parse(Cookies.get('userData'))
-          : null;
         const formData = {
           password: data.currentPassword,
           newPassword: data.newPassword,
           confirmPassword: data.confirmPassword,
         };
-        if (currentUser) {
+        if (user) {
           const headers = {
-            Authorization: currentUser.token,
+            Authorization: user?.token,
           };
           const response = await axios.put(
             'https://gmen-admin.wii.camp/api/v1.0/users/me/password',
@@ -153,7 +144,6 @@ export default function MyAccountForm() {
 
   return (
     <FormProvider {...methods}>
-      <ToastContainer />
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="POST"
@@ -170,7 +160,7 @@ export default function MyAccountForm() {
               name="fname"
               className={classNames(styles.input)}
               placeholder={user && user.name ? user.name.firstname : ''}
-              defaultValues={user && user.name ? user.name.firstname : ''}
+              defaultvalues={user && user.name ? user.name.firstname : ''}
               onChange={(event) =>
                 updateInputValue('fname', event.target.value)
               }
@@ -186,7 +176,7 @@ export default function MyAccountForm() {
               disabled
               className={classNames(styles.input, 'opacity-50')}
               placeholder={user && user.name ? user.name.lastname : ''}
-              defaultValues={user && user.name ? user.name.lastname : ''}
+              defaultvalues={user && user.name ? user.name.lastname : ''}
               onChange={(event) =>
                 updateInputValue('phone', event.target.value)
               }
@@ -204,7 +194,7 @@ export default function MyAccountForm() {
               disabled
               className={classNames(styles.input, 'opacity-50')}
               placeholder={user ? user.email : ''}
-              defaultValues={user ? user.email : ''}
+              defaultvalues={user ? user.email : ''}
               onChange={(event) =>
                 updateInputValue('email', event.target.value)
               }
@@ -220,7 +210,7 @@ export default function MyAccountForm() {
               name="birthday"
               className={classNames(styles.input)}
               placeholder={user && user.birthday ? user.birthday : ''}
-              defaultValues={user && user.birthday ? user.birthday : ''}
+              defaultvalues={user && user.birthday ? user.birthday : ''}
               onChange={(event) =>
                 updateInputValue('birthday', event.target.value)
               }

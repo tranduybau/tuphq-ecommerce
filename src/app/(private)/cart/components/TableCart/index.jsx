@@ -1,14 +1,17 @@
+/* eslint-disable react/no-array-index-key */
+
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 
-import TableCartProductItem from '../TableCartProductItem';
-
 import styles from './TableCart.module.scss';
+
+const TableCartProductItem = React.lazy(() =>
+  import('../TableCartProductItem')
+);
 
 export default function TableCart() {
   const [products, setProducts] = useState([]);
@@ -20,15 +23,17 @@ export default function TableCart() {
         const userData = Cookies.get('userData')
           ? JSON.parse(Cookies.get('userData'))
           : null;
-        const headers = {
-          Authorization: userData.token,
-        };
-        const response = await axios.get(
-          'https://gmen-admin.wii.camp/api/v1.0/carts/me',
-          { headers }
-        );
-        if (response) {
-          setProducts(response.data.body.products);
+        if (userData) {
+          const headers = {
+            Authorization: userData?.token,
+          };
+          const response = await axios.get(
+            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
+            { headers }
+          );
+          if (response) {
+            setProducts(response.data.body.products);
+          }
         }
       } catch {
         return 0;
@@ -44,7 +49,6 @@ export default function TableCart() {
 
   return (
     <div className={`${styles.wrapper} mx-0`}>
-      <ToastContainer />
       <div className={`${styles.heading} mx-0 row`}>
         <span className={`${styles.headingText} px-0 col font-poppins`}>
           Product
@@ -64,10 +68,10 @@ export default function TableCart() {
       </div>
       <div className={`${styles.list}`}>
         {products &&
-          products.map((product) => {
+          products.map((product, index) => {
             return (
               <TableCartProductItem
-                key={product.product._id}
+                key={index}
                 id={product._id}
                 img={product.product.cover}
                 name={product.product.name}

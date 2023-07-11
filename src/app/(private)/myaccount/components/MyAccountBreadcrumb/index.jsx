@@ -6,16 +6,16 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 
-import Breadcrumb from '@/components/Breadcrumb';
-
 import styles from './MyAccountBreadcrumb.module.scss';
+
+const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
 
 export default function MyAccountBreadcrumb() {
   const [user, setUser] = useState();
-  
+
   useEffect(() => {
     const userData = Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null;
-    if(userData){
+    if (userData) {
       setUser(userData);
     }
   }, [])
@@ -31,7 +31,7 @@ export default function MyAccountBreadcrumb() {
             'font-poppins'
           )}
         >
-         {user && user.fullName}
+          {user && user.fullName}
         </span>
       </span>
     </div>

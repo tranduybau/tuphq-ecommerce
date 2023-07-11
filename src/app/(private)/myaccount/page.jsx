@@ -1,11 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import MyAccountBreadcrumb from './components/MyAccountBreadcrumb';
-import MyAccountForm from './components/MyAccountForm';
-import MyAccountSidebar from './components/MyAccountSidebar';
-
 import styles from './MyAccountPage.module.scss';
+
+const MyAccountBreadcrumb = React.lazy(() =>
+  import('./components/MyAccountBreadcrumb')
+);
+const MyAccountForm = React.lazy(() => import('./components/MyAccountForm'));
+const MyAccountSidebar = React.lazy(() =>
+  import('./components/MyAccountSidebar')
+);
 
 export default function MyAccountPage() {
   return (

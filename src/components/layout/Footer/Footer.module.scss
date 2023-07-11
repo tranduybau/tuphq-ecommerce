@@ -217,7 +217,6 @@
 
 @media (max-width: 992px) {
   .main {
-    display: flex;
     flex-direction: column;
     align-items: center;
   }
@@ -262,47 +261,7 @@
 
 @media (max-width: 520px) {
   .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 20px;
-  }
-
-  .content:nth-child(1) {
-    min-width: 100%;
-  }
-
-  .content:nth-child(2) {
-    min-width: 100%;
-  }
-
-  .content:nth-child(3) {
-    min-width: 100%;
-  }
-
-  .content:nth-child(4) {
-    min-width: 100%;
-  }
-
-  .content:nth-child(5) {
-    min-width: 100%;
-  }
-
-  .headingLg {
-    text-align: center;
-  }
-
-  .heading {
-    text-align: center;
-  }
-
-  .contentTextItem {
-    text-align: center;
-  }
-
-  .downloadAppImg {
-    display: flex;
-    justify-content: center;
   }
 
   .DownloadAppText {

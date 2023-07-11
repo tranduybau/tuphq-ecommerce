@@ -6,9 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import * as yup from 'yup';
 
-import InputForm from '@/components/InputForm';
-
 import styles from './ContactForm.module.scss';
+
+const InputForm = React.lazy(() => import('@/components/InputForm'));
 
 const schema = yup.object().shape({
   name: yup.string().required('Please enter your name'),

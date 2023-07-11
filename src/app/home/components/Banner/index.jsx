@@ -1,9 +1,9 @@
 import React from 'react';
 
-import SidebarBanner from './components/Sidebar';
-import SwiperSlider from './components/SwiperSlider';
-
 import './Banner.scss';
+
+const SidebarBanner = React.lazy(() => import('./components/Sidebar'));
+const SwiperSlider = React.lazy(() => import('./components/SwiperSlider'));
 
 function Banner() {
   return (

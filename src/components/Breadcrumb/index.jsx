@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 
 'use client';
@@ -49,7 +50,7 @@ function Breadcrumb({ pathname = '', urls = '' }) {
 
 Breadcrumb.propTypes = {
   pathname: PropTypes.string,
-  urls: PropTypes.string,
+  urls: PropTypes.array,
 };
 
 export default React.memo(Breadcrumb);

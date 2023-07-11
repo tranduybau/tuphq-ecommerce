@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -10,11 +10,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 
-// icon
-import InputForm from '@/components/InputForm';
-
-// css
 import styles from './SignInForm.module.scss';
+
+const InputForm = React.lazy(() => import('@/components/InputForm'));
 
 export default function SignInForm() {
   const router = useRouter();
@@ -56,7 +54,7 @@ export default function SignInForm() {
       setTimeout(() => {
         router.refresh();
         router.push('/');
-      }, 2000);
+      }, 1500);
     } catch (error) {
       toast.error('Lỗi ! Sai tài khoản hoặc mật khẩu');
     }
@@ -101,7 +99,6 @@ export default function SignInForm() {
             Forget Password?
           </Link>
         </div>
-        <ToastContainer />
       </form>
     </FormProvider>
   );

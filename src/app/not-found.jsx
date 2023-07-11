@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 
-import Breadcrumb from '@/components/Breadcrumb';
+const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
 
 function NotFound() {
   return (

@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 
-import SignInForm from './components/SignInForm';
-
 import styles from './SignIn.module.scss';
+
+const SignInForm = React.lazy(() => import('./components/SignInForm'));
 
 function SignIn() {
   return (

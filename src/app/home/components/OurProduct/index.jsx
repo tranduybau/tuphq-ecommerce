@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
@@ -10,68 +9,63 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import ArrowLeft from '@/svgs/icons_arrow-left.svg';
 import ArrowRight from '@/svgs/icons_arrow-right.svg';
 
-import Card from './components/Card';
-
 import './OutProduct.scss';
 
-const breakpointsSwiper = {
-  320: {
-    slidesPerView: 1,
-    spaceBetween: 10,
-  },
-  576: {
-    slidesPerView: 2,
-    spaceBetween: 30,
-  },
-  768: {
-    slidesPerView: 2,
-    spaceBetween: 30,
-  },
-  992: {
-    slidesPerView: 3,
-    spaceBetween: 30,
-  },
-  1200: {
-    slidesPerView: 4,
-    spaceBetween: 30,
-  },
-};
+const Card = React.lazy(() => import('./components/Card'));
 
 function OutProduct({ data }) {
   const [swiper, setSwiper] = useState(true);
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
-  const [products, setProducts] = useState([]);
-
   const swiperRef = useRef();
 
+  const products = useMemo(() => data?.body?.items || [], [data]);
+  const breakpointsSwiper = useMemo(
+    () => ({
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 50,
+      },
+      576: {
+        slidesPerView: 2,
+        spaceBetween: 30,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 40,
+      },
+      992: {
+        slidesPerView: 3,
+        spaceBetween: 40,
+      },
+      1200: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }),
+    []
+  );
   let count = 0;
 
-  useEffect(() => {
-    if (data) {
-      setProducts(data.body.items);
-    }
-  }, [data]);
-
-  const handleControlSwiperLeft = () => {
+  const handleControlSwiperLeft = useCallback(() => {
     swiperRef.current.swiper.slidePrev();
     setCanGoNext(true);
     if (swiper.isBeginning) {
       setCanGoPrev(false);
     }
-  };
+  }, [swiper.isBeginning]);
 
-  const handleControlSwiperRight = () => {
+  const handleControlSwiperRight = useCallback(() => {
     swiperRef.current.swiper.slideNext();
     setCanGoPrev(true);
     if (swiper.isEnd) {
       setCanGoNext(false);
     }
-  };
+  }, [swiper.isEnd]);
 
-  const handleSwiper = (swiperInput) => {
+  const handleSwiper = useCallback((swiperInput) => {
     setSwiper(swiperInput);
-  };
+  }, []);
 
   return (
     <div className="ourproduct-wrapper container">
@@ -150,6 +144,7 @@ function OutProduct({ data }) {
                         count={80}
                         color
                         sizes={newProduct.variants}
+                        slug={newProduct.slug}
                       />
                     </SwiperSlide>
                   )}
@@ -171,7 +166,6 @@ function OutProduct({ data }) {
           </Link>
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 }

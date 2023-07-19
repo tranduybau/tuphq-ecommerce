@@ -1,17 +1,15 @@
 import React from 'react';
 
-import styles from './CartPage.module.scss';
-
 const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
 const TableCart = React.lazy(() => import('./components/TableCart'));
 
 export default function CartPage() {
   return (
-    <section className={`${styles.wrapper} container`}>
-      <div className={`${styles.breadcrumb}`}>
+    <section className="w-full container px-0">
+      <div className="my-[80px]">
         <Breadcrumb />
       </div>
-      <div className={`${styles.table}`}>
+      <div className="bg-[#fff] rounded-[4px]">
         <TableCart />
       </div>
     </section>

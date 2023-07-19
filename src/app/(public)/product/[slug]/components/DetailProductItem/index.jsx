@@ -5,12 +5,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+
+import { get, post, put, setAuthToken } from '@/components/AxiosConfig';
 
 import DeliveryIcon from '@/svgs/DetailProduct/icon-delivery.svg';
 import MinusIcon from '@/svgs/DetailProduct/icon-minus.svg';
@@ -22,7 +23,7 @@ import WishlistIcon from '@/svgs/DetailProduct/Wishlist.svg';
 
 import styles from './DetailProductItem.module.scss';
 
-function ProductDetailItem() {
+export default function ProductDetailItem() {
   const pathname = usePathname();
   const [quantity, setQuantity] = useState(1);
   const [colorSelected, setColorSeleted] = useState(1);
@@ -45,13 +46,8 @@ function ProductDetailItem() {
     const getCart = async () => {
       try {
         if (user) {
-          const headers = {
-            Authorization: user?.token,
-          };
-          const response = await axios.get(
-            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
-            { headers }
-          );
+          setAuthToken(user?.token);
+          const response = await get('/carts/me');
           if (response !== undefined) {
             setCart(response.data);
           }
@@ -67,11 +63,7 @@ function ProductDetailItem() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://gmen-admin.wii.camp/api/v1.0/products/${
-            pathname.split('/')[2]
-          }`
-        );
+        const response = await get(`/products/${pathname.split('/')[2]}`);
         if (response) {
           setProduct(response.data.body);
           setSizeSeleted(response.data.body.variants[0].size);
@@ -86,35 +78,26 @@ function ProductDetailItem() {
   }, [pathname]);
 
   const handlePostApi = async (userToken, formData) => {
-    const headers = {
-      Authorization: userToken,
-    };
-    const response = await axios.post(
-      'https://gmen-admin.wii.camp/api/v1.0/carts/me/products',
-      formData,
-      { headers }
-    );
+    setAuthToken(userToken);
+    const response = await post('/carts/me/products', formData);
     if (response) {
       toast.success('Thêm vào giỏ hàng thành công');
       setTimeout(() => {
-        router.refresh();
+        window.location.reload();
       }, 1500);
     }
   };
 
   const handlePutApi = async (userToken, formData, ProductId) => {
-    const headers = {
-      Authorization: userToken,
-    };
-    const response = await axios.put(
-      `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${ProductId}`,
-      formData,
-      { headers }
+    setAuthToken(userToken);
+    const response = await put(
+      `/carts/me/product-items/${ProductId}`,
+      formData
     );
     if (response) {
       toast.success('Thêm vào giỏ hàng thành công');
       setTimeout(() => {
-        router.refresh();
+        window.location.reload();
       }, 1500);
     }
   };
@@ -361,5 +344,3 @@ function ProductDetailItem() {
     </div>
   );
 }
-
-export default React.memo(ProductDetailItem);

@@ -18,9 +18,9 @@ const AboutSlider = React.lazy(() => import('./components/AboutSlider'));
 const DetailItem = React.lazy(() => import('./components/DetailItem'));
 const ServiceItem = React.lazy(() => import('./components/ServiceItem'));
 
-function AboutPage() {
+export default function AboutPage() {
   return (
-    <section className={classNames(styles.wrapper)}>
+    <section className={classNames(styles.wrapper, 'font-poppins')}>
       <div className={classNames(styles.breadcrumb, 'container', 'px-0')}>
         <Breadcrumb />
       </div>
@@ -29,16 +29,14 @@ function AboutPage() {
           <span className={classNames(styles.heading, 'font-inter')}>
             Our Story
           </span>
-          <span className={classNames(styles.text, 'font-poppins')}>
+          <span className={classNames(styles.text)}>
             Launced in 2015, Exclusive is South Asia’s premier online shopping
             makterplace with an active presense in Bangladesh. Supported by wide
             range of tailored marketing, data and service solutions, Exclusive
             has 10,500 sallers and 300 brands and serves 3 millioons customers
             across the region.
           </span>
-          <span
-            className={classNames(styles.text, 'font-poppins', 'mt-[24px]')}
-          >
+          <span className={classNames(styles.text, 'mt-[24px]')}>
             Exclusive has more than 1 Million products to offer, growing at a
             very fast. Exclusive offers a diverse assotment in categories
             ranging from consumer.
@@ -110,5 +108,3 @@ function AboutPage() {
     </section>
   );
 }
-
-export default React.memo(AboutPage);

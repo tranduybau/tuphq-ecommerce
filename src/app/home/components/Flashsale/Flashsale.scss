@@ -1,9 +1,6 @@
 .flashsale-wrapper {
-  padding-top: 140px;
-  padding-bottom: 60px;
+  padding: 140px 0 60px;
   border-bottom: 1px solid #ccc;
-  padding-right: 0 !important;
-  padding-left: 0 !important;
   display: flex;
   flex-direction: column;
 }
@@ -47,8 +44,9 @@
   align-items: flex-end;
   gap: 87px;
   margin-top: 24px;
+
   h1 {
-    margin: 0 !important;
+    margin: 0;
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
@@ -72,19 +70,15 @@
     height: 46px;
     background-color: #f5f5f5;
     border-radius: 50%;
+
+    &:hover {
+      background-color: #ccc;
+      opacity: 0.8;
+    }
   }
 
-  .btn-control-swiper:hover {
-    background-color: #ccc;
-    opacity: 0.8;
-  }
-
+  .arrow-right,
   .arrow-left {
-    width: 16px;
-    height: 16px;
-  }
-
-  .arrow-right {
     width: 16px;
     height: 16px;
   }
@@ -92,6 +86,7 @@
 
 .product-fs {
   margin-top: 31px;
+
   .swiper {
     overflow: visible;
   }
@@ -106,22 +101,22 @@
   display: flex;
   justify-content: center;
   margin-top: 60px;
-}
 
-.view-all-product__btn {
-  background-color: #db4444;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .view-all-product__btn {
+    background-color: #db4444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 48px;
 
-  padding: 16px 48px;
-  a {
-    text-decoration: none;
-    color: #fafafa;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
+    a {
+      text-decoration: none;
+      color: #fafafa;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 }
 
@@ -130,27 +125,15 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
-  }
 
-  .btn-swiper {
-    position: relative;
+    .btn-swiper {
+      position: relative;
+    }
   }
 }
 
 @media (max-width: 576px) {
   .flashsale {
     gap: 30px;
-  }
-
-  .product-fs {
-    margin-top: 31px;
-    .swiper {
-      overflow: visible;
-    }
-
-    .swiper-slide {
-      min-height: 100%;
-      height: auto;
-    }
   }
 }

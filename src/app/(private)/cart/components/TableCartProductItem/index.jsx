@@ -4,10 +4,11 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
+
+import { put, remove, setAuthToken } from '@/components/AxiosConfig';
 
 import DeleteIcon from '@/svgs/Cart/icon-delete.svg';
 
@@ -41,14 +42,8 @@ function TableCartProductItem({
   const handleDeleteApi = async (productId) => {
     try {
       if (user) {
-        const headers = {
-          Authorization: user?.token,
-        };
-        const response = axios.delete(
-          `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${productId}`,
-          { headers }
-        );
-
+        setAuthToken(user?.token);
+        const response = await remove(`/carts/me/product-items/${productId}`);
         if (response) {
           toast.success('Đã xóa sản phẩm khỏi giỏ hàng');
           setTimeout(() => {
@@ -74,13 +69,10 @@ function TableCartProductItem({
             const payload = {
               quantity: newQuantity,
             };
-            const headers = {
-              Authorization: user?.token,
-            };
-            const response = await axios.put(
-              `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${productId}`,
-              payload,
-              { headers }
+            setAuthToken(user?.token);
+            const response = await put(
+              `/carts/me/product-items/${productId}`,
+              payload
             );
 
             if (response) {

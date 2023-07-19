@@ -4,10 +4,11 @@ import React, { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
+
+import { post } from '@/components/AxiosConfig';
 
 import GoogleIcon from '@/svgs/Signup/Icon-Google.svg';
 
@@ -46,10 +47,7 @@ export default function SignUpForm() {
     (data) => {
       const handleSignUp = async (formData) => {
         try {
-          const response = await axios.post(
-            'https://gmen-admin.wii.camp/api/v1.0/auth/register',
-            formData
-          );
+          const response = await post('/auth/register', formData);
           toast.success('Đăng ký thành công');
           setTimeout(() => {
             router.push('/signin');

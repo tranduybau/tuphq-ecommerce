@@ -4,13 +4,8 @@ import PropTypes from 'prop-types';
 
 import styles from './DetailItem.module.scss';
 
-export default function DetailItem({ icon, count, text }) {
+function DetailItem({ icon, count, text }) {
   const Icon = icon;
-  DetailItem.propTypes = {
-    icon: PropTypes.node.isRequired,
-    count: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired,
-  };
   return (
     <div className={classNames(styles.wrapper)}>
       <div className={classNames(styles.iconWrapper)}>
@@ -21,3 +16,11 @@ export default function DetailItem({ icon, count, text }) {
     </div>
   );
 }
+
+DetailItem.propTypes = {
+  icon: PropTypes.node.isRequired,
+  count: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+};
+
+export default React.memo(DetailItem);

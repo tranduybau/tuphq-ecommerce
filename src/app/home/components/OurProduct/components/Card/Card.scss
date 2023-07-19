@@ -54,21 +54,8 @@
   width: 24px;
   height: 24px;
 }
-.heart-small-icon {
-  width: 34px;
-  height: 34px;
-  background-color: #fff;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 8px;
 
-  &:hover .card-icon {
-    fill: red;
-  }
-}
-
+.heart-small-icon,
 .quick-view-icon {
   width: 34px;
   height: 34px;
@@ -77,10 +64,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.heart-small-icon {
+  margin-bottom: 8px;
 
   &:hover .card-icon {
-    fill: #ccc;
+    fill: red;
   }
+}
+
+.quick-view-icon:hover .card-icon {
+  fill: #ccc;
 }
 
 .description {

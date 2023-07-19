@@ -15,7 +15,7 @@ export default function Featured() {
     <div className={`container ${styles.wrapper}`}>
       <div className={styles.title}>
         <span className={styles.block} />
-        <h5 className={`font-poppins ${styles.textTitle}`}>Featured</h5>
+        <span className={`font-poppins ${styles.textTitle}`}>Featured</span>
       </div>
       <span className={`font-inter ${styles.newArrival}`}>New Arrival</span>
       <div className={`${styles.featured}`}>

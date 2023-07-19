@@ -6,7 +6,6 @@
 
   .image {
     min-width: 270px;
-    min-height: 250px;
     position: relative;
 
     &:hover .add-card {
@@ -30,7 +29,6 @@
     width: 55px;
     height: 26px;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     p {
@@ -50,22 +48,7 @@
     display: flex;
     flex-direction: column;
 
-    .heart-small-icon {
-      width: 34px;
-      height: 34px;
-      background-color: #fff;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      margin-bottom: 8px;
-
-      &:hover .card-icon {
-        fill: red;
-      }
-    }
-
+    .heart-small-icon,
     .quick-view-icon {
       width: 34px;
       height: 34px;
@@ -75,10 +58,18 @@
       justify-content: center;
       align-items: center;
       font-size: 24px;
+    }
+
+    .heart-small-icon {
+      margin-bottom: 8px;
 
       &:hover .card-icon {
-        fill: #ccc;
+        fill: red;
       }
+    }
+
+    .quick-view-icon:hover .card-icon {
+      fill: #ccc;
     }
   }
 
@@ -127,20 +118,20 @@
     gap: 12px;
     margin-bottom: 8px;
 
+    .price-default,
     .price-sale {
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
       line-height: 24px;
+    }
+
+    .price-sale {
       color: #db4444;
     }
 
     .price-default {
       text-decoration: line-through;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 24px;
       color: #000 !important;
       opacity: 0.5;
     }
@@ -174,13 +165,6 @@
 @media (min-width: 968px) and (max-width: 1199.98px) {
   .card-fs {
     .image {
-      position: relative;
-
-      &:hover .add-card {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
       .image-product {
         height: 100%;
       }

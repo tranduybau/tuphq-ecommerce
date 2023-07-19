@@ -3,9 +3,10 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { get } from '@/components/AxiosConfig';
 
 import styles from './Wishlist.module.scss';
 
@@ -45,11 +46,9 @@ export default function Wishlist() {
       : null;
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          'https://gmen-admin.wii.camp/api/v1.0/products?perPage=20&page=1&sort=1'
-        );
+        const response = await get('/products?perPage=20&page=1&sort=1');
         const { data } = response;
-        const allProducts = data.body.items;
+        const allProducts = data.body?.items;
 
         const wishlistItem = localStorage.getItem('wishlistItems');
         const parsedWishlistItem = JSON.parse(wishlistItem);
@@ -61,7 +60,7 @@ export default function Wishlist() {
           );
           setProducts(filteredProducts);
         } else {
-          setProducts(allProducts);
+          setProducts([]);
         }
       } catch (error) {
         return error;

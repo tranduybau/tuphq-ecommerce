@@ -2,68 +2,63 @@ import React, { useEffect, useState } from 'react';
 
 import './TimeCountDown.scss';
 
-function TimeCountDown() {
-  const [secondLeft, setSecondLeft] = useState(60);
-  const [minuteLeft, setMinuteLeft] = useState(59);
-  const [hourLeft, setHourLeft] = useState(23);
-  const [dayLeft, setDayLeft] = useState(3);
+export default function TimeCountDown() {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 3,
+    hours: 23,
+    minutes: 59,
+    seconds: 60,
+  });
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (secondLeft > 0) {
-        setSecondLeft(secondLeft - 1);
-      } else if (minuteLeft > 0) {
-        setMinuteLeft(minuteLeft - 1);
-        setSecondLeft(60);
-      } else if (hourLeft > 0) {
-        setHourLeft(hourLeft - 1);
-        setMinuteLeft(59);
-        setSecondLeft(60);
-      } else if (dayLeft > 0) {
-        setDayLeft(dayLeft - 1);
-        setHourLeft(23);
-        setMinuteLeft(59);
-        setSecondLeft(60);
-      }
-    }, 1500);
+      setTimeLeft((prevTimeLeft) => {
+        let { days, hours, minutes, seconds } = prevTimeLeft;
 
-    if (secondLeft === 0 && minuteLeft === 0 && hourLeft === 0) {
-      clearInterval(intervalId);
-    }
+        seconds -= 1;
+
+        if (seconds === 0 && minutes > 0) {
+          minutes -= 1;
+          seconds = 60;
+        }
+
+        if (minutes === 0 && hours > 0) {
+          hours -= 1;
+          minutes = 59;
+          seconds = 60;
+        }
+
+        if (hours === 0 && days > 0) {
+          days -= 1;
+          hours = 23;
+          minutes = 59;
+          seconds = 60;
+        }
+
+        return { days, hours, minutes, seconds };
+      });
+    }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [secondLeft, minuteLeft, hourLeft, dayLeft]);
+  }, []);
 
   return (
-    <span className="time-area-fs">
-      <div className="time">
-        <h5 className="font-poppins">Days</h5>
-        {dayLeft > 9 && <p className="time-value font-inter">{dayLeft}</p>}
-        {dayLeft < 10 && <p className="time-value font-inter">0{dayLeft}</p>}
-      </div>
-      <span className="semiclone">
-        <p>:</p>
-      </span>
-      <div className="time">
-        <h5 className="font-poppins">Hours</h5>
-        <p className="time-value font-inter">{hourLeft}</p>
-      </div>
-      <span className="semiclone">
-        <p>:</p>
-      </span>
-      <div className="time">
-        <h5 className="font-poppins">Minutes</h5>
-        <p className="time-value font-inter">{minuteLeft}</p>
-      </div>
-      <span className="semiclone">
-        <p>:</p>
-      </span>
-      <div className="time">
-        <h5 className="font-poppins">Seconds</h5>
-        <p className="time-value font-inter">{secondLeft}</p>
-      </div>
-    </span>
+    <div className="time-area-fs font-poppins">
+      {Object.entries(timeLeft).map(([unit, value]) => (
+        <div key={unit} className="flex gap-[17px] items-end">
+          <div className="time">
+            <span>{unit.charAt(0).toUpperCase() + unit.slice(1)}</span>
+            <p className="time-value font-inter">
+              {value.toString().padStart(2, '0')}
+            </p>
+          </div>
+          {unit !== 'seconds' && (
+            <span className="semiclone mr-[17px]">
+              <p>:</p>
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
-
-export default React.memo(TimeCountDown);

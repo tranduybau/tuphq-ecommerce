@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 
 import styles from './ServiceItem.module.scss';
 
-export default function ServiceItem({ children, name, description }) {
+function ServiceItem({ children, name, description }) {
   return (
-    <div className={`${styles.wrapper}`}>
+    <div className={`${styles.wrapper} font-poppins`}>
       <div className={`${styles.icon}`}>{children}</div>
-      <span className={`${styles.name} font-poppins`}>{name}</span>
-      <span className={`${styles.description} font-poppins`}>
-        {description}
-      </span>
+      <span className={`${styles.name}`}>{name}</span>
+      <span className={`${styles.description}`}>{description}</span>
     </div>
   );
 }
@@ -20,3 +18,5 @@ ServiceItem.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
 };
+
+export default React.memo(ServiceItem);

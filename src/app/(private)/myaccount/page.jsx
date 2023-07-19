@@ -1,8 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import styles from './MyAccountPage.module.scss';
-
 const MyAccountBreadcrumb = React.lazy(() =>
   import('./components/MyAccountBreadcrumb')
 );
@@ -13,9 +11,18 @@ const MyAccountSidebar = React.lazy(() =>
 
 export default function MyAccountPage() {
   return (
-    <section className={classNames(styles.wrapper, 'container', 'px-0')}>
+    <section className={classNames('w-full', 'container', 'px-0')}>
       <MyAccountBreadcrumb />
-      <div className={classNames(styles.main)}>
+      <div
+        className={classNames(
+          'w-full',
+          'mb-[140px]',
+          'flex',
+          'justify-between',
+          'xl:flex-row',
+          'xs:flex-col'
+        )}
+      >
         <MyAccountSidebar />
         <MyAccountForm />
       </div>

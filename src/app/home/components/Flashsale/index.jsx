@@ -2,11 +2,20 @@
 
 'use client';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import classNames from 'classnames';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { get, setAuthToken } from '@/components/AxiosConfig';
 
 import ArrowLeft from '@/svgs/icons_arrow-left.svg';
 import ArrowRight from '@/svgs/icons_arrow-right.svg';
@@ -15,13 +24,44 @@ import './Flashsale.scss';
 
 const Card = React.lazy(() => import('./components/Card'));
 const TimeCountDown = React.lazy(() => import('./components/TimeCountDown'));
+const LoadingSkeleton = React.lazy(() =>
+  import('@/components/LoadingSkeleton')
+);
 
 function Flashsale({ data }) {
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
   const swiperRef = useRef();
-
+  const [cart, setCart] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user] = useState(() => {
+    const currentUser = Cookies.get('userData')
+      ? JSON.parse(Cookies.get('userData'))
+      : null;
+    return currentUser;
+  });
   const products = useMemo(() => data?.body?.items || [], [data]);
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        if (user) {
+          setAuthToken(user?.token);
+          const response = await get('/carts/me');
+          if (response.data !== undefined) {
+            setCart(response.data);
+          }
+        }
+      } catch (error) {
+        setCart(0);
+      }
+    };
+    getCart();
+  }, [user]);
+  useEffect(() => {
+    if (data) {
+      setIsLoading(false);
+    }
+  }, [data, isLoading]);
 
   const breakpointsSwiper = useMemo(
     () => ({
@@ -66,10 +106,10 @@ function Flashsale({ data }) {
   }, []);
 
   return (
-    <div className="flashsale-wrapper container">
+    <div className="flashsale-wrapper container font-poppins px-0">
       <div className="today">
         <span className="block" />
-        <span className="font-poppins">Today&apos;s</span>
+        <span>Today&apos;s</span>
       </div>
       <div className="flashsale">
         <h1 className="font-inter">Flash Sales</h1>
@@ -98,31 +138,36 @@ function Flashsale({ data }) {
         </div>
       </div>
       <div className="product-fs">
-        <Swiper
-          onReachEnd={() => setCanGoPrev(true)}
-          onReachBeginning={() => setCanGoPrev(true)}
-          ref={swiperRef}
-          slidesPerView={4}
-          spaceBetween={30}
-          breakpoints={breakpointsSwiper}
-        >
-          {products.map((product) => (
-            <SwiperSlide key={product._id}>
-              <Card
-                id={product._id}
-                img={product.cover}
-                typeDiscount={product.discountType}
-                discount={product.discount}
-                name={product.name}
-                sale={product.discountedPrice}
-                price={product.price}
-                count={80}
-                sizes={product.variants}
-                slug={product.slug}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {isLoading === true ? (
+          <LoadingSkeleton className="w-full h-[351px]" />
+        ) : (
+          <Swiper
+            onReachEnd={() => setCanGoPrev(true)}
+            onReachBeginning={() => setCanGoPrev(true)}
+            ref={swiperRef}
+            slidesPerView={4}
+            spaceBetween={30}
+            breakpoints={breakpointsSwiper}
+          >
+            {products.map((product) => (
+              <SwiperSlide key={product._id}>
+                <Card
+                  id={product._id}
+                  img={product.cover}
+                  typeDiscount={product.discountType}
+                  discount={product.discount}
+                  name={product.name}
+                  sale={product.discountedPrice}
+                  price={product.price}
+                  count={80}
+                  sizes={product.variants}
+                  slug={product.slug}
+                  cart={cart}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
       <div className="view-all-product">
         <button
@@ -130,9 +175,7 @@ function Flashsale({ data }) {
           type="button"
           className="view-all-product__btn"
         >
-          <Link className="font-poppins" href="/">
-            View All Products
-          </Link>
+          <Link href="/">View All Products</Link>
         </button>
       </div>
     </div>

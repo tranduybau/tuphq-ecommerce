@@ -80,11 +80,7 @@ export default function AboutSlider() {
       {members.map((member) => {
         return (
           <SwiperSlide key={member.id}>
-            <AboutMemberCard
-              img={member.img}
-              name={member.name}
-              position={member.position}
-            />
+            <AboutMemberCard {...member} />
           </SwiperSlide>
         );
       })}

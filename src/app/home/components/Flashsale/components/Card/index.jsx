@@ -1,19 +1,22 @@
+/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/forbid-prop-types */
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import LazyLoad from 'react-lazyload';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
+
+import { post, put, setAuthToken } from '@/components/AxiosConfig';
 
 import HeartSmallIcon from '@/svgs/heart-small.svg';
 import QuickViewIcon from '@/svgs/Quick-View.svg';
@@ -26,12 +29,13 @@ function Card({
   img,
   typeDiscount,
   discount,
-  sizes = null,
+  sizes,
   name,
   sale,
   price,
   count,
-  slug = null,
+  slug,
+  cart,
 }) {
   const [user] = useState(() => {
     const currentUser = Cookies.get('userData')
@@ -40,62 +44,30 @@ function Card({
     return currentUser;
   });
   const { register, handleSubmit } = useForm();
-  const [cart, setCart] = useState(null);
   const router = useRouter();
-
-  useEffect(() => {
-    const getCart = async () => {
-      try {
-        if (user) {
-          const headers = {
-            Authorization: user?.token,
-          };
-          const response = await axios.get(
-            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
-            { headers }
-          );
-          if (response.data !== undefined) {
-            setCart(response.data);
-          }
-        }
-      } catch (error) {
-        setCart(0);
-      }
-    };
-    getCart();
-  }, [user]);
 
   const handleAddToCart = async (data) => {
     const handlePostApi = async (userToken, formData) => {
-      const headers = {
-        Authorization: userToken,
-      };
-      const response = await axios.post(
-        'https://gmen-admin.wii.camp/api/v1.0/carts/me/products',
-        formData,
-        { headers }
-      );
+      setAuthToken(userToken);
+      const response = await post('/carts/me/products', formData);
       if (response.data) {
         toast.success('Thêm vào giỏ hàng thành công');
         setTimeout(() => {
-          router.refresh();
+          window.location.reload();
         }, 1500);
       }
     };
 
     const handlePutApi = async (userToken, formData, ProductId) => {
-      const headers = {
-        Authorization: userToken,
-      };
-      const response = await axios.put(
-        `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${ProductId}`,
-        formData,
-        { headers }
+      setAuthToken(userToken);
+      const response = await put(
+        `/carts/me/product-items/${ProductId}`,
+        formData
       );
       if (response.data) {
         toast.success('Thêm vào giỏ hàng thành công');
         setTimeout(() => {
-          router.refresh();
+          window.location.reload();
         }, 1500);
       }
     };
@@ -152,7 +124,7 @@ function Card({
         localStorage.setItem('wishlistItems', JSON.stringify(wishlistItem));
         toast.success('Thêm vào danh sách yêu thích thành công');
         setTimeout(() => {
-          router.refresh();
+          window.location.reload();
         }, 1500);
       } else {
         const existingData = JSON.parse(existingWishlistItems);
@@ -164,7 +136,7 @@ function Card({
             localStorage.setItem('wishlistItems', JSON.stringify(existingData));
             toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
             setTimeout(() => {
-              router.refresh();
+              window.location.reload();
             }, 1500);
           }
         } else {
@@ -172,7 +144,7 @@ function Card({
           localStorage.setItem('wishlistItems', JSON.stringify(existingData));
           toast.success('Thêm vào danh sách yêu thích thành công');
           setTimeout(() => {
-            router.refresh();
+            window.location.reload();
           }, 1500);
         }
       }
@@ -185,23 +157,25 @@ function Card({
   };
 
   return (
-    <div className="card-fs lg:max-w-[270px]">
-      <div className="image">
-        <Image
-          src={img}
-          alt="product"
-          fill
-          className="lg:max-w-[270px]"
-          sizes="(max-width: 768px) 100vw"
-          priority
-        />
+    <div className="card-fs lg:max-w-[270px] font-poppins">
+      <div className="image relative">
+        <LazyLoad className="absolute h-full w-full">
+          <Image
+            src={img}
+            alt="product"
+            fill
+            className="lg:max-w-[270px]"
+            sizes="(max-width: 768px) 100vw"
+            priority={true}
+          />
+        </LazyLoad>
         {typeDiscount === 'PERCENT' ? (
           <span className="card-discount">
-            <p className="font-poppins">-{discount}%</p>
+            <p>-{discount}%</p>
           </span>
         ) : (
           <span className="card-discount">
-            <p className="font-poppins">-{discount}đ</p>
+            <p>-{discount}đ</p>
           </span>
         )}
 
@@ -254,19 +228,19 @@ function Card({
             </select>
           )}
           <button type="submit" aria-label="Add to cart" className="add-card">
-            <span className="font-poppins">Add To Cart</span>
+            <span>Add To Cart</span>
           </button>
         </form>
       </div>
       <div className="description">
         <div className="name">
-          <span className="font-poppins">{name}</span>
+          <span>{name}</span>
         </div>
 
         <div className="description__wrapper">
           <div className="price">
-            <span className="price-sale font-poppins">${sale}</span>
-            <span className="price-default class-poppins">${price}</span>
+            <span className="price-sale">${sale}</span>
+            <span className="price-default">${price}</span>
           </div>
 
           <div className="rate">
@@ -278,7 +252,7 @@ function Card({
               <StarIcon className="star" />
             </div>
             <div className="count">
-              (<span className="font-poppins">{count}</span>)
+              (<span>{count}</span>)
             </div>
           </div>
         </div>
@@ -298,6 +272,7 @@ Card.propTypes = {
   count: PropTypes.number.isRequired,
   sizes: PropTypes.array.isRequired,
   slug: PropTypes.string.isRequired,
+  cart: PropTypes.object.isRequired,
 };
 
 export default React.memo(Card);

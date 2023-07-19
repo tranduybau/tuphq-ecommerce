@@ -9,7 +9,7 @@ import TwitterIcon from '@/svgs/About/Icon-Twitter.svg';
 
 import styles from './AboutMemberCard.module.scss';
 
-export default function AboutMemberCard({ img, name, position }) {
+function AboutMemberCard({ img, name, position }) {
   return (
     <div className={classNames(styles.wrapper)}>
       <div className={classNames(styles.image)}>
@@ -41,3 +41,5 @@ AboutMemberCard.propTypes = {
   name: PropTypes.string.isRequired,
   position: PropTypes.string.isRequired,
 };
+
+export default React.memo(AboutMemberCard);

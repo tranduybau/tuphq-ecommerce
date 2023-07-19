@@ -6,10 +6,6 @@ import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 
 export default function PrivateLayout({ children }) {
-  PrivateLayout.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-
   const router = useRouter();
 
   useEffect(() => {
@@ -23,3 +19,7 @@ export default function PrivateLayout({ children }) {
 
   return <div>{children}</div>;
 }
+
+PrivateLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

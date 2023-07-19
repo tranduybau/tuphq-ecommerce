@@ -5,7 +5,7 @@ import styles from './SignIn.module.scss';
 
 const SignInForm = React.lazy(() => import('./components/SignInForm'));
 
-function SignIn() {
+export default function SignIn() {
   return (
     <section className={`${styles.wrapper}`}>
       <div className={`${styles.sideImg}`}>
@@ -29,5 +29,3 @@ function SignIn() {
     </section>
   );
 }
-
-export default React.memo(SignIn);

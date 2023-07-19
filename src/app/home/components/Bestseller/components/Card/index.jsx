@@ -1,15 +1,21 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import LazyLoad from 'react-lazyload';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
+
+import { post, put, setAuthToken } from '@/components/AxiosConfig';
 
 import HeartSmallIcon from '@/svgs/heart-small.svg';
 import QuickViewIcon from '@/svgs/Quick-View.svg';
@@ -26,11 +32,11 @@ function Card({
   count,
   sizes = null,
   slug = null,
+  cart,
 }) {
   const [user, setUser] = useState();
   const router = useRouter();
   const { register, handleSubmit } = useForm();
-  const [cart, setCart] = useState({});
 
   useEffect(() => {
     const currentUser = Cookies.get('userData')
@@ -41,67 +47,35 @@ function Card({
     }
   }, []);
 
-  useEffect(() => {
-    const getCart = async () => {
-      try {
-        if (user) {
-          const headers = {
-            Authorization: user?.token,
-          };
-          const response = await axios.get(
-            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
-            { headers }
-          );
-          if (response !== undefined) {
-            setCart(response.data);
-          }
-        }
-        return null;
-      } catch {
-        return 0;
-      }
-    };
-    getCart();
-  }, [user]);
-
   const handleAddToCart = useCallback(
     async (data) => {
       const handlePostApi = async (userToken, formData) => {
-        const headers = {
-          Authorization: userToken,
-        };
-        const response = await axios.post(
-          'https://gmen-admin.wii.camp/api/v1.0/carts/me/products',
-          formData,
-          { headers }
-        );
+        setAuthToken(userToken);
+        const response = await post('/carts/me/products', formData);
         if (response.data) {
           toast.success('Thêm vào giỏ hàng thành công');
           setTimeout(() => {
-            router.refresh();
+            window.location.reload();
           }, 1000);
         }
       };
 
       const handlePutApi = async (userToken, formData, ProductId) => {
-        const headers = {
-          Authorization: userToken,
-        };
-        const response = await axios.put(
-          `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${ProductId}`,
-          formData,
-          { headers }
+        setAuthToken(userToken);
+        const response = await put(
+          `/carts/me/product-items/${ProductId}`,
+          formData
         );
         if (response.data) {
           toast.success('Thêm vào giỏ hàng thành công');
           setTimeout(() => {
-            router.refresh();
+            window.location.reload();
           }, 1000);
         }
       };
       try {
         const productId = id;
-        if (data.size === undefined) {
+        if (!data.size) {
           data.size = '';
         }
         const formData = {
@@ -110,28 +84,21 @@ function Card({
           size: data.size,
         };
         if (user) {
-          if (cart) {
-            if (cart.body) {
-              if (cart.body.products) {
-                const existingProduct = cart.body.products.find(
-                  (productCheck) => {
-                    return (
-                      (productCheck.product._id === productId &&
-                        productCheck.size === data.size) ||
-                      (productCheck.product._id === productId &&
-                        productCheck.size === null)
-                    );
-                  }
-                );
-                if (existingProduct) {
-                  const formPutData = {
-                    quantity: existingProduct.quantity + 1,
-                  };
-                  handlePutApi(user.token, formPutData, existingProduct._id);
-                } else {
-                  handlePostApi(user.token, formData);
-                }
-              }
+          if (cart && cart.body && cart.body.products) {
+            const existingProduct = cart.body.products.find(
+              (productCheck) =>
+                (productCheck.product._id === productId &&
+                  productCheck.size === data.size) ||
+                (productCheck.product._id === productId &&
+                  productCheck.size === null)
+            );
+            if (existingProduct) {
+              const formPutData = {
+                quantity: existingProduct.quantity + 1,
+              };
+              handlePutApi(user.token, formPutData, existingProduct._id);
+            } else {
+              handlePostApi(user.token, formData);
             }
           }
         } else {
@@ -155,7 +122,7 @@ function Card({
         localStorage.setItem('wishlistItems', JSON.stringify(wishlistItem));
         toast.success('Thêm vào danh sách yêu thích thành công');
         setTimeout(() => {
-          router.refresh();
+          window.location.reload();
         }, 1500);
       } else {
         const existingData = JSON.parse(existingWishlistItems);
@@ -167,7 +134,7 @@ function Card({
             localStorage.setItem('wishlistItems', JSON.stringify(existingData));
             toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
             setTimeout(() => {
-              router.refresh();
+              window.location.reload();
             }, 1500);
           }
         } else {
@@ -175,7 +142,7 @@ function Card({
           localStorage.setItem('wishlistItems', JSON.stringify(existingData));
           toast.success('Thêm vào danh sách yêu thích thành công');
           setTimeout(() => {
-            router.refresh();
+            window.location.reload();
           }, 1500);
         }
       }
@@ -183,17 +150,20 @@ function Card({
       router.push('/signin');
     }
   }, [id, router, user]);
+
   return (
-    <div className="card-bs">
+    <div className="card-bs font-poppins">
       <div className="image lg:max-w-[270px]">
-        <Image
-          src={img}
-          alt="best selling"
-          fill
-          className="lg:max-w-[270px]"
-          sizes="(max-width: 768px) 100vw"
-          priority
-        />
+        <LazyLoad className="absolute h-full w-full">
+          <Image
+            src={img}
+            alt="best selling"
+            fill
+            className="lg:max-w-[270px]"
+            sizes="(max-width: 768px) 100vw"
+            priority
+          />
+        </LazyLoad>
         <div className="icon-wrapper">
           <button
             aria-label="btn"
@@ -234,30 +204,27 @@ function Card({
               )}
               {...register('size')}
             >
-              {sizes.map((size, index) => {
-                return (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <option key={index} value={`${size}`}>
-                    {size}
-                  </option>
-                );
-              })}
+              {sizes.map((size, index) => (
+                <option key={index} value={`${size}`}>
+                  {size}
+                </option>
+              ))}
             </select>
           )}
           <button type="submit" aria-label="Add to cart" className="add-card">
-            <span className="font-poppins">Add To Cart</span>
+            <span>Add To Cart</span>
           </button>
         </form>
       </div>
       <div className="description">
         <div className="name">
-          <span className="font-poppins">{name}</span>
+          <span>{name}</span>
         </div>
 
         <div className="description__wrapper">
           <div className="price">
-            <span className="price-sale font-poppins">${sale}</span>
-            <span className="price-default class-poppins">${price}</span>
+            <span className="price-sale">${sale}</span>
+            <span className="price-default">${price}</span>
           </div>
 
           <div className="rate">
@@ -269,7 +236,7 @@ function Card({
               <StarIcon className="star" />
             </div>
             <div className="count">
-              (<span className="font-poppins">{count}</span>)
+              (<span>{count}</span>)
             </div>
           </div>
         </div>
@@ -286,8 +253,8 @@ Card.propTypes = {
   sale: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   count: PropTypes.number.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
-  sizes: PropTypes.array.isRequired,
+  sizes: PropTypes.array,
+  cart: PropTypes.object.isRequired,
 };
 
 export default React.memo(Card);

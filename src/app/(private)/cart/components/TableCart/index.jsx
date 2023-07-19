@@ -3,9 +3,10 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+
+import { get, setAuthToken } from '@/components/AxiosConfig';
 
 import styles from './TableCart.module.scss';
 
@@ -24,15 +25,10 @@ export default function TableCart() {
           ? JSON.parse(Cookies.get('userData'))
           : null;
         if (userData) {
-          const headers = {
-            Authorization: userData?.token,
-          };
-          const response = await axios.get(
-            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
-            { headers }
-          );
+          setAuthToken(userData?.token);
+          const response = await get('/carts/me');
           if (response) {
-            setProducts(response.data.body.products);
+            setProducts(response.data?.body?.products);
           }
         }
       } catch {

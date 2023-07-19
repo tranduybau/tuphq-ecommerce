@@ -6,8 +6,6 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
-import styles from './InputForm.module.scss';
-
 function InputForm({
   name,
   type = 'text',
@@ -19,11 +17,12 @@ function InputForm({
     register,
     formState: { errors },
   } = useFormContext();
+
+  const error = errors[name];
+
   return (
     <div>
-      {errors[name] && (
-        <p className={styles.errorMessage}>{errors[name].message}</p>
-      )}
+      {error && <p className="text-[red] text-[12px]">{error.message}</p>}
       <input
         {...register(name)}
         type={type}

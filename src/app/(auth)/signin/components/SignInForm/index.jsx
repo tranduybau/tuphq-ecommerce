@@ -4,11 +4,12 @@ import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
+
+import { post } from '@/components/AxiosConfig';
 
 import styles from './SignInForm.module.scss';
 
@@ -37,10 +38,7 @@ export default function SignInForm() {
 
   const handleSignIn = async (formData) => {
     try {
-      const response = await axios.post(
-        'https://gmen-admin.wii.camp/api/v1.0/auth/login',
-        formData
-      );
+      const response = await post('/auth/login', formData);
       if (response) {
         const { token, fullName, _id } = response.data.body;
         const userData = {
@@ -51,9 +49,9 @@ export default function SignInForm() {
         Cookies.set('userData', JSON.stringify(userData));
       }
       toast.success('Đăng nhập thành công');
+      router.push('/');
       setTimeout(() => {
-        router.refresh();
-        router.push('/');
+        window.location.reload();
       }, 1500);
     } catch (error) {
       toast.error('Lỗi ! Sai tài khoản hoặc mật khẩu');

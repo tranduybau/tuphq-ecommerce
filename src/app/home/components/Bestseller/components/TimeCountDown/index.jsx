@@ -3,61 +3,69 @@ import React, { useEffect, useState } from 'react';
 import './TimeCountDown.scss';
 
 export default function TimeCountDown() {
-  const [secondLeft, setSecondLeft] = useState(60);
-  const [minuteLeft, setMinuteLeft] = useState(59);
-  const [hourLeft, setHourLeft] = useState(23);
-  const [dayLeft, setDayLeft] = useState(5);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 5,
+    hours: 23,
+    minutes: 59,
+    seconds: 60,
+  });
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (secondLeft > 0) {
-        setSecondLeft(secondLeft - 1);
-      } else if (minuteLeft > 0) {
-        setMinuteLeft(minuteLeft - 1);
-        setSecondLeft(60);
-      } else if (hourLeft > 0) {
-        setHourLeft(hourLeft - 1);
-        setMinuteLeft(59);
-        setSecondLeft(60);
-      } else if (dayLeft > 0) {
-        setDayLeft(dayLeft - 1);
-        setHourLeft(23);
-        setMinuteLeft(59);
-        setSecondLeft(60);
-      }
-    }, 1500);
-    if (secondLeft === 0 && minuteLeft === 0 && hourLeft === 0) {
-      clearInterval(intervalId);
-    }
+      setTimeLeft((prevTimeLeft) => {
+        let { days, hours, minutes, seconds } = prevTimeLeft;
+        seconds -= 1;
+
+        if (seconds < 0) {
+          minutes -= 1;
+          seconds = 59;
+        }
+        if (minutes < 0) {
+          hours -= 1;
+          minutes = 59;
+        }
+        if (hours < 0) {
+          days -= 1;
+          hours = 23;
+        }
+        if (days < 0) {
+          clearInterval(intervalId);
+          return prevTimeLeft;
+        }
+
+        return { days, hours, minutes, seconds };
+      });
+    }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [secondLeft, minuteLeft, hourLeft, dayLeft]);
+  }, []);
+
   return (
-    <span className="time-area">
+    <div className="time-area font-poppins">
       <div className="time">
         <div className="time-block">
-          <p className="time-value font-poppins">{hourLeft}</p>
+          <p className="time-value">{timeLeft.hours}</p>
         </div>
-        <h5 className="font-poppins">Hours</h5>
+        <span>Hours</span>
       </div>
       <div className="time">
         <div className="time-block">
-          <p className="time-value font-poppins">{dayLeft}</p>
+          <p className="time-value">{timeLeft.days}</p>
         </div>
-        <h5 className="font-poppins">Days</h5>
+        <span>Days</span>
       </div>
       <div className="time">
         <div className="time-block">
-          <p className="time-value font-poppins">{minuteLeft}</p>
+          <p className="time-value">{timeLeft.minutes}</p>
         </div>
-        <h5 className="font-poppins">Minutes</h5>
+        <span>Minutes</span>
       </div>
       <div className="time">
         <div className="time-block">
-          <p className="time-value font-poppins">{secondLeft}</p>
+          <p className="time-value">{timeLeft.seconds}</p>
         </div>
-        <h5 className="font-poppins">Seconds</h5>
+        <span>Seconds</span>
       </div>
-    </span>
+    </div>
   );
 }

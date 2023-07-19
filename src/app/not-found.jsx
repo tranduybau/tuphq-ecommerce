@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
 
-function NotFound() {
+export default function NotFound() {
   return (
     <div className={classNames('container', 'px-0')}>
-      <div className={classNames('mt-[80px]')}>
+      <div className="mt-80">
         <Breadcrumb pathname="/404 Error" />
       </div>
       <div
@@ -22,11 +22,11 @@ function NotFound() {
       >
         <span
           className={classNames(
-            'lg:text-[110px]',
-            'lg:leading-[115px]',
+            'text-[110px]',
+            'leading-[115px]',
             'sm:text-[64px]',
             'sm:leading-[68px]',
-            'xs:text-[36px] ',
+            'xs:text-[36px]',
             'xs:leading-[40px]',
             'font-medium',
             'font-inter',
@@ -39,8 +39,6 @@ function NotFound() {
         <span
           className={classNames(
             'mt-[40px]',
-            'lg:text-[16px]',
-            'lg:leading-[24px]',
             'sm:text-[16px]',
             'sm:leading-[24px]',
             'xs:text-[12px]',
@@ -58,13 +56,13 @@ function NotFound() {
             'px-[48px]',
             'py-[16px]',
             'rounded-[4px]',
-            'bg-[#DB4444]',
+            'bg-[#db4444]',
             'mt-[80px]',
             'font-poppins',
             'text-[16px]',
             'leading-[24px]',
             'font-medium',
-            'text-[#FAFAFA]',
+            'text-[#fafafa]',
             'no-underline',
             'hover:opacity-70'
           )}
@@ -75,5 +73,3 @@ function NotFound() {
     </div>
   );
 }
-
-export default React.memo(NotFound);

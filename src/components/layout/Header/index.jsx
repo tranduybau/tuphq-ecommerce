@@ -6,11 +6,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+
+import { get, setAuthToken } from '@/components/AxiosConfig';
 
 import CartIcon from '@/svgs/Header/Cart.svg';
 import HeartIcon from '@/svgs/Header/Heart.svg';
@@ -22,9 +23,10 @@ import SearchIcon from '@/svgs/Header/SearchIcon.svg';
 import UserIcon from '@/svgs/Header/user.svg';
 import UserTooltipIcon from '@/svgs/Header/user-img.svg';
 
+import 'react-toastify/dist/ReactToastify.min.css';
 import './Header.scss';
 
-function Header() {
+export default function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -48,38 +50,30 @@ function Header() {
     const fetchCart = async () => {
       try {
         if (user) {
-          const headers = {
-            Authorization: user?.token,
-          };
-          const response = await axios.get(
-            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
-            { headers }
-          );
+          setAuthToken(user.token);
+          const response = await get('/carts/me');
           if (response) {
             setCartItemNumber(response.data.body.products.length);
           }
-          return response.data;
         }
+        return null;
       } catch (error) {
         return error;
       }
-      return null;
     };
-
     fetchCart();
 
     const currentWishlistItems = JSON.parse(
       localStorage.getItem('wishlistItems')
     );
-
     if (user && currentWishlistItems) {
       const accountToken = user.token;
-      if (currentWishlistItems.hasOwnProperty(accountToken)) {
+      if (currentWishlistItems[accountToken]) {
         const productList = currentWishlistItems[accountToken];
         setWishlistItemNumber(productList.length);
       }
     }
-  }, [user]);
+  }, [user, router]);
 
   const handleShowTooltip = useCallback(() => {
     setIsTooltipOpen((prevState) => !prevState);
@@ -89,8 +83,8 @@ function Header() {
     Cookies.remove('userData');
     toast.success('Đăng xuất thành công');
     setTimeout(() => {
-      router.refresh();
       router.push('/');
+      window.location.reload();
     }, 1500);
   }, [router]);
 
@@ -106,7 +100,7 @@ function Header() {
           router.push('/signin');
         }, 1500);
       } else {
-        router.push(`/${pathnameCheck}`);
+        router.push(`${pathnameCheck}`);
       }
     },
     [router, user]
@@ -128,24 +122,20 @@ function Header() {
     <header className="header">
       <ToastContainer />
       <div className="top-header">
-        <div className="top-header-main container">
-          <div className="top-header__text ">
-            <span className="top-header__text-content font-poppins">
+        <div className="top-header-main container font-poppins">
+          <div className="top-header__text">
+            <span className="top-header__text-content">
               Summer Sale For All Swim Suits And Free Express Delivery - OFF
               50%!
             </span>
-            <Link href="/" className="top-header__text-link font-poppins">
+            <Link href="/" className="top-header__text-link">
               ShopNow
             </Link>
           </div>
           <div className="top-header__language ">
             <select className="language-switcher-select">
-              <option className="font-poppins" value="en">
-                English
-              </option>
-              <option className="font-poppins" value="vn">
-                Vietnamese
-              </option>
+              <option value="en">English</option>
+              <option value="vn">Vietnamese</option>
             </select>
           </div>
         </div>
@@ -161,23 +151,18 @@ function Header() {
             onClick={toggleMenu}
             className="fa-carat-icon"
           >
-            <FontAwesomeIcon
-              icon={isMenuOpen === true ? faCaretUp : faCaretDown}
-            />
+            <FontAwesomeIcon icon={isMenuOpen ? faCaretUp : faCaretDown} />
           </button>
           <ul
-            className={classNames('main-header__menu', {
-              show: isMenuOpen === true,
+            className={classNames('main-header__menu', 'font-poppins', {
+              show: isMenuOpen,
             })}
           >
             <li className="nav-item">
               <Link
-                className={classNames(
-                  'nav-link',
-                  'main-header-link',
-                  'font-poppins',
-                  { active: pathname === '/' }
-                )}
+                className={classNames('nav-link', 'main-header-link', {
+                  active: pathname === '/',
+                })}
                 href="/"
               >
                 Home
@@ -185,12 +170,9 @@ function Header() {
             </li>
             <li className="nav-item">
               <Link
-                className={classNames(
-                  'nav-link',
-                  'main-header-link',
-                  'font-poppins',
-                  { active: pathname === '/contact' }
-                )}
+                className={classNames('nav-link', 'main-header-link', {
+                  active: pathname === '/contact',
+                })}
                 href="/contact"
               >
                 Contact
@@ -198,12 +180,9 @@ function Header() {
             </li>
             <li className="nav-item">
               <Link
-                className={classNames(
-                  'nav-link',
-                  'main-header-link',
-                  'font-poppins',
-                  { active: pathname === '/about' }
-                )}
+                className={classNames('nav-link', 'main-header-link', {
+                  active: pathname === '/about',
+                })}
                 href="/about"
               >
                 About
@@ -211,22 +190,18 @@ function Header() {
             </li>
             <li className="nav-item">
               <Link
-                className={classNames(
-                  'nav-link',
-                  'main-header-link',
-                  'font-poppins',
-                  { active: pathname === '/signup' }
-                )}
+                className={classNames('nav-link', 'main-header-link', {
+                  active: pathname === '/signup',
+                })}
                 href="/signup"
               >
                 Sign up
               </Link>
             </li>
-          </ul>
-
+          </ul>{' '}
           <div
             className={classNames('main-header__actions', {
-              show: isMenuOpen === true,
+              show: isMenuOpen,
             })}
           >
             <div className="main-header__actions-search">
@@ -272,25 +247,29 @@ function Header() {
                 <div ref={tooltipRef} className="tooltip-user">
                   <UserIcon onClick={handleShowTooltip} className="user-icon" />
                   <div
-                    className={classNames('tooltip-user__block', {
-                      'tooltip-show': isTooltipOpen === true,
-                    })}
+                    className={classNames(
+                      'tooltip-user__block',
+                      'font-poppins',
+                      {
+                        'tooltip-show': isTooltipOpen,
+                      }
+                    )}
                   >
                     <Link href="/myaccount" className="tooltip-user__item">
                       <UserTooltipIcon className="tooltip-user__icon" />
-                      <span className="font-poppins">Manage My Account</span>
+                      <span>Manage My Account</span>
                     </Link>
                     <Link href="/" className="tooltip-user__item">
                       <MallbagIcon className="tooltip-user__icon" />
-                      <span className="font-poppins">My Order</span>
+                      <span>My Order</span>
                     </Link>
                     <Link href="/" className="tooltip-user__item">
                       <CancelIcon className="tooltip-user__icon" />
-                      <span className="font-poppins">My Cancellations</span>
+                      <span>My Cancellations</span>
                     </Link>
                     <Link href="/" className="tooltip-user__item">
                       <ReviewIcon className="tooltip-user__icon" />
-                      <span className="font-poppins">My Reviews</span>
+                      <span>My Reviews</span>
                     </Link>
                     <button
                       type="button"
@@ -299,7 +278,7 @@ function Header() {
                       className="tooltip-user__item"
                     >
                       <LogoutIcon className="tooltip-user__icon" />
-                      <span className="font-poppins">Logout</span>
+                      <span>Logout</span>
                     </button>
                   </div>
                 </div>
@@ -311,5 +290,3 @@ function Header() {
     </header>
   );
 }
-
-export default React.memo(Header);

@@ -1,6 +1,8 @@
+/* eslint-disable no-prototype-builtins */
+
 'use client';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -17,56 +19,53 @@ import './Category.scss';
 
 const CategoryItem = React.lazy(() => import('./components/CategoryItem'));
 
-function Category() {
-  const swiperRef = useRef();
-  const [swiper, setSwiper] = useState(true);
+const breakpointsSwiper = {
+  320: {
+    slidesPerView: 2,
+    spaceBetween: 20,
+  },
+  576: {
+    slidesPerView: 3,
+    spaceBetween: 30,
+  },
+  768: {
+    slidesPerView: 4,
+    spaceBetween: 40,
+  },
+  992: {
+    slidesPerView: 4,
+    spaceBetween: 40,
+  },
+  1200: {
+    slidesPerView: 6,
+    spaceBetween: 40,
+  },
+};
+
+export default function Category() {
+  const swiperRef = useRef(null);
   const [canGoPrev, setCanGoPrev] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
 
-  const breakpointsSwiper = useMemo(
-    () => ({
-      320: {
-        slidesPerView: 2,
-        spaceBetween: 20,
-      },
-      576: {
-        slidesPerView: 3,
-        spaceBetween: 30,
-      },
-      768: {
-        slidesPerView: 4,
-        spaceBetween: 40,
-      },
-      992: {
-        slidesPerView: 4,
-        spaceBetween: 40,
-      },
-      1200: {
-        slidesPerView: 6,
-        spaceBetween: 40,
-      },
-    }),
-    []
-  );
-
   const handleControlSwiperLeft = useCallback(() => {
     swiperRef.current.swiper.slidePrev();
-    setCanGoNext(true);
-    if (swiper.isBeginning) {
-      setCanGoPrev(false);
-    }
-  }, [swiper.isBeginning]);
+  }, []);
 
   const handleControlSwiperRight = useCallback(() => {
     swiperRef.current.swiper.slideNext();
-    setCanGoPrev(true);
-    if (swiper.isEnd) {
-      setCanGoNext(false);
-    }
-  }, [swiper.isEnd]);
+  }, []);
 
-  const handleSwiper = useCallback((swiperInput) => {
-    setSwiper(swiperInput);
+  const onSwiperReachEnd = useCallback(() => {
+    setCanGoPrev(true);
+  }, []);
+
+  const onSwiperReachBeginning = useCallback(() => {
+    setCanGoPrev(true);
+  }, []);
+
+  const onSwiperSlideChange = useCallback((swiper) => {
+    setCanGoPrev(!swiper.isBeginning);
+    setCanGoNext(!swiper.isEnd);
   }, []);
 
   return (
@@ -83,7 +82,7 @@ function Category() {
             type="button"
             onClick={handleControlSwiperLeft}
             className={classNames('btn-control-swiper', {
-              disabled: canGoPrev === false,
+              disabled: !canGoPrev,
             })}
           >
             <ArrowLeft className="arrow-left-icon" />
@@ -93,7 +92,7 @@ function Category() {
             type="button"
             onClick={handleControlSwiperRight}
             className={classNames('btn-control-swiper', {
-              disabled: canGoNext === false,
+              disabled: !canGoNext,
             })}
           >
             <ArrowRight className="arrow-right-icon" />
@@ -102,17 +101,13 @@ function Category() {
       </div>
       <div className="categories">
         <Swiper
-          onSwiper={handleSwiper}
-          onReachEnd={() => {
-            setCanGoPrev(true);
-          }}
-          onReachBeginning={() => {
-            setCanGoPrev(true);
-          }}
           ref={swiperRef}
           slidesPerView={6}
           spaceBetween={30}
           breakpoints={breakpointsSwiper}
+          onReachEnd={onSwiperReachEnd}
+          onReachBeginning={onSwiperReachBeginning}
+          onSlideChange={onSwiperSlideChange}
         >
           <SwiperSlide>
             <CategoryItem category="Phones">
@@ -154,35 +149,8 @@ function Category() {
               <CellPhone className="category-img max-w-[170px]" />
             </CategoryItem>
           </SwiperSlide>
-          <SwiperSlide>
-            <CategoryItem category="Computer">
-              <CellPhone className="category-img max-w-[170px]" />
-            </CategoryItem>
-          </SwiperSlide>
-          <SwiperSlide>
-            <CategoryItem category="Computer">
-              <CellPhone className="category-img max-w-[170px]" />
-            </CategoryItem>
-          </SwiperSlide>
-          <SwiperSlide>
-            <CategoryItem category="Computer">
-              <CellPhone className="category-img max-w-[170px]" />
-            </CategoryItem>
-          </SwiperSlide>
-          <SwiperSlide>
-            <CategoryItem category="Computer">
-              <CellPhone className="category-img max-w-[170px]" />
-            </CategoryItem>
-          </SwiperSlide>
-          <SwiperSlide>
-            <CategoryItem category="Computer">
-              <CellPhone className="category-img max-w-[170px]" />
-            </CategoryItem>
-          </SwiperSlide>
         </Swiper>
       </div>
     </div>
   );
 }
-
-export default React.memo(Category);

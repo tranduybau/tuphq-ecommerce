@@ -13,16 +13,14 @@ export default function FeaturedItem({
   description,
 }) {
   return (
-    <div className={`${className} ${styles.wrapper}`}>
+    <div className={`${className} ${styles.wrapper} font-poppins`}>
       <div className={`${imgClassName} ${styles.image} relative`}>
         {children}
       </div>
       <div className={`${styles.content}`}>
         <span className={`${styles.name} font-inter`}>{name}</span>
-        <span className={`${styles.description} font-poppins`}>
-          {description}
-        </span>
-        <Link href="/" className={`${styles.link} font-poppins`}>
+        <span className={`${styles.description}`}>{description}</span>
+        <Link href="/" className={`${styles.link}`}>
           Shop Now
         </Link>
       </div>

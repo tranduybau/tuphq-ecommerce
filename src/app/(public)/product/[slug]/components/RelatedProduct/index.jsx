@@ -1,21 +1,20 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import classNames from 'classnames';
+
+import { get } from '@/components/AxiosConfig';
 
 const Card = React.lazy(() => import('../Card'));
 
-function RelatedProduct() {
+export default function RelatedProduct() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          'https://gmen-admin.wii.camp/api/v1.0/products?perPage=20&page=1&sort=1'
-        );
+        const response = await get('/products?perPage=20&page=1&sort=1');
         if (response) {
-          setProducts(response.data.body?.items);
+          setProducts(response.data?.body?.items);
         }
       } catch (error) {
         return 1;
@@ -60,5 +59,3 @@ function RelatedProduct() {
     </div>
   );
 }
-
-export default React.memo(RelatedProduct);

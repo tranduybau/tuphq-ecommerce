@@ -3,9 +3,7 @@ import classNames from 'classnames';
 import { Inter, Poppins } from 'next/font/google';
 import PropTypes from 'prop-types';
 
-import 'swiper/css';
-import 'swiper/swiper-bundle.css';
-import 'react-toastify/dist/ReactToastify.css';
+import 'swiper/swiper-bundle.min.css';
 import './globals.scss';
 
 const Footer = React.lazy(() => import('@/components/layout/Footer'));
@@ -42,7 +40,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={classNames(poppins.variable, inter.variable)}>
         <Header />
-        <div className={classNames('min-h-[40vh]')}>{children}</div>
+        <div className="min-h-[50vh]">{children}</div>
         <Footer />
       </body>
     </html>

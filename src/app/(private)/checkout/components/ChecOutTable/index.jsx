@@ -6,10 +6,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import * as Yup from 'yup';
+
+import { get, setAuthToken } from '@/components/AxiosConfig';
 
 import BkashIcon from '@/svgs/Checkout/Bkash.svg';
 import MastercartIcon from '@/svgs/Checkout/Mastercard.svg';
@@ -45,13 +46,8 @@ export default function CheckOutTable() {
     const fetchData = async () => {
       try {
         if (userData) {
-          const headers = {
-            Authorization: userData?.token,
-          };
-          const response = await axios.get(
-            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
-            { headers }
-          );
+          setAuthToken(userData?.token);
+          const response = await get('/carts/me');
           if (response) {
             setProducts(response.data.body?.products);
           }

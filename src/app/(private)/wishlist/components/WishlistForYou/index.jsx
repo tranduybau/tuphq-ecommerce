@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Link from 'next/link';
+
+import { get } from '@/components/AxiosConfig';
 
 import styles from './WishlistForYou.module.scss';
 
@@ -12,9 +13,7 @@ export default function WishlistForYou() {
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(
-        'https://gmen-admin.wii.camp/api/v1.0/products?perPage=20&page=1&sort=1'
-      );
+      const response = await get('/products?perPage=20&page=1&sort=1');
       if (response) {
         setProducts(response.data.body?.items);
       }

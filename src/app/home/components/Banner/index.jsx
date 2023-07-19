@@ -1,19 +1,25 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable no-undef */
 import React from 'react';
-
-import './Banner.scss';
+import PropTypes from 'prop-types';
 
 const SidebarBanner = React.lazy(() => import('./components/Sidebar'));
 const SwiperSlider = React.lazy(() => import('./components/SwiperSlider'));
 
-function Banner() {
+function Banner({ data, categories }) {
   return (
     <div className="banner-wrapper">
-      <div className="banner container flex">
-        <SidebarBanner />
-        <SwiperSlider />
+      <div className="container flex xs:flex-col xl:flex-row px-0">
+        <SidebarBanner data={categories} />
+        <SwiperSlider data={data} />
       </div>
     </div>
   );
 }
+
+Banner.propTypes = {
+  data: PropTypes.object.isRequired,
+  categories: PropTypes.object.isRequired,
+};
 
 export default React.memo(Banner);

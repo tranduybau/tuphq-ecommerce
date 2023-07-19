@@ -71,10 +71,6 @@
   }
 }
 
-.main-header {
-  padding: 0 !important;
-}
-
 .main-header__wrapper {
   padding: 40px 0 16px !important;
   margin: 0 !important;
@@ -172,24 +168,20 @@
   gap: 16px;
 }
 
+.icon-cart,
 .icon-heart {
   position: relative;
   cursor: pointer;
   width: 32px;
   height: 32px;
-  &:hover {
-    fill: red;
-  }
 }
 
-.icon-cart {
-  position: relative;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-  &:hover {
-    fill: #000;
-  }
+.icon-heart:hover {
+  fill: red;
+}
+
+.icon-cart:hover {
+  fill: #000;
 }
 
 .main-header-icon__count-product {
@@ -274,22 +266,9 @@
 @media (max-width: 1199.98px) {
   .main-header__menu {
     li {
-      margin-right: 48px;
-
       a {
         min-width: 62px;
       }
-    }
-
-    & li:last-child {
-      margin-right: 0px;
-    }
-    .main-header-link {
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
-      text-align: center;
     }
   }
 }
@@ -299,27 +278,6 @@
     flex-direction: column;
     justify-content: center;
     gap: 12px;
-
-    .main-header__menu {
-      li {
-        margin-right: 48px;
-
-        a {
-          min-width: 62px;
-        }
-      }
-
-      & li:last-child {
-        margin-right: 0px;
-      }
-      .main-header-link {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        text-align: center;
-      }
-    }
   }
   .top-header__language {
     .language-switcher-select {
@@ -329,33 +287,6 @@
 }
 
 @media (max-width: 767.98px) {
-  .main-header__wrapper {
-    flex-direction: column;
-    justify-content: center;
-    gap: 16px;
-
-    .main-header__menu {
-      li {
-        margin-right: 48px;
-
-        a {
-          min-width: 62px;
-        }
-      }
-
-      & li:last-child {
-        margin-right: 0px;
-      }
-      .main-header-link {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        text-align: center;
-      }
-    }
-  }
-
   .top-header__language {
     .language-switcher-select {
       margin-left: 32px;
@@ -372,10 +303,6 @@
     font-size: 10px;
     line-height: 14px;
     margin-right: 0;
-  }
-
-  .top-header__text-link {
-    font-size: 12px;
   }
 
   .main-header__wrapper {
@@ -403,15 +330,9 @@
         }
       }
 
+      .icon-heart,
+      .user-icon,
       .icon-cart {
-        margin-top: 12px;
-      }
-
-      .icon-heart {
-        margin-top: 12px;
-      }
-
-      .user-icon {
         margin-top: 12px;
       }
     }

@@ -1,63 +1,33 @@
+/* eslint-disable react/forbid-prop-types */
+
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
-import { Pagination } from 'swiper';
+import PropTypes from 'prop-types';
+import SwiperCore, { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import './SwiperSlider.scss';
 
+const LoadingSkeleton = React.lazy(() =>
+  import('@/components/LoadingSkeleton')
+);
 const Slider = React.lazy(() => import('../Slider'));
 
-const modulesSwiper = [Pagination];
-const paginationSwiper = { clickable: true };
+SwiperCore.use([Pagination]);
 
-function SwiperSlider() {
+function SwiperSlider({ data }) {
   const [slides, setSlides] = useState([]);
-  const breakpointsSwiper = useMemo(
-    () => ({
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 10,
-      },
-      576: {
-        slidesPerView: 1,
-        spaceBetween: 10,
-      },
-      768: {
-        slidesPerView: 1,
-        spaceBetween: 40,
-      },
-      992: {
-        slidesPerView: 1,
-        spaceBetween: 40,
-      },
-      1200: {
-        slidesPerView: 1,
-        spaceBetween: 50,
-      },
-    }),
-    []
-  );
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          'https://gmen-admin.wii.camp/api/v1.0/slides'
-        );
-        setSlides(response.data);
-      } catch (error) {
-        return error;
-      }
-      return null;
-    };
-    fetchData();
-  }, []);
+    setSlides(data);
+    setIsLoading(false);
+  }, [data]);
 
   const swiperSlides = useMemo(
     () =>
-      slides.body?.map((slide) => (
+      slides?.body?.map((slide) => (
         <SwiperSlide key={slide._id}>
           <Slider
             img={slide.image}
@@ -66,22 +36,40 @@ function SwiperSlider() {
           />
         </SwiperSlide>
       )),
-    [slides.body]
+    [slides?.body]
+  );
+
+  const breakpointsSwiper = useMemo(
+    () => ({
+      320: { slidesPerView: 1, spaceBetween: 10 },
+      576: { slidesPerView: 1, spaceBetween: 10 },
+      768: { slidesPerView: 1, spaceBetween: 40 },
+      992: { slidesPerView: 1, spaceBetween: 40 },
+      1200: { slidesPerView: 1, spaceBetween: 50 },
+    }),
+    []
   );
 
   return (
     <div className="slider flex-auto w-full">
-      <Swiper
-        modules={modulesSwiper}
-        spaceBetween={0}
-        slidesPerView={1}
-        pagination={paginationSwiper}
-        breakpoints={breakpointsSwiper}
-      >
-        {swiperSlides}
-      </Swiper>
+      {isLoading ? (
+        <LoadingSkeleton className="xs:ml-0 w-full xl:w-[892px] h-[344px]" />
+      ) : (
+        <Swiper
+          spaceBetween={0}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          breakpoints={breakpointsSwiper}
+        >
+          {swiperSlides}
+        </Swiper>
+      )}
     </div>
   );
 }
+
+SwiperSlider.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export default React.memo(SwiperSlider);

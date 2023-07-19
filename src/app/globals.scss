@@ -29,12 +29,7 @@ a:hover {
 }
 
 ul {
-  padding-left: 0 !important;
-}
-
-img {
-  max-width: 100%;
-  display: block;
+  padding: 0 !important;
 }
 
 .font-inter {
@@ -45,5 +40,11 @@ img {
 .font-poppins {
   font-family: var(--font-poppins);
   font-weight: 400;
+}
+
+.skeleton {
+  background-color: #e2e5e7;
+  background-size: 40px 100%;
+  background-repeat: no-repeat;
 }
 

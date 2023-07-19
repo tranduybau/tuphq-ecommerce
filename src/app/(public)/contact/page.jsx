@@ -9,14 +9,14 @@ import styles from './ContactPage.module.scss';
 const Breadcrumb = React.lazy(() => import('@/components/Breadcrumb'));
 const ContactForm = React.lazy(() => import('./components/ContactForm'));
 
-function ContactPage() {
+export default function ContactPage() {
   return (
     <div className={classNames(styles.wrapper, 'container', 'px-0')}>
       <div className={classNames(styles.breadcrumb)}>
         <Breadcrumb />
       </div>
-      <div className={classNames(styles.contact)}>
-        <div className={classNames(styles.sidebar, 'font-poppins')}>
+      <div className={classNames(styles.contact, 'font-poppins')}>
+        <div className={classNames(styles.sidebar)}>
           <div className={classNames(styles.phoneBlock)}>
             <div className={classNames(styles.heading)}>
               <PhoneIcon className={classNames(styles.icon)} />
@@ -54,5 +54,3 @@ function ContactPage() {
     </div>
   );
 }
-
-export default React.memo(ContactPage);

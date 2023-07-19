@@ -1,7 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 
-import './Home.scss';
+import { get } from '@/components/AxiosConfig';
 
 const Banner = React.lazy(() => import('./components/Banner'));
 const Bestseller = React.lazy(() => import('./components/Bestseller'));
@@ -12,20 +11,27 @@ const OurProduct = React.lazy(() => import('./components/OurProduct'));
 
 const fetchData = async () => {
   try {
-    const response = await axios.get(
-      'https://gmen-admin.wii.camp/api/v1.0/products?perPage=20&page=1&sort=1'
-    );
-    return response.data;
+    const [productsResponse, slidesResponse, categoriesResponse] =
+      await Promise.all([
+        get('/products?perPage=20&page=1&sort=1'),
+        get('/slides'),
+        get('/product-categories'),
+      ]);
+    return {
+      products: productsResponse.data,
+      slides: slidesResponse.data,
+      categories: categoriesResponse.data,
+    };
   } catch (error) {
-    return 1;
+    return error;
   }
 };
 
 const Home = async () => {
-  const products = await fetchData();
+  const { products, slides, categories } = await fetchData();
   return (
-    <main className="home-main">
-      <Banner />
+    <main className="overflow-hidden">
+      <Banner data={slides} categories={categories} />
       <Flashsale data={products} />
       <Category />
       <Bestseller data={products} />
@@ -35,4 +41,4 @@ const Home = async () => {
   );
 };
 
-export default React.memo(Home);
+export default Home;

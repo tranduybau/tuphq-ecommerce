@@ -7,10 +7,11 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import * as yup from 'yup';
+
+import { get, put, setAuthToken } from '@/components/AxiosConfig';
 
 import styles from './MyAccountForm.module.scss';
 
@@ -54,13 +55,8 @@ export default function MyAccountForm() {
           ? JSON.parse(Cookies.get('userData'))
           : null;
         if (currentUser) {
-          const headers = {
-            Authorization: currentUser.token,
-          };
-          const response = await axios.get(
-            'https://gmen-admin.wii.camp/api/v1.0/users/me',
-            { headers }
-          );
+          setAuthToken(currentUser?.token);
+          const response = await get('/users/me');
           if (response) {
             return response.data;
           }
@@ -105,14 +101,8 @@ export default function MyAccountForm() {
           }`,
         };
         if (user) {
-          const headers = {
-            Authorization: user?.token,
-          };
-          const response = await axios.put(
-            'https://gmen-admin.wii.camp/api/v1.0/users/me',
-            formData,
-            { headers }
-          );
+          setAuthToken(user?.token);
+          const response = await put('/users/me', formData);
           if (response) {
             toast.success('Cập nhật thành công');
           }
@@ -124,14 +114,9 @@ export default function MyAccountForm() {
           confirmPassword: data.confirmPassword,
         };
         if (user) {
-          const headers = {
-            Authorization: user?.token,
-          };
-          const response = await axios.put(
-            'https://gmen-admin.wii.camp/api/v1.0/users/me/password',
-            formData,
-            { headers }
-          );
+          setAuthToken(user?.token);
+
+          const response = await put('/users/me/password', formData);
           if (response) {
             toast.success('Đổi mật khẩu thành công');
           }

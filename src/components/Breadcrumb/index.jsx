@@ -1,5 +1,6 @@
-/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/forbid-prop-types */
 
 'use client';
 
@@ -11,39 +12,25 @@ import PropTypes from 'prop-types';
 import styles from './Breadcrumb.module.scss';
 
 function Breadcrumb({ pathname = '', urls = '' }) {
-  let pathnameVar = usePathname();
-  if (pathname) {
-    pathnameVar = pathname;
-  }
-  const pathNameArray = pathnameVar.split('/');
-  pathNameArray.shift();
+  const pathnameVar = usePathname() || pathname;
+  const pathNameArray = pathnameVar.split('/').filter((item) => item !== '');
   const pathNameMainArray = pathNameArray.map((pathnameItem) => {
-    return (
-      pathnameItem.slice(0).charAt(0).toUpperCase() + pathnameItem.slice(1)
-    );
+    return pathnameItem.charAt(0).toUpperCase() + pathnameItem.slice(1);
   });
+
+  const renderLink = (url, index) => (
+    <Link key={index} href="/" className={`${styles.link}`}>
+      {url}
+    </Link>
+  );
+
   return (
-    <div className={styles.wrapper}>
-      <Link href="/" className={`${styles.link} font-poppins`}>
+    <div className="font-poppins w-full">
+      <Link href="/" className={`${styles.link}`}>
         Home
       </Link>
-      {pathNameMainArray.map((url, index) => {
-        const id = index;
-        return (
-          <Link key={id} href="/" className={`${styles.link} font-poppins`}>
-            {url}
-          </Link>
-        );
-      })}
-      {urls &&
-        urls.map((url, index) => {
-          const id = index;
-          return (
-            <Link key={id} href="/" className={`${styles.link} font-poppins`}>
-              {url}
-            </Link>
-          );
-        })}
+      {pathNameMainArray.map(renderLink)}
+      {urls && urls.map(renderLink)}
     </div>
   );
 }

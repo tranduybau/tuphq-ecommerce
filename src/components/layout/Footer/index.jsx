@@ -11,24 +11,22 @@ import TwitterIcon from '@/svgs/Footer/Icon-Twitter.svg';
 
 import styles from './Footer.module.scss';
 
-function Footer() {
+export default function Footer() {
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.main} container`}>
         <div className={`${styles.content}`}>
           <span className={`${styles.headingLg} font-inter`}>Exclusive</span>
-          <ul className={`${styles.contentText}`}>
+          <ul className={`${styles.contentText} font-poppins`}>
             <li className={`${styles.contentTextItem} ${styles.subcribeItem}`}>
               <span
-                className={`${styles.contentTextLink} ${styles.subcribeText} ${styles.noHover} font-poppins`}
+                className={`${styles.contentTextLink} ${styles.subcribeText} ${styles.noHover}`}
               >
                 Subcribe
               </span>
             </li>
             <li className={`${styles.contentTextItem}`}>
-              <span
-                className={`font-poppins ${styles.contentTextLink} ${styles.noHover}`}
-              >
+              <span className={`${styles.contentTextLink} ${styles.noHover}`}>
                 Get 10% off your first order
               </span>
             </li>
@@ -46,11 +44,11 @@ function Footer() {
         </div>
         <div className={`${styles.content}`}>
           <span className={`${styles.heading} font-inter`}>Support</span>
-          <ul className={`${styles.contentText}`}>
+          <ul className={`${styles.contentText} font-poppins`}>
             <li className={`${styles.contentTextItem}`}>
               <Link
                 href="/"
-                className={`font-poppins ${styles.contentTextLink} ${styles.noHover}`}
+                className={`${styles.contentTextLink} ${styles.noHover}`}
               >
                 111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.
               </Link>
@@ -58,7 +56,7 @@ function Footer() {
             <li className={`${styles.contentTextItem}`}>
               <Link
                 href="/"
-                className={`font-poppins ${styles.contentTextLink} ${styles.noHover}`}
+                className={`${styles.contentTextLink} ${styles.noHover}`}
               >
                 exclusive@gmail.com
               </Link>
@@ -66,7 +64,7 @@ function Footer() {
             <li className={`${styles.contentTextItem}`}>
               <Link
                 href="/"
-                className={`font-poppins ${styles.contentTextLink} ${styles.noHover}`}
+                className={`${styles.contentTextLink} ${styles.noHover}`}
               >
                 +88015-88888-9999
               </Link>
@@ -75,44 +73,29 @@ function Footer() {
         </div>
         <div className={`${styles.content}`}>
           <span className={`${styles.heading} font-inter`}>Account</span>
-          <ul className={`${styles.contentText}`}>
+          <ul className={`${styles.contentText} font-poppins`}>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/myaccount" className={`${styles.contentTextLink}`}>
                 My Account
               </Link>
             </li>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/signin"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/signin" className={`${styles.contentTextLink}`}>
                 Login / Register
               </Link>
             </li>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/cart" className={`${styles.contentTextLink}`}>
                 Cart
               </Link>
             </li>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/wishlist" className={`${styles.contentTextLink}`}>
                 Wishlist
               </Link>
             </li>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/" className={`${styles.contentTextLink}`}>
                 Shop
               </Link>
             </li>
@@ -120,36 +103,24 @@ function Footer() {
         </div>
         <div className={`${styles.content}`}>
           <span className={`${styles.heading} font-inter`}>Quick Link</span>
-          <ul className={`${styles.contentText}`}>
+          <ul className={`${styles.contentText} font-poppins`}>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/" className={`${styles.contentTextLink}`}>
                 Privacy Policy
               </Link>
             </li>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/" className={`${styles.contentTextLink}`}>
                 Terms Of Use
               </Link>
             </li>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/" className={`${styles.contentTextLink}`}>
                 FAQ
               </Link>
             </li>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`font-poppins ${styles.contentTextLink}`}
-              >
+              <Link href="/contact" className={`${styles.contentTextLink}`}>
                 Contact
               </Link>
             </li>
@@ -157,12 +128,9 @@ function Footer() {
         </div>
         <div className={`${styles.content}`}>
           <span className={`${styles.heading} font-inter`}>Download App</span>
-          <ul className={`${styles.contentText}`}>
+          <ul className={`${styles.contentText}  font-poppins`}>
             <li className={`${styles.contentTextItem}`}>
-              <Link
-                href="/"
-                className={`${styles.DownloadAppText} font-poppins`}
-              >
+              <Link href="/" className={`${styles.DownloadAppText}`}>
                 Save $3 with App New User Only
               </Link>
             </li>
@@ -240,5 +208,3 @@ function Footer() {
     </div>
   );
 }
-
-export default React.memo(Footer);

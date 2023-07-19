@@ -1,3 +1,5 @@
+/* eslint-disable react/forbid-prop-types */
+
 'use client';
 
 import React, {
@@ -9,33 +11,18 @@ import React, {
 } from 'react';
 import { faBars, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 import classNames from 'classnames';
-
-import DropdownRight from '@/svgs/DropDown-right.svg';
+import PropTypes from 'prop-types';
 
 import './Sidebar.scss';
 
-function SidebarBanner() {
+const DropdownRight = React.lazy(() => import('@/svgs/DropDown-right.svg'));
+
+function SidebarBanner({ data }) {
   const [isBarsOpen, setIsBarsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const sidebarRef = useRef(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          'https://gmen-admin.wii.camp/api/v1.0/product-categories'
-        );
-        setCategories(response.data);
-      } catch (error) {
-        return null;
-      }
-      return null;
-    };
-    fetchData();
-  }, []);
 
   const toggleBars = useCallback(() => {
     setIsBarsOpen((prevIsBarsOpen) => !prevIsBarsOpen);
@@ -48,6 +35,10 @@ function SidebarBanner() {
   }, []);
 
   useEffect(() => {
+    setCategories(data);
+  }, [data]);
+
+  useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
@@ -55,54 +46,68 @@ function SidebarBanner() {
   }, [handleOutsideClick]);
 
   const handleCategoryClick = useCallback((category) => {
-    if (category.childCategories && category.childCategories.length > 0) {
-      setActiveCategory((prevActiveCategory) =>
-        prevActiveCategory && prevActiveCategory._id === category._id
-          ? null
-          : category
-      );
-    }
+    setActiveCategory((prevActiveCategory) =>
+      prevActiveCategory && prevActiveCategory._id === category._id
+        ? null
+        : category
+    );
   }, []);
 
   const categoryElements = useMemo(
     () =>
-      categories?.body?.map((category) => (
-        <div key={category._id}>
-          <button
-            type="button"
-            aria-label="btn item category"
-            className={classNames(
-              'sidebar-item sp-bw',
-              'w-full',
-              'flex',
-              'justify-between',
-              {
-                'mb-0': activeCategory && activeCategory._id === category._id,
-              }
-            )}
-            onClick={() => handleCategoryClick(category)}
-          >
-            <span
-              className={classNames('font-poppins', 'self-start', 'text-start')}
+      categories.body?.map((category) => {
+        const isActiveCategory =
+          activeCategory && activeCategory._id === category._id;
+        const categoryItemClassNames = classNames(
+          'sidebar-item',
+          'xs:p-[8px]',
+          'xl:p-0',
+          'xs:mb-[16px]',
+          'xl:mb-0',
+          'w-full',
+          'flex',
+          'justify-between',
+          { 'mb-0': isActiveCategory }
+        );
+        const categoryNameClassNames = classNames(
+          'not-italic',
+          'font-normal',
+          'font-poppins',
+          'self-start',
+          'text-start',
+          'xl:text-[#000]',
+          'xs:text-[#fff]',
+          'text-[16px]',
+          'leading-[24px]',
+          'min-w-[52px]'
+        );
+
+        return (
+          <li key={category._id}>
+            <button
+              type="button"
+              aria-label="btn item category"
+              className={categoryItemClassNames}
+              onClick={() => handleCategoryClick(category)}
             >
-              {category.name}
-            </span>
-            {category.isMainCategory && (
-              <DropdownRight className="dropdown-right-icon" />
-            )}
-          </button>
-          {activeCategory &&
-            activeCategory._id === category._id &&
-            category.childCategories && (
+              <span className={categoryNameClassNames}>{category.name}</span>
+              {category?.isMainCategory && (
+                <React.Suspense fallback={null}>
+                  <DropdownRight className="w-[24px] h-[24px] fill-[#fff] stroke-[#fff]" />
+                </React.Suspense>
+              )}
+            </button>
+            {isActiveCategory && category.childCategories && (
               <ul className="sub-menu ml-[20px] list-disc">
                 {category.childCategories.map((childCategory) => (
                   <li key={childCategory._id}>{childCategory.name}</li>
                 ))}
               </ul>
             )}
-        </div>
-      )),
-    [categories.body, activeCategory, handleCategoryClick]
+          </li>
+        );
+      }),
+    [categories?.body, activeCategory, handleCategoryClick]
   );
 
   return (
@@ -126,7 +131,9 @@ function SidebarBanner() {
             <FontAwesomeIcon icon={faClose} className="close-icon" />
           </button>
         )}
-        <ul className="sidebar__menu">{categoryElements}</ul>
+        <ul className="my-0 mr-[16px] list-none flex flex-col gap-[16px] min-w-[217px] xs:text-[#fafafa] xl:text-[#000]">
+          {categoryElements}
+        </ul>
       </div>
       <button
         aria-label="sidebar"
@@ -139,5 +146,9 @@ function SidebarBanner() {
     </div>
   );
 }
+
+SidebarBanner.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export default React.memo(SidebarBanner);

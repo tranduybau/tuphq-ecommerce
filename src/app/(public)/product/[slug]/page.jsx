@@ -10,7 +10,7 @@ const ProductDetailItem = React.lazy(() =>
 );
 const RelatedProduct = React.lazy(() => import('./components/RelatedProduct'));
 
-function ProductDetail() {
+export default function ProductDetail() {
   return (
     <section className={classNames(styles.wrapper, 'container', 'px-0')}>
       <div className={classNames('my-[80px]')}>
@@ -33,5 +33,3 @@ function ProductDetail() {
     </section>
   );
 }
-
-export default React.memo(ProductDetail);

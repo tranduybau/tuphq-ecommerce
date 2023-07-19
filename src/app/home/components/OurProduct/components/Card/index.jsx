@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/require-default-props */
@@ -6,14 +8,16 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import LazyLoad from 'react-lazyload';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
+
+import { post, put, setAuthToken } from '@/components/AxiosConfig';
 
 import HeartSmallIcon from '@/svgs/heart-small.svg';
 import QuickViewIcon from '@/svgs/Quick-View.svg';
@@ -31,12 +35,12 @@ function Card({
   color = false,
   sizes = null,
   slug = null,
+  cart = null,
 }) {
   const [active, setActive] = useState(true);
   const [user, setUser] = useState();
   const router = useRouter();
   const { register, handleSubmit } = useForm();
-  const [cart, setCart] = useState({});
 
   useEffect(() => {
     const currentUser = Cookies.get('userData')
@@ -47,71 +51,39 @@ function Card({
     }
   }, []);
 
-  useEffect(() => {
-    const getCart = async () => {
-      try {
-        if (user) {
-          const headers = {
-            Authorization: user?.token,
-          };
-          const response = await axios.get(
-            'https://gmen-admin.wii.camp/api/v1.0/carts/me',
-            { headers }
-          );
-          if (response !== undefined) {
-            setCart(response.data);
-          }
-        }
-        return null;
-      } catch {
-        return 0;
-      }
-    };
-    getCart();
-  }, [user]);
-
   const handleClick = () => {
-    setActive(!active);
+    setActive((prevActive) => !prevActive);
   };
 
   const handleAddToCart = useCallback(
     async (data) => {
       const handlePostApi = async (userToken, formData) => {
-        const headers = {
-          Authorization: userToken,
-        };
-        const response = await axios.post(
-          'https://gmen-admin.wii.camp/api/v1.0/carts/me/products',
-          formData,
-          { headers }
-        );
+        setAuthToken(userToken);
+        const response = await post('/carts/me/products', formData);
         if (response.data) {
           toast.success('Thêm vào giỏ hàng thành công');
           setTimeout(() => {
-            router.refresh();
+            window.location.reload();
           }, 1500);
         }
       };
 
       const handlePutApi = async (userToken, formData, ProductId) => {
-        const headers = {
-          Authorization: userToken,
-        };
-        const response = await axios.put(
-          `https://gmen-admin.wii.camp/api/v1.0/carts/me/product-items/${ProductId}`,
-          formData,
-          { headers }
+        setAuthToken(userToken);
+        const response = await put(
+          `/carts/me/product-items/${ProductId}`,
+          formData
         );
         if (response.data) {
           toast.success('Thêm vào giỏ hàng thành công');
           setTimeout(() => {
-            router.refresh();
+            window.location.reload();
           }, 1500);
         }
       };
       try {
         const productId = id;
-        if (data.size === undefined) {
+        if (!data.size) {
           data.size = '';
         }
         const formData = {
@@ -120,28 +92,21 @@ function Card({
           size: data.size,
         };
         if (user) {
-          if (cart) {
-            if (cart.body) {
-              if (cart.body.products) {
-                const existingProduct = cart.body.products.find(
-                  (productCheck) => {
-                    return (
-                      (productCheck.product._id === productId &&
-                        productCheck.size === data.size) ||
-                      (productCheck.product._id === productId &&
-                        productCheck.size === null)
-                    );
-                  }
-                );
-                if (existingProduct) {
-                  const formPutData = {
-                    quantity: existingProduct.quantity + 1,
-                  };
-                  handlePutApi(user.token, formPutData, existingProduct._id);
-                } else {
-                  handlePostApi(user.token, formData);
-                }
-              }
+          if (cart && cart.body && cart.body.products) {
+            const existingProduct = cart.body.products.find(
+              (productCheck) =>
+                (productCheck.product._id === productId &&
+                  productCheck.size === data.size) ||
+                (productCheck.product._id === productId &&
+                  productCheck.size === null)
+            );
+            if (existingProduct) {
+              const formPutData = {
+                quantity: existingProduct.quantity + 1,
+              };
+              handlePutApi(user.token, formPutData, existingProduct._id);
+            } else {
+              handlePostApi(user.token, formData);
             }
           }
         } else {
@@ -165,7 +130,7 @@ function Card({
         localStorage.setItem('wishlistItems', JSON.stringify(wishlistItem));
         toast.success('Thêm vào danh sách yêu thích thành công');
         setTimeout(() => {
-          router.refresh();
+          window.location.reload();
         }, 1500);
       } else {
         const existingData = JSON.parse(existingWishlistItems);
@@ -177,7 +142,7 @@ function Card({
             localStorage.setItem('wishlistItems', JSON.stringify(existingData));
             toast.success('Đã thêm sản phẩm vào danh sách yêu thích');
             setTimeout(() => {
-              router.refresh();
+              window.location.reload();
             }, 1500);
           }
         } else {
@@ -185,7 +150,7 @@ function Card({
           localStorage.setItem('wishlistItems', JSON.stringify(existingData));
           toast.success('Thêm vào danh sách yêu thích thành công');
           setTimeout(() => {
-            router.refresh();
+            window.location.reload();
           }, 1500);
         }
       }
@@ -195,16 +160,18 @@ function Card({
   }, [id, router, user]);
 
   return (
-    <div className={`card ${className} border-none`}>
+    <div className={`card ${className} border-none font-poppins`}>
       <div className="image lg:max-w-[270px]">
-        <Image
-          fill
-          src={img}
-          alt="product"
-          className="lg:max-w-[270px]"
-          sizes="(max-width: 768px) 100vw"
-          priority
-        />
+        <LazyLoad className="absolute h-full w-full">
+          <Image
+            fill
+            src={img}
+            alt="product"
+            className="lg:max-w-[270px]"
+            sizes="(max-width: 768px) 100vw"
+            priority
+          />
+        </LazyLoad>
         <div className="icon-wrapper">
           <button
             aria-label="btn"
@@ -234,7 +201,7 @@ function Card({
           )}
           onSubmit={handleSubmit(handleAddToCart)}
         >
-          {sizes && sizes[0] !== null && (
+          {sizes && sizes[0] && (
             <select
               className={classNames(
                 'relative',
@@ -245,28 +212,24 @@ function Card({
               )}
               {...register('size')}
             >
-              {sizes.map((size, index) => {
-                return (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <option key={index} value={`${size}`}>
-                    {size}
-                  </option>
-                );
-              })}
+              {sizes.map((size, index) => (
+                <option key={index} value={size}>
+                  {size}
+                </option>
+              ))}
             </select>
           )}
           <button type="submit" aria-label="Add to cart" className="add-card">
-            <span className="font-poppins">Add To Cart</span>
+            <span>Add To Cart</span>
           </button>
         </form>
       </div>
       <div className="description">
-        <span className="name font-poppins">{name}</span>
+        <span className="name">{name}</span>
 
         <div className="description__wrapper">
           <div className="rate">
-            <span className="price-default font-poppins">${sale}</span>
-
+            <span className="price-default">${sale}</span>
             <div className="star">
               <Star className="text-[20px]" />
               <Star className="text-[20px]" />
@@ -274,8 +237,7 @@ function Card({
               <Star className="text-[20px]" />
               <Star className="text-[20px]" />
             </div>
-
-            <span className="font-poppins count">({count})</span>
+            <span className="count">({count})</span>
           </div>
           {color && (
             <div className="color">
@@ -318,8 +280,8 @@ Card.propTypes = {
   sale: PropTypes.number.isRequired,
   count: PropTypes.number.isRequired,
   color: PropTypes.bool,
-  // eslint-disable-next-line react/forbid-prop-types
   sizes: PropTypes.array.isRequired,
+  cart: PropTypes.object.isRequired,
 };
 
 export default React.memo(Card);

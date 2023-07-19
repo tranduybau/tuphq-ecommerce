@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import styles from './CheckOutCard.module.scss';
 
-export default function CheckOutCard({ name, img, price, onTotalChange }) {
+function CheckOutCard({ name, img, price, onTotalChange }) {
   useEffect(() => {
     onTotalChange(price);
   }, [onTotalChange, price]);
@@ -42,3 +42,5 @@ CheckOutCard.propTypes = {
   price: PropTypes.number.isRequired,
   onTotalChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(CheckOutCard);

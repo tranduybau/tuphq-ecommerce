@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import CartIcon from '@/svgs/Header/Cart.svg';
 import HeartIcon from '@/svgs/Header/Heart.svg';
